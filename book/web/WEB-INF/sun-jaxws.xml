@@ -4,6 +4,6 @@
 
     <endpoint
             name='HelloWorld'
-            implementation='example.HelloWorld'
+            implementation='com.blackmamba.endpoint.HelloWorldPublisher'
             url-pattern='/services/HelloWorld'/>
 </endpoints>
