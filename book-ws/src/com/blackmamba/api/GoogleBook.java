@@ -1,6 +1,7 @@
 package com.blackmamba.api;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -63,29 +64,15 @@ public class GoogleBook {
         }
     }
 
-    public List<Object> searchBook(String searchTerm) {
-        List<Object> bookList = new ArrayList<>();
+    public List<Map> searchBook(String searchTerm) {
+        List<Map> bookList = new ArrayList<>();
         try {
             URL url = this.getSearchBookUrl(searchTerm);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-            connection.setRequestMethod("GET");
-
-            int responseCode = connection.getResponseCode();
-            if (responseCode != 200) {
-                System.out.println("Search Error!");
-            }
-
-            String response = this.parseInputStream(new InputStreamReader(connection.getInputStream()));
-            if (response == null) {
-                System.out.println("Failed parsing response");
-            }
-
-            JSONObject books = new JSONObject(response);
+            JSONObject books = makeConnection(url);
             JSONArray bookItem = books.getJSONArray("items");
             for (int i = 0; i < bookItem.length(); i++) {
                 JSONObject item = bookItem.getJSONObject(i);
-                bookList.add(item);
+                bookList.add(parseBookDetail(item));
             }
 
         } catch (Exception e) {
@@ -94,6 +81,25 @@ public class GoogleBook {
         }
 
         return bookList;
+    }
+
+    private JSONObject makeConnection(URL url) throws IOException, JSONException {
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        connection.setRequestMethod("GET");
+
+        int responseCode = connection.getResponseCode();
+        if (responseCode != 200) {
+            System.out.println("Search Error!");
+        }
+
+        String response = this.parseInputStream(new InputStreamReader(connection.getInputStream()));
+        if (response == null) {
+            System.out.println("Failed parsing response");
+        }
+
+        JSONObject books = new JSONObject(response);
+        return books;
     }
 
     private String parseBookTitle(JSONObject book) throws JSONException {
@@ -205,21 +211,7 @@ public class GoogleBook {
     public Map getBookDetail(String id) {
         try {
             URL url = this.getBookDetailUrl(id);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-            connection.setRequestMethod("GET");
-
-            int responseCode = connection.getResponseCode();
-            if (responseCode != 200) {
-                System.out.println("Search Error!");
-            }
-
-            String response = this.parseInputStream(new InputStreamReader(connection.getInputStream()));
-            if (response == null) {
-                System.out.println("Failed parsing response");
-            }
-
-            JSONObject book = new JSONObject(response);
+            JSONObject book = makeConnection(url);
 
             return this.parseBookDetail(book);
 
