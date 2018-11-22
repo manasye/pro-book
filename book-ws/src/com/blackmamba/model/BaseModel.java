@@ -10,9 +10,9 @@ public class BaseModel {
     private String password;
 
     public BaseModel() {
-        this.url = "jdbc:mysql://localhost:3306/probook";
+        this.url = "jdbc:mysql://localhost:3306/probook2";
         this.user = "root";
-        this.password = "";
+        this.password = "root";
     }
 
     public BaseModel(String url, String user, String password) {
