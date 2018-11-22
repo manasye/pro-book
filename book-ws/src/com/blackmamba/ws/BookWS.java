@@ -4,6 +4,12 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import org.json.simple.JSONObject;
+
+import com.blackmamba.model.Book;
 
 @WebService
 @SOAPBinding(style= Style.RPC, use= SOAPBinding.Use.ENCODED)
@@ -14,7 +20,7 @@ public class BookWS {
     }
 
     @WebMethod
-    public String searchDetail(String id) {
+    public String searchDetail(String id) throws IOException {
         return "huyu";
     }
 
