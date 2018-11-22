@@ -17,6 +17,7 @@ import java.util.Map;
 
 import com.blackmamba.model.BookDB;
 import com.blackmamba.model.Book;
+import com.blackmamba.model.BookDetail;
 
 public class GoogleBook {
     private String BASE_API_URL = "https://www.googleapis.com/books/v1/volumes";
@@ -168,7 +169,7 @@ public class GoogleBook {
         }
     }
 
-    private Map parseBookDetail(JSONObject book) {
+    private BookDetail parseBookDetail(JSONObject book) {
         try {
             String id = book.getString("id");
             String title = this.parseBookTitle(book);
@@ -178,15 +179,17 @@ public class GoogleBook {
             String imageUrl = this.parseBookImageUrl(book);
             int price = this.getBookPrice(id);
 
-            Map bookDetail = new HashMap();
+            BookDetail bookDetail = new BookDetail(id, title, author, category, description, imageUrl, price);
 
-            bookDetail.put("id", id);
-            bookDetail.put("title", title);
-            bookDetail.put("author", author);
-            bookDetail.put("category", category);
-            bookDetail.put("description", description);
-            bookDetail.put("imageUrl", imageUrl);
-            bookDetail.put("price", price);
+//            HashMap bookDetail = new HashMap();
+//
+//            bookDetail.put("id", id);
+//            bookDetail.put("title", title);
+//            bookDetail.put("author", author);
+//            bookDetail.put("category", category);
+//            bookDetail.put("description", description);
+//            bookDetail.put("imageUrl", imageUrl);
+//            bookDetail.put("price", price);
 
             return bookDetail;
 
@@ -196,9 +199,10 @@ public class GoogleBook {
         }
     }
 
-    public Map getBookDetail(String id) {
+    public BookDetail getBookDetail(String id) {
         try {
             URL url = this.getBookDetailUrl(id);
+            System.out.println(url);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
             connection.setRequestMethod("GET");
@@ -213,9 +217,15 @@ public class GoogleBook {
                 System.out.println("Failed parsing response");
             }
 
+            System.out.println(response);
+
             JSONObject book = new JSONObject(response);
 
-            return this.parseBookDetail(book);
+            BookDetail bookDetail = this.parseBookDetail(book);
+
+            System.out.println(bookDetail.getTitle());
+
+            return bookDetail;
 
         } catch (Exception e) {
 
@@ -224,4 +234,6 @@ public class GoogleBook {
 
         }
     }
+
+
 }
