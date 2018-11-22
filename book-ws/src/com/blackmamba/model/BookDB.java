@@ -18,9 +18,11 @@ public class BookDB extends BaseModel {
 
     public Book getBookById(int id) {
         try {
-            // Prepare and execute query
+            // Prepare query
             PreparedStatement preparedStatement = this.connection.prepareStatement("SELECT * FROM book where id = ?;");
             preparedStatement.setInt(1, id);
+
+            // Execute query
             ResultSet resultSet = preparedStatement.executeQuery();
 
             // Parse query
@@ -38,9 +40,40 @@ public class BookDB extends BaseModel {
         }
     }
 
-    // TODO: method to insert book
+    public boolean insertBook(Book book) {
+        try {
+            // Parse book
+            int id = book.getId();
+            int price = book.getPrice();
 
-    // TODO: method to update book
+            // Prepare query
+            PreparedStatement preparedStatement = this.connection.prepareStatement("INSERT INTO book VALUES (?, ?);");
+            preparedStatement.setInt(1, id);
+            preparedStatement.setInt(2, price);
+
+            // Execute query
+            System.out.println(preparedStatement.executeUpdate());
+
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
+
+    public boolean deleteBookById(int id) {
+        try {
+            // Prepare query
+            PreparedStatement preparedStatement = this.connection.prepareStatement("DELETE FROM book WHERE id = ?;");
+            preparedStatement.setInt(1, id);
+
+            // Execute query
+            preparedStatement.executeUpdate();
+
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
 
     public void printAllBooks() {
         String query = "SELECT * FROM book;";
