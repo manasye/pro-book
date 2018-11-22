@@ -5,18 +5,14 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Books {
-    public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/probook";
-        String user = "root";
-        String password = "";
 
+    public static void main(String[] args) {
+        BaseModel model = new BaseModel();
         String query = "SELECT * FROM book;";
 
-        try (Connection con = DriverManager.getConnection(url, user, password);
+        try (Connection con = model.connect();
              Statement st = con.createStatement();
              ResultSet rs = st.executeQuery(query)) {
 
