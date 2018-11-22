@@ -48,11 +48,43 @@ public class SoldDB extends BaseModel {
             String category = sold.getCategory();
             int count = sold.getCount();
 
+            // Check whether the sold already existed
+            if (getSoldById(id) != null) {
+                return false;
+            }
+
             // Prepare query
             PreparedStatement preparedStatement = this.connection.prepareStatement("INSERT INTO sold VALUES (?, ?, ?);");
             preparedStatement.setInt(1, id);
             preparedStatement.setString(2, category);
             preparedStatement.setInt(3, count);
+
+            // Execute query
+            System.out.println(preparedStatement.executeUpdate());
+
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
+
+    public boolean updateSold(Sold sold) {
+        try {
+            // Parse book
+            int id = sold.getId();
+            String category = sold.getCategory();
+            int count = sold.getCount();
+
+            // Check whether the sold already existed
+            if (getSoldById(id) == null) {
+                return false;
+            }
+
+            // Prepare query
+            PreparedStatement preparedStatement = this.connection.prepareStatement("UPDATE sold SET category =  ?, count = ? WHERE id = ?;");
+            preparedStatement.setString(1, category);
+            preparedStatement.setInt(2, count);
+            preparedStatement.setInt(3, id);
 
             // Execute query
             System.out.println(preparedStatement.executeUpdate());

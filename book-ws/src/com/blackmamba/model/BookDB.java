@@ -46,10 +46,40 @@ public class BookDB extends BaseModel {
             int id = book.getId();
             int price = book.getPrice();
 
+            // Check whether the book already existed
+            if (getBookById(id) != null) {
+                return false;
+            }
+
             // Prepare query
             PreparedStatement preparedStatement = this.connection.prepareStatement("INSERT INTO book VALUES (?, ?);");
             preparedStatement.setInt(1, id);
             preparedStatement.setInt(2, price);
+
+            // Execute query
+            System.out.println(preparedStatement.executeUpdate());
+
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+    }
+
+    public boolean updateBook(Book book) {
+        try {
+            // Parse book
+            int id = book.getId();
+            int price = book.getPrice();
+
+            // Check whether the book already existed
+            if (getBookById(id) == null) {
+                return false;
+            }
+
+            // Prepare query
+            PreparedStatement preparedStatement = this.connection.prepareStatement("UPDATE book SET price =  ? WHERE id = ?;");
+            preparedStatement.setInt(1, price);
+            preparedStatement.setInt(2, id);
 
             // Execute query
             System.out.println(preparedStatement.executeUpdate());
