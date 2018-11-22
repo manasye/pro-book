@@ -1,5 +1,6 @@
 package com.blackmamba.api;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -10,6 +11,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GoogleBook {
     private String BASE_API_URL = "https://www.googleapis.com/books/v1/volumes";
@@ -50,7 +53,8 @@ public class GoogleBook {
         }
     }
 
-    public void searchBook(String searchTerm) {
+    public List<Object> searchBook(String searchTerm) {
+        List<Object> bookList = new ArrayList<>();
         try {
             URL url = this.getSearchBookUrl(searchTerm);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -68,12 +72,17 @@ public class GoogleBook {
             }
 
             JSONObject books = new JSONObject(response);
+            JSONArray bookItem = books.getJSONArray("items");
+            for(int i=0; i<bookItem.length(); i++) {
+                JSONObject item = bookItem.getJSONObject(i);
+                bookList.add(item);
+            }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
 
         }
 
-//        return books;
+        return bookList;
     }
 }
