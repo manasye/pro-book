@@ -9,6 +9,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import org.json.simple.JSONObject;
 
+import com.blackmamba.model.Book;
+
 @WebService
 @SOAPBinding(style= Style.RPC, use= SOAPBinding.Use.ENCODED)
 public class BookWS {

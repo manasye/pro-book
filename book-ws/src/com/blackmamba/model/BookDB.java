@@ -16,18 +16,18 @@ public class BookDB extends BaseModel {
         }
     }
 
-    public Book getBookById(int id) {
+    public Book getBookById(String id) {
         try {
             // Prepare query
             PreparedStatement preparedStatement = this.connection.prepareStatement("SELECT * FROM book where id = ?;");
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, id);
 
             // Execute query
             ResultSet resultSet = preparedStatement.executeQuery();
 
             // Parse query
             resultSet.next();
-            int bookId = Integer.parseInt(resultSet.getString("id"));
+            String bookId = resultSet.getString("id");
             int bookPrice = Integer.parseInt(resultSet.getString("price"));
 
             return new Book(bookId, bookPrice);
@@ -43,7 +43,7 @@ public class BookDB extends BaseModel {
     public boolean insertBook(Book book) {
         try {
             // Parse book
-            int id = book.getId();
+            String id = book.getId();
             int price = book.getPrice();
 
             // Check whether the book already existed
@@ -53,7 +53,7 @@ public class BookDB extends BaseModel {
 
             // Prepare query
             PreparedStatement preparedStatement = this.connection.prepareStatement("INSERT INTO book VALUES (?, ?);");
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, id);
             preparedStatement.setInt(2, price);
 
             // Execute query
@@ -68,7 +68,7 @@ public class BookDB extends BaseModel {
     public boolean updateBook(Book book) {
         try {
             // Parse book
-            int id = book.getId();
+            String id = book.getId();
             int price = book.getPrice();
 
             // Check whether the book already existed
@@ -79,7 +79,7 @@ public class BookDB extends BaseModel {
             // Prepare query
             PreparedStatement preparedStatement = this.connection.prepareStatement("UPDATE book SET price =  ? WHERE id = ?;");
             preparedStatement.setInt(1, price);
-            preparedStatement.setInt(2, id);
+            preparedStatement.setString(2, id);
 
             // Execute query
             System.out.println(preparedStatement.executeUpdate());
@@ -90,11 +90,11 @@ public class BookDB extends BaseModel {
         }
     }
 
-    public boolean deleteBookById(int id) {
+    public boolean deleteBookById(String id) {
         try {
             // Prepare query
             PreparedStatement preparedStatement = this.connection.prepareStatement("DELETE FROM book WHERE id = ?;");
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, id);
 
             // Execute query
             preparedStatement.executeUpdate();
@@ -110,7 +110,7 @@ public class BookDB extends BaseModel {
         try (Statement st = this.connection.createStatement();
              ResultSet rs = st.executeQuery(query)) {
             while (rs.next()) {
-                int id = Integer.parseInt(rs.getString("id"));
+                String id = rs.getString("id");
                 int price = Integer.parseInt(rs.getString("price"));
                 Book book = new Book(id, price);
                 System.out.println(book);
