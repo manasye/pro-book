@@ -2,25 +2,27 @@ package com.blackmamba.model;
 
 //import java.util.Objects;
 
+import java.util.Objects;
+
 public class Book{
-    private int id;
+    private String id;
     private int price;
 
-    public Book(int id, int price) {
+    public Book(String id, int price) {
         this.id = id;
         this.price = price;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getPrice() {
         return price;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setPrice(int price) {
@@ -32,14 +34,14 @@ public class Book{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return id == book.id &&
-                price == book.price;
+        return price == book.price &&
+                Objects.equals(id, book.id);
     }
 
     @Override
     public String toString() {
         return "Book{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", price=" + price +
                 '}';
     }
