@@ -5,17 +5,17 @@ import java.util.Map;
 
 public class ListBooks {
 
-    private List<Map> bookList;
+    private List<BookDetail> bookList;
 
-    public ListBooks(List<Map> bookList) {
+    public ListBooks(List<BookDetail> bookList) {
         this.bookList = bookList;
     }
 
-    public List<Map> getBookList() {
+    public List<BookDetail> getBookList() {
         return bookList;
     }
 
-    public void setBookList(List<Map> bookList) {
+    public void setBookList(List<BookDetail> bookList) {
         this.bookList = bookList;
     }
 }

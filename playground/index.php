@@ -6,4 +6,6 @@ $options = array(
 
 $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options);
 
-var_dump($soapClient->getBook());
+$bookDetail = $soapClient->searchDetail('iJrS9blx6fIC');
+
+var_dump($bookDetail);
