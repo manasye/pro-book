@@ -21,6 +21,16 @@ import com.blackmamba.model.BookDB;
 import com.blackmamba.model.Book;
 import com.blackmamba.model.BookDetail;
 
+private static final class DefaultValues {
+    public static String BOOK_TITLE = "Title Not Available!";
+    public static String BOOK_AUTHOR = "-";
+    public static String BOOK_CATEGORY = "Others";
+    public static String BOOK_DESCRIPTION = "Description Not Available";
+    public static String BOOK_IMAGE_URL = "https://bennetts.co.nz/wp-content/uploads/placeholder2.png";
+    public static int BOOK_PRICE = -1;
+
+}
+
 public class GoogleBook {
     private String BASE_API_URL = "https://www.googleapis.com/books/v1/volumes";
     private BookDB bookDB;
@@ -112,7 +122,7 @@ public class GoogleBook {
         if (volumeInfo.has("title")) {
             title = volumeInfo.getString("title");
         } else {
-            title = "-";
+            title = DefaultValues.BOOK_TITLE;
         }
         return title;
     }
@@ -125,10 +135,10 @@ public class GoogleBook {
             if (authors.length() > 0) {
                 author = authors.get(0).toString();
             } else {
-                author = "-";
+                author = DefaultValues.BOOK_AUTHOR;
             }
         } else {
-            author = "-";
+            author = DefaultValues.BOOK_AUTHOR;
         }
         return author;
     }
@@ -141,10 +151,10 @@ public class GoogleBook {
             if (categories.length() > 0) {
                 category = categories.get(0).toString();
             } else {
-                category = "Other";
+                category = DefaultValues.BOOK_CATEGORY;
             }
         } else {
-            category = "Other";
+            category = DefaultValues.BOOK_CATEGORY;
         }
         return category;
     }
@@ -154,7 +164,7 @@ public class GoogleBook {
         if (book.has("description")) {
             description = book.getString("description");
         } else {
-            description = "-";
+            description = DefaultValues.BOOK_DESCRIPTION;
         }
         return description;
     }
@@ -167,10 +177,10 @@ public class GoogleBook {
             if (imageLinks.has("thumbnail")) {
                 imageUrl = imageLinks.getString("thumbnail");
             } else {
-                imageUrl = null;
+                imageUrl = DefaultValues.BOOK_IMAGE_URL;
             }
         } else {
-            imageUrl = null;
+            imageUrl = DefaultValues.BOOK_IMAGE_URL;
         }
         return imageUrl;
     }
@@ -180,7 +190,7 @@ public class GoogleBook {
         if (book != null) {
             return book.getPrice();
         } else {
-            return -1;
+            return DefaultValues.BOOK_PRICE;
         }
     }
 
