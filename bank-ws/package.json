@@ -1,0 +1,19 @@
+{
+  "name": "bank-ws",
+  "version": "1.0.0",
+  "description": "Bank Webservice",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Abram Situmorang",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^6.1.0",
+    "mysql2": "^1.6.4",
+    "sequelize": "^4.41.2"
+  }
+}

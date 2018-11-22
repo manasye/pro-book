@@ -1,7 +1,6 @@
 package com.blackmamba.api;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -12,6 +11,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,7 +64,8 @@ public class GoogleBook {
         }
     }
 
-    public void searchBook(String searchTerm) {
+    public List<Object> searchBook(String searchTerm) {
+        List<Object> bookList = new ArrayList<>();
         try {
             URL url = this.getSearchBookUrl(searchTerm);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -81,14 +83,18 @@ public class GoogleBook {
             }
 
             JSONObject books = new JSONObject(response);
-            System.out.println(books);
+            JSONArray bookItem = books.getJSONArray("items");
+            for (int i = 0; i < bookItem.length(); i++) {
+                JSONObject item = bookItem.getJSONObject(i);
+                bookList.add(item);
+            }
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
 
         }
 
-//        return books;
+        return bookList;
     }
 
     private String parseBookTitle(JSONObject book) throws JSONException {
