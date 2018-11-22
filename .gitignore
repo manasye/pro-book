@@ -1,0 +1,7 @@
+# Book Webservice
+book-ws/.idea/*.xml
+book-ws/out/
+
+# Bank Webservice
+bank-ws/node_modules
+bank-ws/package-lock.json

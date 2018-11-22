@@ -2,13 +2,13 @@ const Sequelize = require('sequelize')
 const db = require('./db')
 const Customers = require('./customer')
 
-const Transaction = db.define('transaction', {
+const Merchant = db.define('merchant', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
     },
-    senderAccount: {
+    ownerAccount: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
@@ -16,22 +16,15 @@ const Transaction = db.define('transaction', {
             key: 'id',
         }
     },
-    receiverAccount: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-            model: Customers,
-            key: 'id',
-        }
-    },
-    amount: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-    },
-    transactionTime: {
-        type: Sequelize.DATE,
+    merchantName: {
+        type: Sequelize.STRING,
         allowNull: false
+    },
+    secret: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
     }
 });
 
-module.exports = Transaction
+module.exports = Merchant
