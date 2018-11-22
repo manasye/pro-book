@@ -2,11 +2,11 @@ package com.blackmamba.model;
 
 public class Driver {
     public static void main(String[] args) {
-        BookDB bookDB = new BookDB();
+//        BookDB bookDB = new BookDB();
 
         // Test READ book
-        Book book = bookDB.getBookById(1);
-        System.out.println(book);
+//        Book book = bookDB.getBookById(1);
+//        System.out.println(book);
 
         // Test DELETE book
 //        int deleteBookId = 6;
@@ -18,7 +18,12 @@ public class Driver {
 //        }
 
         // Test CREATE book
-        Book insertedBook = new Book(6, 34243432);
-        bookDB.insertBook(insertedBook);
+//        Book insertedBook = new Book(6, 34243432);
+//        bookDB.insertBook(insertedBook);
+
+
+        SoldDB soldDB = new SoldDB();
+
+        soldDB.printAllSold();
     }
 }
