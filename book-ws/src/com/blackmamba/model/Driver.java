@@ -23,7 +23,6 @@ public class Driver {
 
 
         SoldDB soldDB = new SoldDB();
-
         soldDB.printAllSold();
     }
 }
