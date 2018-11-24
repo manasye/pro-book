@@ -1,3 +1,7 @@
+body {
+  overflow-x: hidden;
+}
+
 .main-page-container {
   width: 100%;
   display: flex;

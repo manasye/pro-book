@@ -3,8 +3,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 0 15vw;
-  width: auto !important;
+  min-height: 75vh;
 }
 
 .search-content-container {
@@ -13,6 +12,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  padding: 0 9vw;
 }
 
 .search-title-container {
