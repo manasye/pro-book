@@ -10,7 +10,7 @@ browseApp.controller('mainController', [
         $scope.searchBook = () => {
             $scope.isLoading = true;
             $http
-                .get(`${baseURL}activities/content`)
+                .get(`${baseURL}mentorship`)
                 .success(res => {
                     console.log($scope.searchInput);
                     console.log(res);
@@ -18,6 +18,7 @@ browseApp.controller('mainController', [
                     $scope.isLoading = false;
                 })
                 .error((data, status) => {
+                    $scope.isLoading = false;
                     console.log(data);
                 });
         };
