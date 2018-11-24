@@ -1,9 +1,10 @@
 .main-content-container {
   /* display: flex; */
+  display: table;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  min-height: 75vh;
+  min-height: 85vh;
 }
 
 .search-content-container {

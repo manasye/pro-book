@@ -77,6 +77,7 @@ function render_template(string $username) {
                   </button>
                </div>
             </div>
+            <div class="loader" ng-if="isLoading">Loading...</div>
             <div class='search-content-container'>
                <!-- <div class='search-title-container'>
                   <h1 class='search-title'>Maximo's Result</h1>
