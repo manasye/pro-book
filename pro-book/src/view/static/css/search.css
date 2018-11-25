@@ -23,7 +23,6 @@
   justify-content: space-between;
   align-items: flex-end;
   margin-top: 10vh;
-  margin-bottom: 3vh;
 }
 
 .search-title {
@@ -34,7 +33,7 @@
 
 .search-result-count-container {
   height: 60px;
-  flex: 0 0 150px;
+  flex: 0 0 200px;
   padding-right: 10px;
   display: flex;
   flex-direction: row;

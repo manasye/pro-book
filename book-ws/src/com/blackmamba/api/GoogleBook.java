@@ -21,15 +21,15 @@ import com.blackmamba.model.BookDB;
 import com.blackmamba.model.Book;
 import com.blackmamba.model.BookDetail;
 
-private static final class DefaultValues {
-    public static String BOOK_TITLE = "Title Not Available!";
-    public static String BOOK_AUTHOR = "-";
-    public static String BOOK_CATEGORY = "Others";
-    public static String BOOK_DESCRIPTION = "Description Not Available";
-    public static String BOOK_IMAGE_URL = "https://bennetts.co.nz/wp-content/uploads/placeholder2.png";
-    public static int BOOK_PRICE = -1;
-
-}
+//private static final class DefaultValues {
+//    public static String BOOK_TITLE = "Title Not Available!";
+//    public static String BOOK_AUTHOR = "-";
+//    public static String BOOK_CATEGORY = "Others";
+//    public static String BOOK_DESCRIPTION = "Description Not Available";
+//    public static String BOOK_IMAGE_URL = "https://bennetts.co.nz/wp-content/uploads/placeholder2.png";
+//    public static int BOOK_PRICE = -1;
+//
+//}
 
 public class GoogleBook {
     private String BASE_API_URL = "https://www.googleapis.com/books/v1/volumes";

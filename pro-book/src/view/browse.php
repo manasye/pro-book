@@ -65,7 +65,7 @@ function render_template(string $username) {
                <div class='browse-title-container'>
                   <h1 class='browse-title'>Search B<a class='o-button' href='/about'>o</a><a class='o-button' href='/about'>o</a>ks</h1>
                </div>
-               <form id='browseForm' class='browse-form' action='/search' method='GET'>
+               <form id='browseForm' class='browse-form'>
                   <input id='queryField' type='text' name='title' placeholder='Input search terms...' autofocus 
                      ng-model="searchInput">
                </form>
@@ -79,22 +79,23 @@ function render_template(string $username) {
             </div>
             <div class="loader" ng-if="isLoading">Loading...</div>
             <div class='search-content-container'>
-               <!-- <div class='search-title-container'>
-                  <h1 class='search-title'>Maximo's Result</h1>
+               <div class='search-title-container'>
+                  <h1 class='search-title' ng-if="searched">Search Result</h1>
                   <div class='search-result-count-container add-background'>
-                    <h4 class='search-result-count'>Found 2 Result(s)</h4>
+                    <h4 class='search-result-count' ng-if="searched">
+                      Found {{books.length}} Result(s)</h4>
                   </div>
-                  </div> -->
-               <div class='search-result-container' ng-repeat="book in books">
+                </div>
+               <div class='search-result-container' ng-repeat="book in books" ng-if="searched">
                   <div class="search-book-container">
                      <div class="search-book-content-container">
                         <div class="search-book-image-container">
-                           <img class="search-book-image" src="src/model/books/1.jpg/">
+                           <img class="search-book-image" src={{book.imageUrl}}>
                         </div>
                         <div class="search-book-text-container">
-                           <h4 class="book-title">The Communist Manifesto</h4>
-                           <h4 class="book-author">Karl Marx - 0.0 / 5.0 (0 vote)</h4>
-                           <p class="book-description">The Communist Manifesto is divided into a preamble and four sections, the last of these a short conclusion.</p>
+                           <h4 class="book-title">{{book.title}}</h4>
+                           <h4 class="book-author">{{book.author}} - 0.0 / 5.0 (0 vote)</h4>
+                           <p class="book-description">{{book.description}}</p>
                         </div>
                      </div>
                      <div class="search-detail-button-container">
