@@ -12,31 +12,50 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+import com.blackmamba.model.SoldDB;
+import com.blackmamba.model.Sold;
 import com.blackmamba.model.BookDB;
 import com.blackmamba.model.Book;
 import com.blackmamba.model.BookDetail;
 
-private static final class DefaultValues {
-    public static String BOOK_TITLE = "Title Not Available!";
-    public static String BOOK_AUTHOR = "-";
-    public static String BOOK_CATEGORY = "Others";
-    public static String BOOK_DESCRIPTION = "Description Not Available";
-    public static String BOOK_IMAGE_URL = "https://bennetts.co.nz/wp-content/uploads/placeholder2.png";
-    public static int BOOK_PRICE = -1;
+//class DefaultValues {
+//    public static String BOOK_TITLE = "Title Not Available!";
+//    public static String BOOK_AUTHOR = "-";
+//    public static String BOOK_CATEGORY = "Others";
+//    public static String BOOK_DESCRIPTION = "Description Not Available";
+//    public static String BOOK_IMAGE_URL = "https://bennetts.co.nz/wp-content/uploads/placeholder2.png";
+//    public static int BOOK_PRICE = -1;
+//
+//}
 
+class SortbySold implements Comparator<Sold> {
+    // Used for sorting in ascending order of
+    // roll number
+    public int compare(Sold a, Sold b)
+    {
+        return b.getCount() - a.getCount();
+    }
 }
 
 public class GoogleBook {
     private String BASE_API_URL = "https://www.googleapis.com/books/v1/volumes";
     private BookDB bookDB;
+    private SoldDB soldDB;
+
+    private static String BOOK_TITLE = "Title Not Available!";
+    private static String BOOK_AUTHOR = "-";
+    private static String BOOK_CATEGORY = "Others";
+    private static String BOOK_DESCRIPTION = "Description Not Available";
+    private static String BOOK_IMAGE_URL = "https://bennetts.co.nz/wp-content/uploads/placeholder2.png";
+    private static int BOOK_PRICE = -1;
+
+    private static int MAX_RECOMMENDATION = 5;
 
     public GoogleBook() {
         this.bookDB = new BookDB();
+        this.soldDB = new SoldDB();
     }
 
     private String parseSearchTerm(String searchTerm) throws UnsupportedEncodingException {
@@ -110,11 +129,9 @@ public class GoogleBook {
             System.out.println("Failed parsing response");
         }
 
-        System.out.println(response);
         JSONObject books = new JSONObject(response);
         return books;
     }
-
 
     private String parseBookTitle(JSONObject book) throws JSONException {
         JSONObject volumeInfo = book.getJSONObject("volumeInfo");
@@ -122,7 +139,7 @@ public class GoogleBook {
         if (volumeInfo.has("title")) {
             title = volumeInfo.getString("title");
         } else {
-            title = DefaultValues.BOOK_TITLE;
+            title = GoogleBook.BOOK_TITLE;
         }
         return title;
     }
@@ -135,10 +152,10 @@ public class GoogleBook {
             if (authors.length() > 0) {
                 author = authors.get(0).toString();
             } else {
-                author = DefaultValues.BOOK_AUTHOR;
+                author = GoogleBook.BOOK_AUTHOR;
             }
         } else {
-            author = DefaultValues.BOOK_AUTHOR;
+            author = GoogleBook.BOOK_AUTHOR;
         }
         return author;
     }
@@ -151,10 +168,10 @@ public class GoogleBook {
             if (categories.length() > 0) {
                 category = categories.get(0).toString();
             } else {
-                category = DefaultValues.BOOK_CATEGORY;
+                category = GoogleBook.BOOK_CATEGORY;
             }
         } else {
-            category = DefaultValues.BOOK_CATEGORY;
+            category = GoogleBook.BOOK_CATEGORY;
         }
         return category;
     }
@@ -164,7 +181,7 @@ public class GoogleBook {
         if (book.has("description")) {
             description = book.getString("description");
         } else {
-            description = DefaultValues.BOOK_DESCRIPTION;
+            description = GoogleBook.BOOK_DESCRIPTION;
         }
         return description;
     }
@@ -177,10 +194,10 @@ public class GoogleBook {
             if (imageLinks.has("thumbnail")) {
                 imageUrl = imageLinks.getString("thumbnail");
             } else {
-                imageUrl = DefaultValues.BOOK_IMAGE_URL;
+                imageUrl = GoogleBook.BOOK_IMAGE_URL;
             }
         } else {
-            imageUrl = DefaultValues.BOOK_IMAGE_URL;
+            imageUrl = GoogleBook.BOOK_IMAGE_URL;
         }
         return imageUrl;
     }
@@ -190,7 +207,7 @@ public class GoogleBook {
         if (book != null) {
             return book.getPrice();
         } else {
-            return DefaultValues.BOOK_PRICE;
+            return GoogleBook.BOOK_PRICE;
         }
     }
 
@@ -206,16 +223,6 @@ public class GoogleBook {
 
             BookDetail bookDetail = new BookDetail(id, title, author, category, description, imageUrl, price);
 
-            // HashMap bookDetail = new HashMap();
-            //
-            // bookDetail.put("id", id);
-            // bookDetail.put("title", title);
-            // bookDetail.put("author", author);
-            // bookDetail.put("category", category);
-            // bookDetail.put("description", description);
-            // bookDetail.put("imageUrl", imageUrl);
-            // bookDetail.put("price", price);
-
             return bookDetail;
 
         } catch (JSONException ex) {
@@ -227,21 +234,47 @@ public class GoogleBook {
     public BookDetail getBookDetail(String id) {
         try {
             URL url = this.getBookDetailUrl(id);
-            System.out.println(url);
             JSONObject book = makeConnection(url);
-
             BookDetail bookDetail = this.parseBookDetail(book);
-
-            System.out.println(bookDetail.getTitle());
-
             return bookDetail;
-
         } catch (Exception e) {
-
             System.out.println(e.getMessage());
             return null;
-
         }
+    }
+
+    public List<BookDetail> getBookRecommendation(String id) {
+        BookDetail bookDetail = this.getBookDetail(id);
+        if (bookDetail == null) {
+            System.out.println("book gaketemu");
+            return null;
+        }
+
+        List<Sold> soldList = this.soldDB.getSoldByCategory(bookDetail.getCategory());
+        if (soldList == null) {
+            System.out.println("category ga ketemu");
+            return null;
+        }
+
+        Collections.sort(soldList, new SortbySold());
+
+        int highestSoldCounter = 0;
+        List<BookDetail> bookRecommendations = new ArrayList<BookDetail>();
+        for (Sold sold : soldList) {
+            if (highestSoldCounter >= GoogleBook.MAX_RECOMMENDATION) {
+                break;
+            }
+            if (sold.getId().equals(bookDetail.getId())) {
+                continue;
+            }
+            BookDetail curHighestSoldBookDetail = this.getBookDetail(sold.getId());
+            if (curHighestSoldBookDetail != null) {
+                bookRecommendations.add(curHighestSoldBookDetail);
+                highestSoldCounter += 1;
+            }
+        }
+
+        return bookRecommendations;
     }
 
 }

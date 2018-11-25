@@ -6,6 +6,8 @@ $options = array(
 
 $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options);
 
-$bookDetail = $soapClient->searchDetail('iJrS9blx6fIC');
+// var_dump($bookDetail = $soapClient->searchDetail('iJrS9blx6fIC');
 
-var_dump($bookDetail);
+// var_dump($soapClient->getBookRecommendation('Crafts & Hobbies / Quilts & Quilting'));
+
+var_dump($soapClient->getBookRecommendation('KckVORnmg40C'));

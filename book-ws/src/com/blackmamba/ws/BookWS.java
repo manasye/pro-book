@@ -34,13 +34,26 @@ public class BookWS {
 
     @WebMethod
     public BookDetail searchDetail(String id) {
-        System.out.println(id);
         GoogleBook googleBook = new GoogleBook();
         BookDetail bookDetail = googleBook.getBookDetail(id);
-        // Book book = new Book(id, 400000);
         return bookDetail;
     }
 
-    // @WebMethod
+    @WebMethod
+    public ListBooks getBookRecommendation(String id) {
+        GoogleBook googleBook = new GoogleBook();
+        List<BookDetail> bookRecommendations = googleBook.getBookRecommendation(id);
+        if (bookRecommendations  == null) {
+            return null;
+        } else {
+            ListBooks bookRecommendationsList = new ListBooks(bookRecommendations);
+            return bookRecommendationsList;
+        }
+    }
+
+    // TODO: implement book transaction
+//    @WebMethod
+//    public ListBooks getBookRecommendation(String id) {
+//    }
 
 }
