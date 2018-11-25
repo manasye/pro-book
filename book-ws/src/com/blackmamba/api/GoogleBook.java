@@ -237,7 +237,7 @@ public class GoogleBook {
     public List<BookDetail> getBookRecommendation(String id) {
         BookDetail bookDetail = this.getBookDetail(id);
         if (bookDetail == null) {
-            System.out.println("book gaketemu");
+            System.out.println("book ga ketemu");
             return null;
         }
 
@@ -250,7 +250,7 @@ public class GoogleBook {
         Collections.sort(soldList, new SortbySold());
 
         int highestSoldCounter = 0;
-        List<BookDetail> bookRecommendations = new ArrayList<BookDetail>();
+        List<BookDetail> bookRecommendations = new ArrayList<>();
         for (Sold sold : soldList) {
             if (highestSoldCounter >= GoogleBook.MAX_RECOMMENDATION) {
                 break;

@@ -100,10 +100,10 @@ function render_template(string $username) {
                         </div>
                      </div>
                      <div class="search-detail-button-container">
-                        <form id="bookDetail-0" action="/book" method="get">
+                        <form id="bookDetail-{{book.id}}" action="/book" method="get">
                            <input hidden="" name="id" value={{book.id}}>
                         </form>
-                        <button class="search-detail-button" type="submit" form="bookDetail-0">
+                        <button class="search-detail-button" type="submit" form="bookDetail-{{book.id}}">
                            <div class="search-detail-button-inner">
                               DETAILS
                            </div>

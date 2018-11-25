@@ -5,3 +5,6 @@ book-ws/out/
 # Bank Webservice
 bank-ws/node_modules
 bank-ws/package-lock.json
+
+# Bank VSCode
+bank-ws/.vscode

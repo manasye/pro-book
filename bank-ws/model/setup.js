@@ -4,14 +4,19 @@ const Customer = require('./customer');
 const Merchant = require('./merchant');
 const Transaction = require('./transaction');
 
-Customer.sync({ force: true }).then(() => {
-    Customer.bulkCreate([
-        {
+Customer.sync({
+    force: true
+}).then(() => {
+    Customer.bulkCreate([{
             name: 'Abram Situmorang',
             cardNumber: '4111111111111111',
             amount: 100000
         },
-        { name: 'Ahmad Izzan', cardNumber: '4111111111111112', amount: 200000 },
+        {
+            name: 'Ahmad Izzan',
+            cardNumber: '4111111111111112',
+            amount: 200000
+        },
         {
             name: 'Manasye Bukit',
             cardNumber: '4111111111111113',
@@ -25,7 +30,9 @@ Customer.sync({ force: true }).then(() => {
     ]);
 });
 
-Merchant.sync({ force: true }).then(() => {
+Merchant.sync({
+    force: true
+}).then(() => {
     Merchant.create({
         ownerAccount: 1,
         merchantName: 'Pro-Book',
@@ -33,7 +40,9 @@ Merchant.sync({ force: true }).then(() => {
     });
 });
 
-Transaction.sync({ force: true }).then(() => {
+Transaction.sync({
+    force: true
+}).then(() => {
     Transaction.create({
         senderAccount: 1,
         receiverAccount: 4,
