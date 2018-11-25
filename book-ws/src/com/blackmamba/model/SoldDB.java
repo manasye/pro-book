@@ -1,6 +1,8 @@
 package com.blackmamba.model;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SoldDB extends BaseModel {
     private Connection connection;
@@ -10,24 +12,24 @@ public class SoldDB extends BaseModel {
         try {
             this.connection = this.connect();
         } catch (SQLException ex) {
-            System.out.println("BookDB Failed to Connect to MySQL Server");
+            System.out.println("SoldDB Failed to Connect to MySQL Server");
             System.out.println(ex.getMessage());
             this.connection = null;
         }
     }
 
-    public Sold getSoldById(int id) {
+    public Sold getSoldById(String id) {
         try {
             // Prepare query
             PreparedStatement preparedStatement = this.connection.prepareStatement("SELECT * FROM sold where id = ?;");
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, id);
 
             // Execute query
             ResultSet resultSet = preparedStatement.executeQuery();
 
             // Parse query
             resultSet.next();
-            int soldId = Integer.parseInt(resultSet.getString("id"));
+            String soldId = resultSet.getString("id");
             String soldCategory = resultSet.getString("price");
             int soldCount = resultSet.getShort("count");
 
@@ -41,10 +43,39 @@ public class SoldDB extends BaseModel {
         }
     }
 
+    public List<Sold> getSoldByCategory(String category) {
+        try {
+            // Prepare query
+            PreparedStatement preparedStatement = this.connection.prepareStatement("SELECT * FROM sold where category = ?;");
+            preparedStatement.setString(1, category);
+
+            // Execute query
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Parse query
+            List<Sold> soldList = new ArrayList<Sold>();
+            while (resultSet.next()) {
+                String soldId = resultSet.getString("id");
+                String soldCategory = resultSet.getString("category");
+                int soldCount = resultSet.getShort("count");
+                Sold soldBook = new Sold(soldId, soldCategory, soldCount);
+                soldList.add(soldBook);
+            }
+
+            return soldList;
+
+        } catch (SQLException ex) {
+
+            System.out.println(ex.getMessage());
+            return null;
+
+        }
+    }
+
     public boolean insertSold(Sold sold) {
         try {
             // Parse book
-            int id = sold.getId();
+            String id = sold.getId();
             String category = sold.getCategory();
             int count = sold.getCount();
 
@@ -55,7 +86,7 @@ public class SoldDB extends BaseModel {
 
             // Prepare query
             PreparedStatement preparedStatement = this.connection.prepareStatement("INSERT INTO sold VALUES (?, ?, ?);");
-            preparedStatement.setInt(1, id);
+            preparedStatement.setString(1, id);
             preparedStatement.setString(2, category);
             preparedStatement.setInt(3, count);
 
@@ -71,7 +102,7 @@ public class SoldDB extends BaseModel {
     public boolean updateSold(Sold sold) {
         try {
             // Parse book
-            int id = sold.getId();
+            String id = sold.getId();
             String category = sold.getCategory();
             int count = sold.getCount();
 
@@ -84,7 +115,7 @@ public class SoldDB extends BaseModel {
             PreparedStatement preparedStatement = this.connection.prepareStatement("UPDATE sold SET category =  ?, count = ? WHERE id = ?;");
             preparedStatement.setString(1, category);
             preparedStatement.setInt(2, count);
-            preparedStatement.setInt(3, id);
+            preparedStatement.setString(3, id);
 
             // Execute query
             System.out.println(preparedStatement.executeUpdate());
@@ -115,13 +146,12 @@ public class SoldDB extends BaseModel {
         try (Statement st = this.connection.createStatement();
              ResultSet rs = st.executeQuery(query)) {
             while (rs.next()) {
-                int id = Integer.parseInt(rs.getString("id"));
+                String id = rs.getString("id");
                 String category = rs.getString("category");
                 int count = Integer.parseInt(rs.getString("count"));
                 Sold sold = new Sold(id, category, count);
                 System.out.println(sold);
             }
-
         } catch (SQLException ex) {
             System.out.println("gagal brader");
             System.out.println(ex.getMessage());
