@@ -167,9 +167,10 @@ public class GoogleBook {
     }
 
     private String parseBookDescription(JSONObject book) throws JSONException {
+        JSONObject volumeInfo = book.getJSONObject("volumeInfo");
         String description;
-        if (book.has("description")) {
-            description = book.getString("description");
+        if (volumeInfo.has("description")) {
+            description = volumeInfo.getString("description");
         } else {
             description = GoogleBook.BOOK_DESCRIPTION;
         }

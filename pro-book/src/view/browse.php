@@ -83,7 +83,7 @@ function render_template(string $username) {
                   <h1 class='search-title' ng-if="searched">Search Result</h1>
                   <div class='search-result-count-container add-background'>
                     <h4 class='search-result-count' ng-if="searched">
-                      Found {{books.length}} Result(s)</h4>
+                      Found {{books.length || 0}} Result(s)</h4>
                   </div>
                 </div>
                <div class='search-result-container' ng-repeat="book in books" ng-if="searched">
@@ -95,7 +95,8 @@ function render_template(string $username) {
                         <div class="search-book-text-container">
                            <h4 class="book-title">{{book.title}}</h4>
                            <h4 class="book-author">{{book.author}} - 0.0 / 5.0 (0 vote)</h4>
-                           <p class="book-description">{{book.description}}</p>
+                           <p class="book-description">{{book.description.length > 300 ? 
+                           book.description.substring(0, 300) + '...' : book.description.substring}}</p>
                         </div>
                      </div>
                      <div class="search-detail-button-container">

@@ -7,6 +7,7 @@ browseApp.controller('mainController', [
         $scope.searchInput = '';
         $scope.isLoading = false;
         $scope.searched = false;
+        $scope.books = [];
         let baseURL = 'http://localhost:5000/';
         $scope.searchBook = () => {
             $scope.isLoading = true;
