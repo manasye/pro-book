@@ -20,15 +20,6 @@ import com.blackmamba.model.BookDB;
 import com.blackmamba.model.Book;
 import com.blackmamba.model.BookDetail;
 
-//private static final class DefaultValues {
-//    public static String BOOK_TITLE = "Title Not Available!";
-//    public static String BOOK_AUTHOR = "-";
-//    public static String BOOK_CATEGORY = "Others";
-//    public static String BOOK_DESCRIPTION = "Description Not Available";
-//    public static String BOOK_IMAGE_URL = "https://bennetts.co.nz/wp-content/uploads/placeholder2.png";
-//    public static int BOOK_PRICE = -1;
-//
-//}
 
 class SortbySold implements Comparator<Sold> {
     // Used for sorting in ascending order of
@@ -43,10 +34,10 @@ public class GoogleBook {
     private BookDB bookDB;
     private SoldDB soldDB;
 
-    private static String BOOK_TITLE = "Title Not Available!";
+    private static String BOOK_TITLE = "Title Is Not Available!";
     private static String BOOK_AUTHOR = "-";
     private static String BOOK_CATEGORY = "Others";
-    private static String BOOK_DESCRIPTION = "Description Not Available";
+    private static String BOOK_DESCRIPTION = "Description Is Not Available";
     private static String BOOK_IMAGE_URL = "https://bennetts.co.nz/wp-content/uploads/placeholder2.png";
     private static int BOOK_PRICE = -1;
 
