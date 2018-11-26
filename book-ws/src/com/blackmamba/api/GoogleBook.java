@@ -52,8 +52,12 @@ public class GoogleBook {
         return URLEncoder.encode(searchTerm, "UTF-8");
     }
 
-    private URL getSearchBookUrl(String searchTerm) throws UnsupportedEncodingException, MalformedURLException {
-        return new URL(BASE_API_URL + "?q=" + parseSearchTerm(searchTerm));
+    private URL getSearchBookByTitleUrl(String title) throws UnsupportedEncodingException, MalformedURLException {
+        return new URL(BASE_API_URL + "?q=" + parseSearchTerm(title));
+    }
+
+    private URL getSearchBookByCategoryUrl(String category) throws UnsupportedEncodingException, MalformedURLException {
+        return new URL(BASE_API_URL + "?q=subject:" + parseSearchTerm(category));
     }
 
     private URL getBookDetailUrl(String bookId) throws MalformedURLException {
@@ -84,23 +88,39 @@ public class GoogleBook {
         }
     }
 
-    public List<BookDetail> searchBook(String searchTerm) {
+    public List<BookDetail> searchBookByTitle(String title) {
+        try {
+            URL url = this.getSearchBookByTitleUrl(title);
+            return this.searchBook(url);
+        } catch (Exception ex) {
+            System.out.println("[ERROR searchBookByTitle]: " + ex.getMessage());
+            return null;
+        }
+    }
+
+    public List<BookDetail> searchBookByCategory(String category) {
+        try {
+            URL url = this.getSearchBookByCategoryUrl(category);
+            return this.searchBook(url);
+        } catch (Exception ex) {
+            System.out.println("[ERROR searchBookByTitle]: " + ex.getMessage());
+            return null;
+        }
+    }
+
+    public List<BookDetail> searchBook(URL url) {
         List<BookDetail> bookList = new ArrayList<>();
         try {
-            URL url = this.getSearchBookUrl(searchTerm);
             JSONObject books = makeConnection(url);
-
             JSONArray bookItem = books.getJSONArray("items");
             for (int i = 0; i < bookItem.length(); i++) {
                 JSONObject item = bookItem.getJSONObject(i);
                 bookList.add(parseBookDetail(item));
             }
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
 
         }
-
         return bookList;
     }
 
@@ -234,38 +254,28 @@ public class GoogleBook {
         }
     }
 
-    public List<BookDetail> getBookRecommendation(String id) {
-        BookDetail bookDetail = this.getBookDetail(id);
-        if (bookDetail == null) {
-            System.out.println("book ga ketemu");
+    public List<BookDetail> getBookRecommendation(String[] categories) {
+        if (categories.length == 0) {
             return null;
         }
 
-        List<Sold> soldList = this.soldDB.getSoldByCategory(bookDetail.getCategory());
+        List<Sold> soldList = this.soldDB.getHighestSoldByCategories(categories);
         if (soldList == null) {
-            System.out.println("category ga ketemu");
             return null;
+        } else if (soldList.size() > 0) {
+            List<BookDetail> bookRecommendations = new ArrayList<>();
+            for (Sold sold : soldList) {
+                BookDetail curHighestSoldBookDetail = this.getBookDetail(sold.getId());
+                if (curHighestSoldBookDetail != null) {
+                    bookRecommendations.add(curHighestSoldBookDetail);
+                }
+            }
+            return bookRecommendations;
+        } else {
+            List<BookDetail> bookDetails = this.searchBookByCategory(categories[0]);
+            bookDetails = new ArrayList<BookDetail>(bookDetails.subList(0, 1));
+            return bookDetails;
         }
-
-        Collections.sort(soldList, new SortbySold());
-
-        int highestSoldCounter = 0;
-        List<BookDetail> bookRecommendations = new ArrayList<>();
-        for (Sold sold : soldList) {
-            if (highestSoldCounter >= GoogleBook.MAX_RECOMMENDATION) {
-                break;
-            }
-            if (sold.getId().equals(bookDetail.getId())) {
-                continue;
-            }
-            BookDetail curHighestSoldBookDetail = this.getBookDetail(sold.getId());
-            if (curHighestSoldBookDetail != null) {
-                bookRecommendations.add(curHighestSoldBookDetail);
-                highestSoldCounter += 1;
-            }
-        }
-
-        return bookRecommendations;
     }
 
 }

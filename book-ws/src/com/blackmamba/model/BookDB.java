@@ -26,11 +26,13 @@ public class BookDB extends BaseModel {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             // Parse query
-            resultSet.next();
-            String bookId = resultSet.getString("id");
-            int bookPrice = Integer.parseInt(resultSet.getString("price"));
-
-            return new Book(bookId, bookPrice);
+            if (resultSet.next()) {
+                String bookId = resultSet.getString("id");
+                int bookPrice = Integer.parseInt(resultSet.getString("price"));
+                return new Book(bookId, bookPrice);
+            } else {
+                return null;
+            }
 
         } catch (SQLException ex) {
 

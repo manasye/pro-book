@@ -8,7 +8,7 @@ import java.util.Map;
 public class Driver {
     public static void main(String[] argc) {
         GoogleBook googleBook = new GoogleBook();
-        List<BookDetail> bookList = googleBook.searchBook("Informatics");
+        List<BookDetail> bookList = googleBook.searchBookByTitle("Informatics");
         int i = 1;
         for (Object book : bookList) {
             System.out.println(i);
