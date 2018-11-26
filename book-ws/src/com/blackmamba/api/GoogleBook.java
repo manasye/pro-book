@@ -12,21 +12,38 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
+import com.blackmamba.model.SoldDB;
+import com.blackmamba.model.Sold;
 import com.blackmamba.model.BookDB;
 import com.blackmamba.model.Book;
 import com.blackmamba.model.BookDetail;
 
+class SortbySold implements Comparator<Sold> {
+    public int compare(Sold a, Sold b)
+    {
+        return b.getCount() - a.getCount();
+    }
+}
+
 public class GoogleBook {
     private String BASE_API_URL = "https://www.googleapis.com/books/v1/volumes";
     private BookDB bookDB;
+    private SoldDB soldDB;
+
+    private static String BOOK_TITLE = "Title Is Not Available!";
+    private static String BOOK_AUTHOR = "-";
+    private static String BOOK_CATEGORY = "Others";
+    private static String BOOK_DESCRIPTION = "Description Is Not Available";
+    private static String BOOK_IMAGE_URL = "https://bennetts.co.nz/wp-content/uploads/placeholder2.png";
+    private static int BOOK_PRICE = -1;
+
+    private static int MAX_RECOMMENDATION = 5;
 
     public GoogleBook() {
         this.bookDB = new BookDB();
+        this.soldDB = new SoldDB();
     }
 
     private String parseSearchTerm(String searchTerm) throws UnsupportedEncodingException {
@@ -65,29 +82,16 @@ public class GoogleBook {
         }
     }
 
-    public List<Object> searchBook(String searchTerm) {
-        List<Object> bookList = new ArrayList<>();
+    public List<BookDetail> searchBook(String searchTerm) {
+        List<BookDetail> bookList = new ArrayList<>();
         try {
             URL url = this.getSearchBookUrl(searchTerm);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            JSONObject books = makeConnection(url);
 
-            connection.setRequestMethod("GET");
-
-            int responseCode = connection.getResponseCode();
-            if (responseCode != 200) {
-                System.out.println("Search Error!");
-            }
-
-            String response = this.parseInputStream(new InputStreamReader(connection.getInputStream()));
-            if (response == null) {
-                System.out.println("Failed parsing response");
-            }
-
-            JSONObject books = new JSONObject(response);
             JSONArray bookItem = books.getJSONArray("items");
             for (int i = 0; i < bookItem.length(); i++) {
                 JSONObject item = bookItem.getJSONObject(i);
-                bookList.add(item);
+                bookList.add(parseBookDetail(item));
             }
 
         } catch (Exception e) {
@@ -98,13 +102,32 @@ public class GoogleBook {
         return bookList;
     }
 
+    private JSONObject makeConnection(URL url) throws IOException, JSONException {
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        connection.setRequestMethod("GET");
+
+        int responseCode = connection.getResponseCode();
+        if (responseCode != 200) {
+            System.out.println("Search Error!");
+        }
+
+        String response = this.parseInputStream(new InputStreamReader(connection.getInputStream()));
+        if (response == null) {
+            System.out.println("Failed parsing response");
+        }
+
+        JSONObject books = new JSONObject(response);
+        return books;
+    }
+
     private String parseBookTitle(JSONObject book) throws JSONException {
         JSONObject volumeInfo = book.getJSONObject("volumeInfo");
         String title;
         if (volumeInfo.has("title")) {
             title = volumeInfo.getString("title");
         } else {
-            title = "-";
+            title = GoogleBook.BOOK_TITLE;
         }
         return title;
     }
@@ -117,10 +140,10 @@ public class GoogleBook {
             if (authors.length() > 0) {
                 author = authors.get(0).toString();
             } else {
-                author = "-";
+                author = GoogleBook.BOOK_AUTHOR;
             }
         } else {
-            author = "-";
+            author = GoogleBook.BOOK_AUTHOR;
         }
         return author;
     }
@@ -133,20 +156,21 @@ public class GoogleBook {
             if (categories.length() > 0) {
                 category = categories.get(0).toString();
             } else {
-                category = "Other";
+                category = GoogleBook.BOOK_CATEGORY;
             }
         } else {
-            category = "Other";
+            category = GoogleBook.BOOK_CATEGORY;
         }
         return category;
     }
 
     private String parseBookDescription(JSONObject book) throws JSONException {
+        JSONObject volumeInfo = book.getJSONObject("volumeInfo");
         String description;
-        if (book.has("description")) {
-            description = book.getString("description");
+        if (volumeInfo.has("description")) {
+            description = volumeInfo.getString("description");
         } else {
-            description = "-";
+            description = GoogleBook.BOOK_DESCRIPTION;
         }
         return description;
     }
@@ -159,10 +183,10 @@ public class GoogleBook {
             if (imageLinks.has("thumbnail")) {
                 imageUrl = imageLinks.getString("thumbnail");
             } else {
-                imageUrl = null;
+                imageUrl = GoogleBook.BOOK_IMAGE_URL;
             }
         } else {
-            imageUrl = null;
+            imageUrl = GoogleBook.BOOK_IMAGE_URL;
         }
         return imageUrl;
     }
@@ -172,7 +196,7 @@ public class GoogleBook {
         if (book != null) {
             return book.getPrice();
         } else {
-            return -1;
+            return GoogleBook.BOOK_PRICE;
         }
     }
 
@@ -188,16 +212,6 @@ public class GoogleBook {
 
             BookDetail bookDetail = new BookDetail(id, title, author, category, description, imageUrl, price);
 
-//            HashMap bookDetail = new HashMap();
-//
-//            bookDetail.put("id", id);
-//            bookDetail.put("title", title);
-//            bookDetail.put("author", author);
-//            bookDetail.put("category", category);
-//            bookDetail.put("description", description);
-//            bookDetail.put("imageUrl", imageUrl);
-//            bookDetail.put("price", price);
-
             return bookDetail;
 
         } catch (JSONException ex) {
@@ -209,38 +223,47 @@ public class GoogleBook {
     public BookDetail getBookDetail(String id) {
         try {
             URL url = this.getBookDetailUrl(id);
-            System.out.println(url);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-            connection.setRequestMethod("GET");
-
-            int responseCode = connection.getResponseCode();
-            if (responseCode != 200) {
-                System.out.println("Search Error!");
-            }
-
-            String response = this.parseInputStream(new InputStreamReader(connection.getInputStream()));
-            if (response == null) {
-                System.out.println("Failed parsing response");
-            }
-
-            System.out.println(response);
-
-            JSONObject book = new JSONObject(response);
-
+            JSONObject book = makeConnection(url);
             BookDetail bookDetail = this.parseBookDetail(book);
-
-            System.out.println(bookDetail.getTitle());
-
             return bookDetail;
-
         } catch (Exception e) {
-
             System.out.println(e.getMessage());
             return null;
-
         }
     }
 
+    public List<BookDetail> getBookRecommendation(String id) {
+        BookDetail bookDetail = this.getBookDetail(id);
+        if (bookDetail == null) {
+            System.out.println("book ga ketemu");
+            return null;
+        }
+
+        List<Sold> soldList = this.soldDB.getSoldByCategory(bookDetail.getCategory());
+        if (soldList == null) {
+            System.out.println("category ga ketemu");
+            return null;
+        }
+
+        Collections.sort(soldList, new SortbySold());
+
+        int highestSoldCounter = 0;
+        List<BookDetail> bookRecommendations = new ArrayList<>();
+        for (Sold sold : soldList) {
+            if (highestSoldCounter >= GoogleBook.MAX_RECOMMENDATION) {
+                break;
+            }
+            if (sold.getId().equals(bookDetail.getId())) {
+                continue;
+            }
+            BookDetail curHighestSoldBookDetail = this.getBookDetail(sold.getId());
+            if (curHighestSoldBookDetail != null) {
+                bookRecommendations.add(curHighestSoldBookDetail);
+                highestSoldCounter += 1;
+            }
+        }
+
+        return bookRecommendations;
+    }
 
 }

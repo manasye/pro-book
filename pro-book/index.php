@@ -95,6 +95,10 @@ $router->get('/email', function($request) {
   return json_encode(Api::validateEmail($request->email));
 });
 
+$router->get('/search-book', function($request) {
+  return json_encode(Api::getBooksFromTitle($request->title));
+});
+
 /** POST */
 $router->post('/order', function($request) {
   return json_encode(Api::order($request));

@@ -3,21 +3,21 @@ package com.blackmamba.model;
 import java.util.Objects;
 
 public class Sold {
-    private int id;
+    private String id;
     private String category;
     private int count;
 
-    public Sold(int id, String category, int count) {
+    public Sold(String id, String category, int count) {
         this.id = id;
         this.category = category;
         this.count = count;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -33,24 +33,24 @@ public class Sold {
         return count;
     }
 
-    public void setCount(int sold) {
-        this.count = sold;
+    public void setCount(int count) {
+        this.count = count;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Sold sold1 = (Sold) o;
-        return id == sold1.id &&
-                count == sold1.count &&
-                Objects.equals(category, sold1.category);
+        Sold sold = (Sold) o;
+        return count == sold.count &&
+                Objects.equals(id, sold.id) &&
+                Objects.equals(category, sold.category);
     }
 
     @Override
     public String toString() {
         return "Sold{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", category='" + category + '\'' +
                 ", count=" + count +
                 '}';
