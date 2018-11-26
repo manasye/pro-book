@@ -5,7 +5,71 @@ function render_template(string $username, $book, $reviews, $recommendation) {
   $bookImagePath = $book->imageUrl;
   $book->description = strip_tags($book->description);
 
-  print_r($recommendation);
+  $recoms = $recommendation->bookList;
+  $bookListType = (gettype($recommendation->bookList));
+  // print_r($recommendation->bookList);
+  $recomHTML = "";
+
+  if ($bookListType === 'object') {
+    $description = strip_tags($recoms->description);
+    if (strlen($recoms->description) >= 150) {
+      $description = substr($description, 0, 150) . "...";
+    }
+    $recomHTML = $recomHTML . <<<HTML
+
+      <div class="col-1-of-3">
+        <div class="search-book-container recom-result-container">
+          <img class="search-book-image recom-image" src='{$recoms->imageUrl}'>
+          <h4 class="book-title">{$recoms->title}</h4>
+          <h4 class="book-author">{$recoms->author} - 0.0 / 5.0 (0 vote)</h4>
+          <p class="book-description">{$description}</p>
+            <div class="search-detail-button-container">
+              <form id="bookDetail-{$recoms->id}" action="/book" method="get">
+                  <input hidden="" name="id" value="{$recoms->id}">
+              </form>
+              <button class="search-detail-button" type="submit" form="bookDetail-{$recoms->id}">
+                  <div class="search-detail-button-inner">
+                    DETAILS
+                  </div>
+              </button>
+            </div>
+        </div>
+      </div>
+
+HTML;
+  } else {
+    $recomHTML = "";
+    $idx = 1;
+    foreach ($recoms as $book) {
+      $description = strip_tags($book->description);
+      if (strlen($book->description) >= 150) {
+        $description = substr($description, 0, 150) . "...";
+      }
+      $recomHTML = $recomHTML . <<<HTML
+
+      <div class="col-1-of-3">
+        <div class="search-book-container recom-result-container">
+          <img class="search-book-image recom-image" src='{$book->imageUrl}'>
+          <h4 class="book-title">{$book->title}</h4>
+          <h4 class="book-author">{$book->author} - 0.0 / 5.0 (0 vote)</h4>
+          <p class="book-description">{$description}</p>
+            <div class="search-detail-button-container">
+              <form id="bookDetail-{$book->id}" action="/book" method="get">
+                  <input hidden="" name="id" value="{$book->id}">
+              </form>
+              <button class="search-detail-button" type="submit" form="bookDetail-{$book->id}">
+                  <div class="search-detail-button-inner">
+                    DETAILS
+                  </div>
+              </button>
+            </div>
+        </div>
+      </div>
+
+HTML;
+    
+    }
+  }
 
   // $rating = round($book['rating'], 1);
   $rating = 0;
@@ -203,24 +267,7 @@ HTML;
                      <h3 class='book-review-title'>Recommendation</h3>
                   </div>
                   <div class="row">
-                     <div class="col-1-of-3">
-                        <div class="search-book-container recom-result-container">
-                          <img class="search-book-image recom-image" src="http://books.google.com/books/content?id=da_iBAAAQBAJ&amp;printsec=frontcover&amp;img=1&amp;zoom=1&amp;edge=curl&amp;source=gbs_api">
-                          <h4 class="book-title">Advanced JAX-WS Web Services</h4>
-                          <h4 class="book-author">Alessio Soldano - 0.0 / 5.0 (0 vote)</h4>
-                          <p class="book-description">In this book you'll learn the concepts of SOAP based Web Services architecture and get practical advice on building and deploying Web Services in the enterprise. Starting from the basics and the best practices for...</p>
-                           <div class="search-detail-button-container">
-                              <form id="bookDetail-da_iBAAAQBAJ" action="/book" method="get" class="ng-pristine ng-valid">
-                                 <input hidden="" name="id" value="da_iBAAAQBAJ">
-                              </form>
-                              <button class="search-detail-button" type="submit" form="bookDetail-da_iBAAAQBAJ">
-                                 <div class="search-detail-button-inner">
-                                    DETAILS
-                                 </div>
-                              </button>
-                           </div>
-                        </div>
-                     </div>
+                     {$recomHTML}
                   </div>
                </div>
             </div>

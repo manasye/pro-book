@@ -9,6 +9,7 @@ class BookGetController implements ControllerInterface {
     $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options); 
     $book = $soapClient->searchDetail($request->id);
     $recommendation = $soapClient->getBookRecommendation(explode("/", $book->category));
+    // $recommendation = $soapClient->getBookRecommendation(['Other']);
     $reviews = $db->getReviews($book->id);
     $template = new Template('src/view/book.php');
     return $template->render($username, $book, $reviews, $recommendation);
