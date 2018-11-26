@@ -1,6 +1,6 @@
 # Book Webservice
-book-ws/.idea/*.xml
-book-ws/out/
+bookws/.idea/
+bookws/out/
 
 # Bank Webservice
 bank-ws/node_modules
