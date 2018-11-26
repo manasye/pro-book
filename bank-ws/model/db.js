@@ -1,8 +1,8 @@
-const Sequelize = require('sequelize')
-const dotenv = require('dotenv').config()
+const Sequelize = require("sequelize");
+const dotenv = require("dotenv").config();
 
 if (dotenv.error) {
-    throw dotenv.error
+    throw dotenv.error;
 }
 
 const db = new Sequelize({
@@ -10,8 +10,8 @@ const db = new Sequelize({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     host: process.env.DB_HOST,
-    dialect: 'mysql',
-    'pool': {}
-})
+    dialect: "mysql",
+    pool: {}
+});
 
-module.exports = db
+module.exports = db;

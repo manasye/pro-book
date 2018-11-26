@@ -1,7 +1,7 @@
-const Sequelize = require('sequelize')
-const db = require('./db')
+const Sequelize = require("sequelize");
+const db = require("./db");
 
-const Customer = db.define('customer', {
+const Customer = db.define("customer", {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -22,4 +22,4 @@ const Customer = db.define('customer', {
     }
 });
 
-module.exports = Customer
+module.exports = Customer;

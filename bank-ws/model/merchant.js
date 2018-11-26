@@ -1,8 +1,8 @@
-const Sequelize = require('sequelize')
-const db = require('./db')
-const Customers = require('./customer')
+const Sequelize = require("sequelize");
+const db = require("./db");
+const Customers = require("./customer");
 
-const Merchant = db.define('merchant', {
+const Merchant = db.define("merchant", {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -13,7 +13,7 @@ const Merchant = db.define('merchant', {
         allowNull: false,
         references: {
             model: Customers,
-            key: 'id',
+            key: "id"
         }
     },
     merchantName: {
@@ -27,4 +27,4 @@ const Merchant = db.define('merchant', {
     }
 });
 
-module.exports = Merchant
+module.exports = Merchant;
