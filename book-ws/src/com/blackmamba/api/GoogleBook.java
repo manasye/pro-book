@@ -20,11 +20,9 @@ import com.blackmamba.model.BookDB;
 import com.blackmamba.model.Book;
 import com.blackmamba.model.BookDetail;
 
-
 class SortbySold implements Comparator<Sold> {
-    // Used for sorting in ascending order of
-    // roll number
-    public int compare(Sold a, Sold b) {
+    public int compare(Sold a, Sold b)
+    {
         return b.getCount() - a.getCount();
     }
 }
