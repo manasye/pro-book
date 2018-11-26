@@ -1,10 +1,1 @@
-# Book Webservice
-bookws/.idea/
-bookws/out/
-
-# Bank Webservice
-bank-ws/node_modules
-bank-ws/package-lock.json
-
-# Bank VSCode
-bank-ws/.vscode
+*.zip

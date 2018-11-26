@@ -1,0 +1,6 @@
+# Bank Webservice
+node_modules
+package-lock.json
+
+# Bank VSCode
+.vscode
