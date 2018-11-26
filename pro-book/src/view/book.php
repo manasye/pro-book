@@ -5,6 +5,8 @@ function render_template(string $username, $book, $reviews, $recommendation) {
   $bookImagePath = $book->imageUrl;
   $book->description = strip_tags($book->description);
 
+  print_r($recommendation);
+
   // $rating = round($book['rating'], 1);
   $rating = 0;
   $intRating = round($rating, 0, PHP_ROUND_HALF_UP);
