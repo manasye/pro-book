@@ -414,8 +414,35 @@
   margin-top: 10vh;
 }
 
-.recom-result-container {
+/* .recom-result-container {
   width: auto !important;
+} */
+
+.recom-image {
+  margin-bottom: 5vh;
+  max-width: 60%;
+}
+
+.recom-result-container {
+  text-align: center;
+  width: 75%;
+}
+
+.recom-result-container .book-title {
+  line-height: 35px;
+  margin-bottom: 2vh;
+  font-size: 3rem;
+}
+
+.recom-result-container .book-author {
+  line-height: 30px;
+  margin-bottom: 2.5vh;
+  font-size: 2rem;
+}
+
+.recom-result-container p {
+  font-size: 1.8rem;
+  text-align: left;
 }
 
 select {
