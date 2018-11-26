@@ -43,35 +43,6 @@ public class SoldDB extends BaseModel {
         }
     }
 
-    public List<Sold> getSoldByCategory(String category) {
-        try {
-            // Prepare query
-            PreparedStatement preparedStatement = this.connection.prepareStatement("SELECT * FROM sold where category = ?;");
-            preparedStatement.setString(1, category);
-
-            // Execute query
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            // Parse query
-            List<Sold> soldList = new ArrayList<Sold>();
-            while (resultSet.next()) {
-                String soldId = resultSet.getString("id");
-                String soldCategory = resultSet.getString("category");
-                int soldCount = resultSet.getShort("count");
-                Sold soldBook = new Sold(soldId, soldCategory, soldCount);
-                soldList.add(soldBook);
-            }
-
-            return soldList;
-
-        } catch (SQLException ex) {
-
-            System.out.println(ex.getMessage());
-            return null;
-
-        }
-    }
-
     public boolean insertSold(Sold sold) {
         try {
             // Parse book
@@ -96,6 +67,71 @@ public class SoldDB extends BaseModel {
             return true;
         } catch (SQLException ex) {
             return false;
+        }
+    }
+
+    public List<Sold> parseSoldBookResultSet(ResultSet resultSet) throws SQLException {
+        List<Sold> soldList = new ArrayList<Sold>();
+        while (resultSet != null && resultSet.next()) {
+            String soldId = resultSet.getString("id");
+            String soldCategory = resultSet.getString("category");
+            int soldCount = resultSet.getShort("count");
+            Sold soldBook = new Sold(soldId, soldCategory, soldCount);
+            soldList.add(soldBook);
+        }
+        return soldList;
+    }
+
+    public List<Sold> getSoldByCategory(String category) {
+        try {
+            // Prepare query
+            PreparedStatement preparedStatement = this.connection.prepareStatement("SELECT * FROM sold where category = ?;");
+            preparedStatement.setString(1, category);
+
+            // Execute query
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Parse query
+            List<Sold> soldList = this.parseSoldBookResultSet(resultSet);
+
+            return soldList;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return null;
+
+        }
+    }
+
+    public List<Sold> getHighestSoldByCategories(String[] categories) {
+        try {
+            String sqlStatement = "";
+            for (int i = 0; i < categories.length; i++) {
+                if (i == 0) {
+                    sqlStatement += "SELECT * FROM sold WHERE category IN (?";
+                } else {
+                    sqlStatement += ", ?";
+                }
+            }
+            sqlStatement +=  ") ORDER BY `count` DESC LIMIT 3;";
+            PreparedStatement preparedStatement = this.connection.prepareStatement(sqlStatement);
+            for (int i = 1; i <= categories.length; i++) {
+                preparedStatement.setString(i, categories[i - 1]);
+            }
+
+            // Execute query
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Parse query
+            List<Sold> soldList = this.parseSoldBookResultSet(resultSet);
+
+            return soldList;
+
+        } catch (SQLException ex) {
+            System.out.println("FUNCTION ERRORRRRRR . . .");
+            System.out.println(ex.getMessage());
+            return null;
+
         }
     }
 

@@ -27,7 +27,7 @@ public class BookWS {
     @WebMethod
     public ListBooks searchTitle(String title) {
         GoogleBook googleBook = new GoogleBook();
-        List<BookDetail> books = googleBook.searchBook(title);
+        List<BookDetail> books = googleBook.searchBookByTitle(title);
         ListBooks bookList = new ListBooks(books);
         return bookList;
     }
@@ -40,10 +40,10 @@ public class BookWS {
     }
 
     @WebMethod
-    public ListBooks getBookRecommendation(String id) {
+    public ListBooks getBookRecommendation(String[] categories) {
         GoogleBook googleBook = new GoogleBook();
-        List<BookDetail> bookRecommendations = googleBook.getBookRecommendation(id);
-        if (bookRecommendations  == null) {
+        List<BookDetail> bookRecommendations = googleBook.getBookRecommendation(categories);
+        if (bookRecommendations == null) {
             return null;
         } else {
             ListBooks bookRecommendationsList = new ListBooks(bookRecommendations);
