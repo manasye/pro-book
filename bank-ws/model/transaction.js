@@ -1,8 +1,8 @@
-const Sequelize = require('sequelize')
-const db = require('./db')
-const Customers = require('./customer')
+const Sequelize = require("sequelize");
+const db = require("./db");
+const Customers = require("./customer");
 
-const Transaction = db.define('transaction', {
+const Transaction = db.define("transaction", {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -13,7 +13,7 @@ const Transaction = db.define('transaction', {
         allowNull: false,
         references: {
             model: Customers,
-            key: 'id',
+            key: "id"
         }
     },
     receiverAccount: {
@@ -21,12 +21,12 @@ const Transaction = db.define('transaction', {
         allowNull: false,
         references: {
             model: Customers,
-            key: 'id',
+            key: "id"
         }
     },
     amount: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: false
     },
     transactionTime: {
         type: Sequelize.DATE,
@@ -34,4 +34,4 @@ const Transaction = db.define('transaction', {
     }
 });
 
-module.exports = Transaction
+module.exports = Transaction;
