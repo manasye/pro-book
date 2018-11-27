@@ -421,11 +421,13 @@
 .recom-image {
   margin-bottom: 5vh;
   max-width: 60%;
+  height: 25vh;
 }
 
 .recom-result-container {
   text-align: center;
   width: 75%;
+  height: 80vh;
 }
 
 .recom-result-container .book-title {

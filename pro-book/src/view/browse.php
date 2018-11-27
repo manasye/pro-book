@@ -11,6 +11,7 @@ function render_template(string $username) {
       <link rel='stylesheet' href='src/view/static/css/main.css'>
       <link rel='stylesheet' href='src/view/static/css/browse.css'>
       <link rel='stylesheet' href='src/view/static/css/search.css'>
+      <link rel='stylesheet' href='src/view/static/css/grid.css'>
       <script type='module' src='src/view/static/js/main.js'></script>
       <script type='module' src='src/view/static/js/browse.js'></script>
       <script src="//code.angularjs.org/1.3.0-rc.1/angular.min.js"></script>
@@ -93,7 +94,14 @@ function render_template(string $username) {
                            <img class="search-book-image" src={{book.imageUrl}}>
                         </div>
                         <div class="search-book-text-container">
-                           <h4 class="book-title">{{book.title}}</h4>
+                            <div class="row">
+                              <div class="col-1-of-2">
+                                <h4 class="book-title">{{book.title}}</h4>
+                              </div>
+                              <div class="col-1-of-2">
+                                <h4 class="book-price">{{book.price === -1 ? 'Not For Sale' : 'Rp. ' + book.price}}</h4>
+                              </div>
+                            </div>
                            <h4 class="book-author">{{book.author}} - 0.0 / 5.0 (0 vote)</h4>
                            <p class="book-description">{{book.description.length > 300 ? 
                            book.description.substring(0, 300) + '...' : book.description.substring}}</p>

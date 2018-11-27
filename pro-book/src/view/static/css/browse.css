@@ -28,6 +28,13 @@
   margin-bottom: 50px;
 }
 
+.book-price {
+  line-height: 48px;
+  text-align: right;
+  margin: 1vh 1vw;
+  text-transform: uppercase;
+}
+
 .browse-submit-container {
   width: 100%;
   margin: 0px 0px 26px 0;
