@@ -39,33 +39,24 @@ INSERT INTO `ActiveTokens` VALUES (1,'3141f6a32bc6b73627157967ada18a29',15404596
 /*!40000 ALTER TABLE `ActiveTokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `Books`
---
 
-DROP TABLE IF EXISTS `Books`;
+DROP TABLE IF EXISTS `Ratings`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Books` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(300) DEFAULT NULL,
-  `author` varchar(300) DEFAULT NULL,
-  `synopsis` varchar(300) DEFAULT NULL,
+CREATE TABLE `Ratings` (
+  `id` varchar(255) NOT NULL,
+  -- `title` varchar(300) DEFAULT NULL,
+  -- `author` varchar(300) DEFAULT NULL,
+  -- `synopsis` varchar(300) DEFAULT NULL,
   `rating` float DEFAULT '0',
   `vote` int(11) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `Books`
 --
-
-LOCK TABLES `Books` WRITE;
-/*!40000 ALTER TABLE `Books` DISABLE KEYS */;
-INSERT INTO `Books` VALUES (1,'The Communist Manifesto','Karl Marx','The Communist Manifesto is divided into a preamble and four sections, the last of these a short conclusion.',4,1),(2,'The Cold War: A New History','John Lewis Gaddis','The dean of Cold War historians (The New York Times) now presents the definitive account of the global confrontation that dominated the last half of the twentieth century.',0,0),(3,'Cebong vs Onta : Cebong','Goksjer Zali','This books is recommended for you who does not have a choice yet for Indonesia President and want to know more about Mr. Joko Widodo',0,0),(4,'Cebong vs Onta : Onta','Goksjer Zali','This books is recommended for you who does not have a choice yet for Indonesia President and want to know more about Mr. Prabowo Subianto',0,0),(5,'What Makes Indonesia Left Behind','Setya Novanto','A story from the criminal point of view Mr. Setya Novanto, who want to share about the reason why Indonesia left behind from other developed countries such as malaysia, saudi arabia, etc.',0,0),(6,'How I Steal People\'s Money On Indonesia','Setya Novanto','A story from the criminal point of view Mr. Setya Novanto, who want to share about how he become a rich man by stealing Indonesia Money using his power as the head of Indonesia Parlement.',0,0),(7,'How I Create The Biggest Hoax in Indonesia','Ratna Sarumpaaet','This is a story from Ratna Sarumpaet, who got kicked from Prabowo Subianto team because of her biggest hoax in Indonesia.',0,0),(8,'Why I Destroy WTC Tower','Osama Bin Laden','A book about the story of Osama Bin Laden on his way to become the most notorius terrorist in the world by hijacking three american airplane and crash it to the WTC Tower and Pentagon.',0,0),(9,'Guide To Assassinate Arab Journalist','Kingdom of Saudi Arabia','This is a book about assassination plan developed by the Kingdom of Saudi Arabia. They had assassinate their opposition journalist effectively on October 2018.',0,0),(10,'Pretending to Know About Stuff','The Practical Dev','The Practical Dev will tell you about how to pretend to know about stuff to your job interviewer so you can be the king of con-man and tackle your job interview.',0,0),(11,'The Ideological Origins Of Nazi Imperialism','Woodruff D. Smith','This is the end of liberalism era!!. This book will tell you how Nazi Imperialism ideology on 1900s has almost win the World War and How to implement it on this era.',5,1),(12,'Googling the Error Message','The Practical Dev','The Practical Dev will tell you about how to googling your error message,',0,0);
-/*!40000 ALTER TABLE `Books` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `Orders`
@@ -78,7 +69,7 @@ CREATE TABLE `Orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `is_review` tinyint(1) DEFAULT NULL,
-  `book_id` int(11) DEFAULT NULL,
+  `book_id` varchar(255) DEFAULT NULL,
   `amount` int(11) DEFAULT NULL,
   `order_timestamp` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -91,7 +82,7 @@ CREATE TABLE `Orders` (
 
 LOCK TABLES `Orders` WRITE;
 /*!40000 ALTER TABLE `Orders` DISABLE KEYS */;
-INSERT INTO `Orders` VALUES (1,1,0,1,4,1540460068),(2,1,1,11,3,1540460087),(3,3,1,1,1,1543049288),(4,3,0,NULL,1,1543156031),(5,3,0,NULL,1,1543245029);
+-- INSERT INTO `Orders` VALUES (1,1,0,1,4,1540460068),(2,1,1,11,3,1540460087),(3,3,1,1,1,1543049288),(4,3,0,NULL,1,1543156031),(5,3,0,NULL,1,1543245029);
 /*!40000 ALTER TABLE `Orders` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -1,5 +1,5 @@
 #list of ethes variables
-DB_HOST=localhost
+DB_HOST=localhost:3306
 DB_NAME=probook
 DB_USERNAME=root
 DB_PASSWORD=root
