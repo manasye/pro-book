@@ -103,7 +103,7 @@ public class GoogleBook {
             URL url = this.getSearchBookByCategoryUrl(category);
             return this.searchBook(url);
         } catch (Exception ex) {
-            System.out.println("[ERROR searchBookByTitle]: " + ex.getMessage());
+            System.out.println("[ERROR searchBookByTitle] " + ex.getMessage());
             return null;
         }
     }
@@ -118,7 +118,7 @@ public class GoogleBook {
                 bookList.add(parseBookDetail(item));
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("[ERROR searchBook] " + e.getMessage());
 
         }
         return bookList;
@@ -273,7 +273,9 @@ public class GoogleBook {
             return bookRecommendations;
         } else {
             List<BookDetail> bookDetails = this.searchBookByCategory(categories[0]);
-            bookDetails = new ArrayList<BookDetail>(bookDetails.subList(0, 1));
+            if (bookDetails.size() > 0) {
+                bookDetails = new ArrayList<BookDetail>(bookDetails.subList(0, 1));
+            }
             return bookDetails;
         }
     }
