@@ -10,6 +10,13 @@ function render_template(string $username, $book, $reviews, $recommendation) {
   // print_r($recommendation->bookList);
   $recomHTML = "";
 
+  $price = 'Rp. ' . $book->price;
+  $priceClass = 'book-detail-price';
+  if ($book->price == -1) {
+    $price = 'NOT FOR SALE';
+    $priceClass = 'book-detail-price-not-sale';
+  }
+
   if ($bookListType === 'object') {
     $description = strip_tags($recoms->description);
     if (strlen($recoms->description) >= 150) {
@@ -217,6 +224,7 @@ HTML;
                   </div>
                   <div class='book-detail-right-container'>
                      <div class='book-detail-right-content-container'>
+                        <h2 class="{$priceClass}">{$price}</h2>
                         <div class='book-detail-image-container'>
                            <img class='book-detail-image' src='{$bookImagePath}'>
                         </div>

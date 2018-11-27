@@ -19,6 +19,8 @@
     "lodash": "^4.17.11",
     "mysql2": "^1.6.4",
     "nodemon": "^1.18.6",
-    "sequelize": "^4.41.2"
+    "qrcode": "^1.3.2",
+    "sequelize": "^4.41.2",
+    "speakeasy": "^2.0.0"
   }
 }

@@ -1,26 +1,33 @@
-const Sequelize = require("sequelize");
-// const db = require('./db')
-const Customer = require("./customer");
-const Merchant = require("./merchant");
-const Transaction = require("./transaction");
+const speakeasy = require("speakeasy"),
+    Customer = require("./customer"),
+    Merchant = require("./merchant"),
+    Transaction = require("./transaction");
 
 Customer.sync({ force: true }).then(() => {
     Customer.bulkCreate([
         {
             name: "Abram Situmorang",
             cardNumber: "4111111111111111",
-            balance: 100000
+            balance: 100000,
+            secret: speakeasy.generateSecret({ length: 19 }).base32
         },
-        { name: "Ahmad Izzan", cardNumber: "4111111111111112", balance: 200000 },
+        {
+            name: "Ahmad Izzan",
+            cardNumber: "4111111111111112",
+            balance: 200000,
+            secret: speakeasy.generateSecret({ length: 19 }).base32
+        },
         {
             name: "Manasye Bukit",
             cardNumber: "4111111111111113",
-            balance: 300000
+            balance: 300000,
+            secret: speakeasy.generateSecret({ length: 19 }).base32
         },
         {
             name: "Joko Widodo",
             cardNumber: "4111111111111114",
-            balance: 500000000
+            balance: 500000000,
+            secret: speakeasy.generateSecret({ length: 19 }).base32
         }
     ]);
 });

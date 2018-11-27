@@ -19,6 +19,10 @@ const Customer = db.define("customer", {
         type: Sequelize.BIGINT,
         allowNull: false,
         defaultValue: 0
+    },
+    secret: {
+        type: Sequelize.STRING,
+        allowNull: false
     }
 });
 
