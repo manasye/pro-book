@@ -13,6 +13,6 @@ $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options);
 // var_dump($soapClient->getBookRecommendation('KckVORnmg40C'));
 
 // $categories = array('Children Book', 'Crafts & Hobbies / Quilts & Quilting');
-$categories = array('cukicukciiciccicickckdkd');
+$categories = array('Others');
 
 var_dump($soapClient->getBookRecommendation($categories));

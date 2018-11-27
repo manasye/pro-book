@@ -124,14 +124,17 @@ public class GoogleBook {
         return bookList;
     }
 
-    private JSONObject makeConnection(URL url) throws IOException, JSONException {
+    private JSONObject _makeConnection(URL url, int attempLeft) throws IOException, JSONException {
+        if (attempLeft <= 0) {
+            return null;
+        }
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         connection.setRequestMethod("GET");
 
         int responseCode = connection.getResponseCode();
         if (responseCode != 200) {
-            System.out.println("Search Error!");
+            return this._makeConnection(url, attempLeft - 1);
         }
 
         String response = this.parseInputStream(new InputStreamReader(connection.getInputStream()));
@@ -141,6 +144,10 @@ public class GoogleBook {
 
         JSONObject books = new JSONObject(response);
         return books;
+    }
+
+    private JSONObject makeConnection(URL url) throws IOException, JSONException {
+        return this._makeConnection(url, 3);
     }
 
     private String parseBookTitle(JSONObject book) throws JSONException {
@@ -256,8 +263,18 @@ public class GoogleBook {
             JSONObject book = makeConnection(url);
             BookDetail bookDetail = this.parseBookDetail(book);
             return bookDetail;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception ex) {
+            System.out.println("[ERROR getBookDetail] " + ex.getMessage());
+            return null;
+        }
+    }
+
+    public BookDetail getRandomBookDetail() {
+        try {
+            Sold sold = this.soldDB.getSoldRandom();
+            return this.getBookDetail(sold.getId());
+        } catch (Exception ex) {
+            System.out.println("[ERROR getOneBookNoMatterWhat] " + ex.getMessage());
             return null;
         }
     }
@@ -283,6 +300,8 @@ public class GoogleBook {
             List<BookDetail> bookDetails = this.searchBookByCategory(categories[0]);
             if (bookDetails.size() > 0) {
                 bookDetails = new ArrayList<BookDetail>(bookDetails.subList(0, 1));
+            } else {
+                bookDetails.add(this.getRandomBookDetail());
             }
             return bookDetails;
         }
