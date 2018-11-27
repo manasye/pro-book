@@ -4,6 +4,10 @@ const invalidQueryMessage = 'Please input some search terms';
 
 let submitButtonHovered = false;
 
+function htmlToPlaintext(text) {
+    return text ? String(text).replace(/<[^>]+>/gm, '') : '';
+}
+
 function showInputValidationMessage() {
     $$('#inputValidationMessageContainer').classList.add('visible');
     $$('#inputValidationMessage').classList.add('visible');

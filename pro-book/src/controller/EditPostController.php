@@ -8,6 +8,16 @@ class EditPostController implements ControllerInterface {
     return preg_match('/^\d+$/', $value);
   }
 
+  private static function isCardNumberValid($value) {
+    // $baseURL = 'http://localhost:1111/production/';
+    // $url = $baseURL . 'validate?cardNumber=';
+    // $contents = file_get_contents($url . $value);
+    // if ($contents !== false) {
+    //   echo $contents;
+    // }
+    return false;
+  }
+
   public static function control(Request $request) {
     $db = new MarufDB();
     $user = $db->getUser($_COOKIE['token']);
@@ -15,7 +25,7 @@ class EditPostController implements ControllerInterface {
     $name = $user['name'];
     $address = $user['address'];
     $phoneNumber = $user['phonenumber'];
-
+    $cardNumber = $user['cardnumber'];
 
     $response = array('error' => array());
     $response['success'] = True;
@@ -67,12 +77,16 @@ class EditPostController implements ControllerInterface {
       } else if (!(EditPostController::isNum($request->phoneNumber) && strlen($request->phoneNumber) >= 9 && strlen($request->phoneNumber) <= 12)) {
         $response['success'] = False;
         $response['error'][] = 'Phone number must be a number with 9 to 12 digits';
+      } else if (!(EditPostController::isCardNumberValid($request->cardNumber))) {
+        $response['success'] = False;
+        $response['error'][] = 'Card number is invalid';
       } else {
         $name = $request->name;
         $address = $request->address;
         $phoneNumber = $request->phoneNumber;
+        $cardNumber = $request->cardNumber;
         $response['success'] = True;
-        $result = $db->editProfile($request->name, $request->address, $request->phoneNumber, $request->userId);
+        $result = $db->editProfile($request->name, $request->address, $request->phoneNumber, $request->userId, $request->cardNumber);
       }
     }
 
@@ -82,6 +96,6 @@ class EditPostController implements ControllerInterface {
     }
 
     $template = new Template('src/view/edit.php');
-    return $template->render($user['id'], $name, $user['username'], $user['email'], $address, $phoneNumber, $response);
+    return $template->render($user['id'], $name, $user['username'], $user['email'], $address, $phoneNumber, $cardNumber, $response);
   }
 }
