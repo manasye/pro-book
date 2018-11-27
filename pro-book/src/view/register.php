@@ -1,6 +1,7 @@
 <?php
-function render_template(bool $invalidUsername = TRUE, bool $invalidEmail = TRUE) {
-  return <<<HTML
+function render_template(bool $invalidUsername = true, bool $invalidEmail = true)
+{
+    return <<<HTML
 
 <!DOCTYPE html>
 <html>
@@ -16,32 +17,32 @@ function render_template(bool $invalidUsername = TRUE, bool $invalidEmail = TRUE
 </head>
 <body>
 HTML
-.
-($invalidUsername && $invalidEmail ?
-    <<<HTML
+    .
+        ($invalidUsername&&$invalidEmail?
+        <<<HTML
     <div id='usernameTakenMessageContainer' class='auth-error-message-container'>
       <p>Username and email already taken</p>
     </div>
 HTML
-  : '')
-.
-($invalidUsername && !$invalidEmail ?
-    <<<HTML
+        :'')
+        .
+        ($invalidUsername&&!$invalidEmail?
+        <<<HTML
     <div id='emailTakenMessageContainer' class='auth-error-message-container'>
       <p>Username already taken</p>
     </div>
 HTML
-  : '')
-.
-($invalidEmail && !$invalidUsername ?
-    <<<HTML
+        :'')
+        .
+        ($invalidEmail&&!$invalidUsername?
+        <<<HTML
     <div id='emailTakenMessageContainer' class='auth-error-message-container'>
       <p>Email already taken</p>
     </div>
 HTML
-  : '')
-.
-  <<<HTML
+        :'')
+        .
+        <<<HTML
 	<div class='auth-page-container'>
 		<div class='auth-pane-container'>
       <div class='auth-pane-content'>
@@ -125,6 +126,20 @@ HTML
             </div>
             <div class='auth-form-item-field-container'>
               <input id='formPhoneNumberField' type='text' name='phone_number'>
+            </div>
+          </div>
+
+          <div class='auth-form-item'>
+            <div class='auth-form-item-label-container'>
+              <h4>Card Number</h4>
+            </div>
+            <div class='auth-form-item-field-container'>
+              <div class='auth-form-item-field-text-container'>
+                <input id='formCardNumberField' type='text' name='card_number'>
+              </div>
+              <div id='formCardNumberValidation' class='auth-form-item-field-validation-container'>
+                <img id='formCardNumberValidationIcon' class='auth-form-item-validation-icon' src='src/view/static/img/icon_failed.svg' alt='Validation icon'>
+              </div>
             </div>
           </div>
 

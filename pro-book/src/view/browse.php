@@ -104,7 +104,7 @@ function render_template(string $username) {
                             </div>
                            <h4 class="book-author">{{book.author}} - 0.0 / 5.0 (0 vote)</h4>
                            <p class="book-description">{{book.description.length > 300 ? 
-                           book.description.substring(0, 300) + '...' : book.description.substring}}</p>
+                           book.description.substring(0, 300) + '...' : book.description}}</p>
                         </div>
                      </div>
                      <div class="search-detail-button-container">
