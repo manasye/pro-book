@@ -27,4 +27,12 @@ const Merchant = db.define("merchant", {
     }
 });
 
+Merchant.getBySecret = function(secret) {
+    return Merchant.findOne({
+        where: {
+            secret: secret
+        }
+    })
+}
+
 module.exports = Merchant;

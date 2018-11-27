@@ -1,18 +1,16 @@
-Customer = require("../models/merchant");
+Merchant = require("../models/merchant");
 
 module.exports = function(req, res, next) {
-    if (req.session && req.session.user) {
-        User.get(req.session.user, function(err, user) {
-            if (user) {
-                req.user = user;
-            } else {
-                delete req.user;
-                delete req.session.user;
-            }
-
+    Merchant.getBySecret(req.body.merchantSecret)
+        .then(merchant => {
+            req.body.merchantAccountId = merchant.ownerAccount;
             next();
+        })
+        .catch(error => {
+            console.log("[ERROR]: " + error.message);
+            res.json({
+                success: true,
+                message: "Merchant Secret invalid"
+            });
         });
-    } else {
-        next();
-    }
 };

@@ -30,4 +30,8 @@ Customer.getByCardNumber = function(cardNumber) {
     });
 }
 
+// Customer.prototype.charge = function(amount) {
+//     return Customer.add
+// }
+
 module.exports = Customer;
