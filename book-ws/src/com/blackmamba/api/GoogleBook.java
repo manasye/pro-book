@@ -103,7 +103,7 @@ public class GoogleBook {
             URL url = this.getSearchBookByCategoryUrl(category);
             return this.searchBook(url);
         } catch (Exception ex) {
-            System.out.println("[ERROR searchBookByTitle]: " + ex.getMessage());
+            System.out.println("[ERROR searchBookByTitle] " + ex.getMessage());
             return null;
         }
     }
@@ -118,20 +118,23 @@ public class GoogleBook {
                 bookList.add(parseBookDetail(item));
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("[ERROR searchBook] " + e.getMessage());
 
         }
         return bookList;
     }
 
-    private JSONObject makeConnection(URL url) throws IOException, JSONException {
+    private JSONObject _makeConnection(URL url, int attempLeft) throws IOException, JSONException {
+        if (attempLeft <= 0) {
+            return null;
+        }
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         connection.setRequestMethod("GET");
 
         int responseCode = connection.getResponseCode();
         if (responseCode != 200) {
-            System.out.println("Search Error!");
+            return this._makeConnection(url, attempLeft - 1);
         }
 
         String response = this.parseInputStream(new InputStreamReader(connection.getInputStream()));
@@ -141,6 +144,10 @@ public class GoogleBook {
 
         JSONObject books = new JSONObject(response);
         return books;
+    }
+
+    private JSONObject makeConnection(URL url) throws IOException, JSONException {
+        return this._makeConnection(url, 3);
     }
 
     private String parseBookTitle(JSONObject book) throws JSONException {
@@ -202,7 +209,15 @@ public class GoogleBook {
         String imageUrl;
         if (volumeInfo.has("imageLinks")) {
             JSONObject imageLinks = volumeInfo.getJSONObject("imageLinks");
-            if (imageLinks.has("thumbnail")) {
+            if (imageLinks.has("extraLarge")) {
+                imageUrl = imageLinks.getString("extraLarge");
+            } else if (imageLinks.has("large")) {
+                imageUrl = imageLinks.getString("large");
+            } else if (imageLinks.has("medium")) {
+                imageUrl = imageLinks.getString("medium");
+            } else if (imageLinks.has("small")) {
+                imageUrl = imageLinks.getString("small");
+            } else if (imageLinks.has("thumbnail")) {
                 imageUrl = imageLinks.getString("thumbnail");
             } else {
                 imageUrl = GoogleBook.BOOK_IMAGE_URL;
@@ -248,8 +263,18 @@ public class GoogleBook {
             JSONObject book = makeConnection(url);
             BookDetail bookDetail = this.parseBookDetail(book);
             return bookDetail;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception ex) {
+            System.out.println("[ERROR getBookDetail] " + ex.getMessage());
+            return null;
+        }
+    }
+
+    public BookDetail getRandomBookDetail() {
+        try {
+            Sold sold = this.soldDB.getSoldRandom();
+            return this.getBookDetail(sold.getId());
+        } catch (Exception ex) {
+            System.out.println("[ERROR getOneBookNoMatterWhat] " + ex.getMessage());
             return null;
         }
     }
@@ -273,7 +298,11 @@ public class GoogleBook {
             return bookRecommendations;
         } else {
             List<BookDetail> bookDetails = this.searchBookByCategory(categories[0]);
-            bookDetails = new ArrayList<BookDetail>(bookDetails.subList(0, 1));
+            if (bookDetails.size() > 0) {
+                bookDetails = new ArrayList<BookDetail>(bookDetails.subList(0, 1));
+            } else {
+                bookDetails.add(this.getRandomBookDetail());
+            }
             return bookDetails;
         }
     }

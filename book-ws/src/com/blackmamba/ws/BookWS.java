@@ -43,6 +43,7 @@ public class BookWS {
     public ListBooks getBookRecommendation(String[] categories) {
         GoogleBook googleBook = new GoogleBook();
         List<BookDetail> bookRecommendations = googleBook.getBookRecommendation(categories);
+        System.out.println("BOOKREC LEN = " + bookRecommendations.size());
         if (bookRecommendations == null) {
             return null;
         } else {

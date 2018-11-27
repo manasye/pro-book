@@ -1,5 +1,7 @@
 package com.blackmamba.model;
 
+import com.mysql.cj.protocol.Resultset;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,19 @@ public class SoldDB extends BaseModel {
         }
     }
 
+    public Sold getSoldFromResultSet(ResultSet resultSet) throws SQLException {
+        if (resultSet == null) {
+            return null;
+        } else if (resultSet.next()) {
+            String soldId = resultSet.getString("id");
+            String soldCategory = resultSet.getString("category");
+            int soldCount = resultSet.getShort("count");
+            return new Sold(soldId, soldCategory, soldCount);
+        } else {
+            return null;
+        }
+    }
+
     public Sold getSoldById(String id) {
         try {
             // Prepare query
@@ -28,12 +43,27 @@ public class SoldDB extends BaseModel {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             // Parse query
-            resultSet.next();
-            String soldId = resultSet.getString("id");
-            String soldCategory = resultSet.getString("price");
-            int soldCount = resultSet.getShort("count");
+            return this.getSoldFromResultSet(resultSet);
 
-            return new Sold(soldId, soldCategory, soldCount);
+        } catch (SQLException ex) {
+
+            System.out.println(ex.getMessage());
+            return null;
+
+        }
+    }
+
+    public Sold getSoldRandom() {
+        try {
+            // Prepare query
+            PreparedStatement preparedStatement = this.connection.prepareStatement("SELECT * FROM sold ORDER BY RAND() LIMIT ?;");
+            preparedStatement.setInt(1, 1);
+
+            // Execute query
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            // Parse query
+            return this.getSoldFromResultSet(resultSet);
 
         } catch (SQLException ex) {
 
