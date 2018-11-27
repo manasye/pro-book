@@ -202,7 +202,15 @@ public class GoogleBook {
         String imageUrl;
         if (volumeInfo.has("imageLinks")) {
             JSONObject imageLinks = volumeInfo.getJSONObject("imageLinks");
-            if (imageLinks.has("thumbnail")) {
+            if (imageLinks.has("extraLarge")) {
+                imageUrl = imageLinks.getString("extraLarge");
+            } else if (imageLinks.has("large")) {
+                imageUrl = imageLinks.getString("large");
+            } else if (imageLinks.has("medium")) {
+                imageUrl = imageLinks.getString("medium");
+            } else if (imageLinks.has("small")) {
+                imageUrl = imageLinks.getString("small");
+            } else if (imageLinks.has("thumbnail")) {
                 imageUrl = imageLinks.getString("thumbnail");
             } else {
                 imageUrl = GoogleBook.BOOK_IMAGE_URL;
