@@ -2,15 +2,15 @@
 function render_template(string $username, $book, $reviews, $recommendation) {
   $reviewsHTML = "";
   $bookId = $book->id;
+  // print_r($book->title);
   $bookImagePath = $book->imageUrl;
   $book->description = strip_tags($book->description);
 
   $recoms = $recommendation->bookList;
   $bookListType = (gettype($recommendation->bookList));
-  // print_r($recommendation->bookList);
   $recomHTML = "";
 
-  $price = 'Rp. ' . $book->price;
+  $price = 'Rp. ' . number_format($book->price);
   $priceClass = 'book-detail-price';
   if ($book->price == -1) {
     $price = 'NOT FOR SALE';
@@ -47,24 +47,24 @@ HTML;
   } else {
     $recomHTML = "";
     $idx = 1;
-    foreach ($recoms as $book) {
-      $description = strip_tags($book->description);
-      if (strlen($book->description) >= 150) {
+    foreach ($recoms as $rec) {
+      $description = strip_tags($rec->description);
+      if (strlen($rec->description) >= 150) {
         $description = substr($description, 0, 150) . "...";
       }
       $recomHTML = $recomHTML . <<<HTML
 
       <div class="col-1-of-3">
         <div class="search-book-container recom-result-container">
-          <img class="search-book-image recom-image" src='{$book->imageUrl}'>
-          <h4 class="book-title">{$book->title}</h4>
-          <h4 class="book-author">{$book->author} - 0.0 / 5.0 (0 vote)</h4>
+          <img class="search-book-image recom-image" src='{$rec->imageUrl}'>
+          <h4 class="book-title">{$rec->title}</h4>
+          <h4 class="book-author">{$rec->author} - 0.0 / 5.0 (0 vote)</h4>
           <p class="book-description">{$description}</p>
             <div class="search-detail-button-container">
-              <form id="bookDetail-{$book->id}" action="/book" method="get">
-                  <input hidden="" name="id" value="{$book->id}">
+              <form id="bookDetail-{$rec->id}" action="/book" method="get">
+                  <input hidden="" name="id" value="{$rec->id}">
               </form>
-              <button class="search-detail-button" type="submit" form="bookDetail-{$book->id}">
+              <button class="search-detail-button" type="submit" form="bookDetail-{$rec->id}">
                   <div class="search-detail-button-inner">
                     DETAILS
                   </div>
