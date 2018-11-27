@@ -17,6 +17,11 @@ browseApp.controller('mainController', [
                     $scope.books = res.bookList;
                     $scope.isLoading = false;
                     $scope.searched = true;
+                    $scope.books.forEach((part, index) => {
+                        $scope.books[index].price = numeral(
+                            $scope.books[index].price
+                        ).format('0,0');
+                    });
                 })
                 .error((data, status) => {
                     $scope.isLoading = false;

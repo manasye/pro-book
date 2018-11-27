@@ -16,6 +16,7 @@ function render_template(string $username) {
       <script type='module' src='src/view/static/js/browse.js'></script>
       <script src="//code.angularjs.org/1.3.0-rc.1/angular.min.js"></script>
       <script src="src/view/static/js/ang-controller.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
       <link rel="stylesheet" href="src/view/static/css/fonts.css" type='text/css'>
       <title>Pro-Book</title>
    </head>
@@ -98,7 +99,7 @@ function render_template(string $username) {
                                 <h4 class="book-title">{{book.title}}</h4>
                               </div>
                               <div class="col-1-of-2">
-                                <h4 class="book-price" ng-class="{'book-price-red': book.price === -1}">{{book.price === -1 ? 'Not For Sale' : 'Rp. ' + book.price}}</h4>
+                                <h4 class="book-price" ng-class="{'book-price-red': book.price === -1}">{{ book.price === -1 ? 'Not For Sale' : 'Rp ' + book.price }}</h4>
                               </div>
                             </div>
                            <h4 class="book-author">{{book.author}} - 0.0 / 5.0 (0 vote)</h4>

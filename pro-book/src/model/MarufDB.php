@@ -18,8 +18,8 @@ class MarufDB {
     try {
       // echo $this->dbUser;
       // echo $this->dbPassword;
-      // $this->pdo = new PDO('mysql:host='.$this->host.';dbname='.$this->dbName, $this->dbUser, $this->dbPassword);
-      $this->pdo = new PDO('mysql:host='.$this->host.';dbname='.$this->dbName, $this->dbUser, '');
+      $this->pdo = new PDO('mysql:host='.$this->host.';dbname='.$this->dbName, $this->dbUser, $this->dbPassword);
+      // $this->pdo = new PDO('mysql:host='.$this->host.';dbname='.$this->dbName, $this->dbUser, '');
     } catch (PDOException $e) {
       print "Error!: " . $e->getMessage() . "<br/>";
       die();

@@ -1,5 +1,5 @@
 <?php
-function render_template(string $userId, string $name, string $username, string $email, string $address, string $phoneNumber) {
+function render_template(string $userId, string $name, string $username, string $email, string $address, string $phoneNumber, string $cardNumber) {
   $path = 'src/model/profile/';
   if(file_exists($path . $userId .'.jpg')) {
     $path = $path . $userId . '.jpg';
@@ -128,6 +128,15 @@ HTML;
             </div>
             <div class='profile-detail-content-row-content-container'>
               <p class='profile-detail-content-row-content'>{$phoneNumber}</p>
+            </div>
+          </div>
+          <div class='profile-detail-content-row-container'>
+            <div class='profile-detail-content-row-label-container'>
+              <img class='profile-detail-content-row-label-icon' src='src/view/static/img/icon_credit_card.svg' alt='Phone Number icon'>
+              <p class='profile-detail-content-row-label'>Card Number</p>
+            </div>
+            <div class='profile-detail-content-row-content-container'>
+              <p class='profile-detail-content-row-content'>{$cardNumber}</p>
             </div>
           </div>
         </div>
