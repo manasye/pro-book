@@ -1,13 +1,12 @@
 var express = require("express"),
     router = express.Router(),
     db = require("../models/db"),
-    Customer = require("../models/customer"),
-    Merchant = require("../models/merchant"),
     Transaction = require("../models/transaction"),
+    totp = require("../middlewares/totpMiddleware"),
     customerMiddleware = require("../middlewares/customerMiddleware"),
     merchantMiddleware = require("../middlewares/merchantMiddleware");
 
-router.post("/", [customerMiddleware, merchantMiddleware], function(req, res) {
+router.post("/", [customerMiddleware, merchantMiddleware, totp], function(req, res) {
     return db
         .transaction(function(t) {
             customerAccount = req.body.customerAccount;
