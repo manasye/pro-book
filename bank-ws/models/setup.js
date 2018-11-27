@@ -9,18 +9,18 @@ Customer.sync({ force: true }).then(() => {
         {
             name: "Abram Situmorang",
             cardNumber: "4111111111111111",
-            amount: 100000
+            balance: 100000
         },
-        { name: "Ahmad Izzan", cardNumber: "4111111111111112", amount: 200000 },
+        { name: "Ahmad Izzan", cardNumber: "4111111111111112", balance: 200000 },
         {
             name: "Manasye Bukit",
             cardNumber: "4111111111111113",
-            amount: 300000
+            balance: 300000
         },
         {
             name: "Joko Widodo",
             cardNumber: "4111111111111114",
-            amount: 500000000
+            balance: 500000000
         }
     ]);
 });
@@ -41,5 +41,3 @@ Transaction.sync({ force: true }).then(() => {
         transactionTime: new Date()
     });
 });
-
-process.exit();
