@@ -2,7 +2,6 @@
 function render_template(string $username, $book, $reviews, $recommendation) {
   $reviewsHTML = "";
   $bookId = $book->id;
-  // print_r($book->title);
   $bookImagePath = $book->imageUrl;
   $book->description = strip_tags($book->description);
 
@@ -22,6 +21,12 @@ function render_template(string $username, $book, $reviews, $recommendation) {
     if (strlen($recoms->description) >= 150) {
       $description = substr($description, 0, 150) . "...";
     }
+    $recomprice = 'Rp. ' . number_format($recoms->price);
+    $recPriceClass = 'recom-price';
+    if ($recoms->price == -1) {
+      $recomprice = 'NOT FOR SALE';
+      $recPriceClass = 'recom-price-red';
+    }
     $recomHTML = $recomHTML . <<<HTML
 
       <div class="col-1-of-3">
@@ -34,11 +39,18 @@ function render_template(string $username, $book, $reviews, $recommendation) {
               <form id="bookDetail-{$recoms->id}" action="/book" method="get">
                   <input hidden="" name="id" value="{$recoms->id}">
               </form>
-              <button class="search-detail-button" type="submit" form="bookDetail-{$recoms->id}">
-                  <div class="search-detail-button-inner">
-                    DETAILS
-                  </div>
-              </button>
+              <div class="row">
+                <div class="col-1-of-2">
+                  <h4 class="{$recPriceClass}">{$recomprice}</h4>
+                </div>
+                <div class="col-1-of-2 recom-row-detail">
+                  <button class="search-detail-button" type="submit" form="bookDetail-{$recoms->id}">
+                    <div class="search-detail-button-inner">
+                      DETAILS
+                    </div>
+                  </button>
+                </div>
+              </div>
             </div>
         </div>
       </div>
@@ -48,6 +60,12 @@ HTML;
     $recomHTML = "";
     $idx = 1;
     foreach ($recoms as $rec) {
+      $recomprice = 'Rp. ' . number_format($rec->price);
+      $recPriceClass = 'recom-price';
+      if ($rec->price == -1) {
+        $recomprice = 'NOT FOR SALE';
+        $recPriceClass = 'recom-price-red';
+      }
       $description = strip_tags($rec->description);
       if (strlen($rec->description) >= 150) {
         $description = substr($description, 0, 150) . "...";
@@ -64,11 +82,18 @@ HTML;
               <form id="bookDetail-{$rec->id}" action="/book" method="get">
                   <input hidden="" name="id" value="{$rec->id}">
               </form>
-              <button class="search-detail-button" type="submit" form="bookDetail-{$rec->id}">
-                  <div class="search-detail-button-inner">
-                    DETAILS
-                  </div>
-              </button>
+              <div class="row">
+                <div class="col-1-of-2">
+                  <h4 class="{$recPriceClass}">{$recomprice}</h4>
+                </div>
+                <div class="col-1-of-2 recom-row-detail">
+                  <button class="search-detail-button" type="submit" form="bookDetail-{$rec->id}">
+                    <div class="search-detail-button-inner">
+                      DETAILS
+                    </div>
+                  </button>
+                </div>
+              </div>
             </div>
         </div>
       </div>
