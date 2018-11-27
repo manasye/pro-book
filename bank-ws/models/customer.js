@@ -16,7 +16,7 @@ const Customer = db.define("customer", {
         allowNull: false
     },
     balance: {
-        type: Sequelize.FLOAT(14, 2),
+        type: Sequelize.BIGINT,
         allowNull: false,
         defaultValue: 0
     }
@@ -28,10 +28,28 @@ Customer.getByCardNumber = function(cardNumber) {
             cardNumber: cardNumber
         }
     });
-}
+};
 
-// Customer.prototype.charge = function(amount) {
-//     return Customer.add
-// }
+Customer.prototype.charge = function(amount, opts) {
+    if (this.balance >= amount) {
+        return Customer.update(
+            {
+                balance: parseInt(this.balance) - parseInt(amount)
+            },
+            Object.assign(opts, { where: { id: this.id } })
+        );
+    } else {
+        throw new Error("Insufficient funds");
+    }
+};
+
+Customer.prototype.deposit = function(amount, opts) {
+    return Customer.update(
+        {
+            balance: parseInt(this.balance) + parseInt(amount)
+        },
+        Object.assign(opts, { where: { id: this.id } })
+    );
+};
 
 module.exports = Customer;

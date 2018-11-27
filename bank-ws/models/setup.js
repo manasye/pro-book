@@ -27,7 +27,7 @@ Customer.sync({ force: true }).then(() => {
 
 Merchant.sync({ force: true }).then(() => {
     Merchant.create({
-        ownerAccount: 1,
+        ownerAccount: 4,
         merchantName: "Pro-Book",
         secret: "JokowiMaruf2019"
     });

@@ -3,7 +3,7 @@ var express = require("express"),
     // Comment = require("../models/comment");
 
 router.use("/validate", require("./validate"));
-router.use("/transfer", require("./transfer"));
+router.use("/payment", require("./payment"));
 // router.use("/users", require("./users"));
 
 // router.get("/", function(req, res) {

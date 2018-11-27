@@ -25,7 +25,7 @@ const Transaction = db.define("transaction", {
         }
     },
     amount: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
         allowNull: false
     },
     transactionTime: {
@@ -33,5 +33,19 @@ const Transaction = db.define("transaction", {
         allowNull: false
     }
 });
+
+Transaction.createTransaction = function(
+    senderAccount,
+    receiverAccount,
+    amount,
+    opts
+) {
+    return Transaction.upsert({
+        senderAccount: senderAccount,
+        receiverAccount: receiverAccount,
+        amount: amount,
+        transactionTime: new Date()
+    }, opts);
+};
 
 module.exports = Transaction;

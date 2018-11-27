@@ -1,9 +1,17 @@
 Merchant = require("../models/merchant");
+Customer = require("../models/customer");
 
 module.exports = function(req, res, next) {
     Merchant.getBySecret(req.body.merchantSecret)
         .then(merchant => {
-            req.body.merchantAccountId = merchant.ownerAccount;
+            return Customer.findOne({
+                where: {
+                    id: merchant.ownerAccount
+                }
+            });
+        })
+        .then(merchantOwnerAccount => {
+            req.body.merchantOwnerAccount = merchantOwnerAccount;
             next();
         })
         .catch(error => {
