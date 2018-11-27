@@ -81,7 +81,6 @@ function render_template(string $username) {
             <div class="loader" ng-if="isLoading">Loading...</div>
             <div class='search-content-container'>
                <div class='search-title-container'>
-                  <h1 class='search-title' ng-if="searched">Search Result</h1>
                   <div class='search-result-count-container add-background'>
                     <h4 class='search-result-count' ng-if="searched">
                       Found {{books.length || 0}} Result(s)</h4>
@@ -99,12 +98,12 @@ function render_template(string $username) {
                                 <h4 class="book-title">{{book.title}}</h4>
                               </div>
                               <div class="col-1-of-2">
-                                <h4 class="book-price">{{book.price === -1 ? 'Not For Sale' : 'Rp. ' + book.price}}</h4>
+                                <h4 class="book-price" ng-class="{'book-price-red': book.price === -1}">{{book.price === -1 ? 'Not For Sale' : 'Rp. ' + book.price}}</h4>
                               </div>
                             </div>
                            <h4 class="book-author">{{book.author}} - 0.0 / 5.0 (0 vote)</h4>
                            <p class="book-description">{{book.description.length > 300 ? 
-                           book.description.substring(0, 300) + '...' : book.description.substring}}</p>
+                           book.description.substring(0, 300) + '...' : book.description}}</p>
                         </div>
                      </div>
                      <div class="search-detail-button-container">

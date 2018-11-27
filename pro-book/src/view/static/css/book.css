@@ -19,6 +19,19 @@
   opacity: 0.6;
 }
 
+.book-detail-price {
+  font-weight: 700;
+  line-height: 48px;
+  font-size: 4rem;
+}
+
+.book-detail-price-not-sale {
+  color: #B33A3A;
+  font-weight: 700;
+  line-height: 48px;
+  font-size: 4rem;
+}
+
 .book-purchase-message-popup {
   position: fixed;
   width: 500px;

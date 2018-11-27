@@ -2,6 +2,7 @@ body {
 	width: 100vw;
 	height: 100vh;
 	margin: 0px;
+	overflow-x: hidden;
 }
 
 h1 {
@@ -12,15 +13,15 @@ h1 {
 }
 
 h2 {
-  line-height: 96px;
-  font-family: 'Chathura', sans-serif;
+	line-height: 96px;
+	font-family: 'Chathura', sans-serif;
 	font-weight: 400;
 	font-size: 6rem;
 	margin: 0px;
 }
 
 h3 {
-  line-height: 60px;
+	line-height: 60px;
 	font-family: 'Bungee', sans-serif;
 	font-weight: 200;
 	font-size: 1.5rem;
@@ -35,7 +36,7 @@ h4 {
 }
 
 h5 {
-  line-height: 60px;
+	line-height: 60px;
 	font-family: 'Saira', sans-serif;
 	font-weight: 600;
 	font-size: 1.5rem;
@@ -45,7 +46,7 @@ h5 {
 p {
 	font-family: 'Chathura', sans-serif;
 	font-weight: 400;
-  font-size: 2.2rem;
-  line-height: 34px;
+	font-size: 2.2rem;
+	line-height: 34px;
 	margin: 0px;
 }
