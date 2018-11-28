@@ -35,6 +35,7 @@ let emailValidationRequest;
 let cardNumberValidationRequest;
 
 let submitButtonHovered = false;
+let imageQRCode = '';
 
 function isName(value) {
     const re = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
@@ -297,3 +298,12 @@ setTimeout(() => {
     if (emailTakenMessageContainer)
         emailTakenMessageContainer.classList.remove("visible");
 }, 5000);
+
+$$('#formSubmitButton').onclick = () => {
+    swal({
+        imageUrl: 'https://placeholder.pics/svg/300x1500',
+        imageAlt: 'QR Code'
+    }).then(res => {
+        $$('#registerForm').submit();
+    });
+};

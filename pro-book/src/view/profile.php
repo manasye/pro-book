@@ -132,11 +132,20 @@ HTML;
           </div>
           <div class='profile-detail-content-row-container'>
             <div class='profile-detail-content-row-label-container'>
-              <img class='profile-detail-content-row-label-icon' src='src/view/static/img/icon_credit_card.svg' alt='Phone Number icon'>
+              <img class='profile-detail-content-row-label-icon' src='src/view/static/img/icon_credit_card.svg' alt='Card Number icon'>
               <p class='profile-detail-content-row-label'>Card Number</p>
             </div>
             <div class='profile-detail-content-row-content-container'>
               <p class='profile-detail-content-row-content'>{$cardNumber}</p>
+            </div>
+          </div>
+          <div class='profile-detail-content-row-container'>
+            <div class='profile-detail-content-row-label-container'>
+              <img class='profile-detail-content-row-label-icon' src='src/view/static/img/icon_qr.svg' alt='QR Code icon'>
+              <p class='profile-detail-content-row-label'>QR Code</p>
+            </div>
+            <div class='profile-detail-content-row-content-container'>
+              <img src="http://www.myqrlink.com/qrcodes/calendar.png" alt="" id="qr-code">
             </div>
           </div>
         </div>
