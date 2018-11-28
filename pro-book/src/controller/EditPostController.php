@@ -8,6 +8,10 @@ class EditPostController implements ControllerInterface {
     return preg_match('/^\d+$/', $value);
   }
 
+  private static function isCardNumber(string $cardNumber) {
+    return Api::validateCardNumber($cardNumber)['valid'];
+  }
+
   public static function control(Request $request) {
     $db = new MarufDB();
     $user = $db->getUser($_COOKIE['token']);
@@ -67,6 +71,9 @@ class EditPostController implements ControllerInterface {
       } else if (!(EditPostController::isNum($request->phoneNumber) && strlen($request->phoneNumber) >= 9 && strlen($request->phoneNumber) <= 12)) {
         $response['success'] = False;
         $response['error'][] = 'Phone number must be a number with 9 to 12 digits';
+      } else if (!(EditPostController::isCardNumber($request->cardNumber))) {
+        $response['success'] = False;
+        $response['error'][] = 'Card number invalid';
       } else {
         $name = $request->name;
         $address = $request->address;
