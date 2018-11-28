@@ -120,7 +120,7 @@ function render_template(string $id, string $name, string $username, string $ema
                   <h4>Card Number</h4>
                 </div>
                 <div class='edit-detail-content-row-content-container'>
-                  <input id='cardNumberField' class='edit-detail-content-row-input' type='text' name='phone_number' value='{$cardNumber}'>
+                  <input id='cardNumberField' class='edit-detail-content-row-input' type='text' name='card_number' value='{$cardNumber}'>
                 </div>
               </div>
               <div class='edit-button-container'>

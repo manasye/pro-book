@@ -229,7 +229,6 @@ function validateCardNumber(_) {
             url: `/cardnumber`,
             data: JSON.stringify(data),
             callback: response => {
-                console.log(response);
                 response = JSON.parse(response);
                 const cardNumberValidationIcon = $$(
                     '#formCardNumberValidationIcon'
