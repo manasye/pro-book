@@ -221,20 +221,4 @@ public class BookDB extends BaseModel {
         }
     }
 
-//    public void printAllBooks() {
-//        String query = "SELECT * FROM book;";
-//        try (Statement st = this.connection.createStatement();
-//             ResultSet rs = st.executeQuery(query)) {
-//            while (rs.next()) {
-//                String id = rs.getString("id");
-//                int price = Integer.parseInt(rs.getString("price"));
-//                Book book = new Book(id, price);
-//                System.out.println(book);
-//            }
-//
-//        } catch (SQLException ex) {
-//            System.out.println("gagal brader");
-//            System.out.println(ex.getMessage());
-//        }
-//    }
 }

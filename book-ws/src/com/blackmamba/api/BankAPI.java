@@ -2,7 +2,6 @@ package com.blackmamba.api;
 
 import com.blackmamba.model.Book;
 import com.blackmamba.model.BookDB;
-import com.blackmamba.model.SoldDB;
 import com.blackmamba.model.TransactionResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,7 +9,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -23,11 +21,9 @@ public class BankAPI extends BaseAPI {
     private static String MERCHANT_SECRET = "JokowiMaruf2019";
 
     private BookDB bookDB;
-    private SoldDB soldDB;
 
     public BankAPI() {
         this.bookDB = new BookDB();
-        this.soldDB = new SoldDB();
     }
 
     private URL getPaymentUrl() {
