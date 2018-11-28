@@ -1,164 +1,300 @@
-# Tugas 2 IF3110 Pengembangan Aplikasi Berbasis Web 
+<img src="docs/logo.png">
 
-Melakukan *upgrade* Website toko buku online pada Tugas 1 dengan mengaplikasikan **arsitektur web service REST dan SOAP**.
+Pro-Book
+&middot;
+[![GitLab license](https://img.shields.io/github/license/Day8/re-frame.svg)](LICENSE)
+![Build Pass](https://img.shields.io/badge/Linux%2FOSX%20Build-passing-brightgreen.svg)
+![Downloads](https://img.shields.io/badge/downloads-1m-brightgreen.svg?longCache=true&style=flat)
+=====
+> A book is both a usually portable physical object and the body of immaterial representations or intellectual object whose material signs—written or drawn lines or other two-dimensional media—the physical object contains or houses. Pro-Book is an online book store that allows user to buy books and give reviews to their purchased books.
 
-### Tujuan Pembuatan Tugas
+## Table Of Contents
+- [Introduction](#introduction)
+- [Installation](#installation)
+- [Run Pro-Book](#run-pro-book)
+- [Features](#features)
+- [Implemented Libraries](#implemented-libraries)
+- [Authors](#authors)
+- [Words From Authors](#words-from-authors)
+- [References](#references)
 
-Diharapkan dengan tugas ini anda dapat mengerti:
-* Produce dan Consume REST API
-* Produce dan Consume Web Services dengan protokol SOAP
-* Membuat web application yang akan memanggil web service secara REST dan SOAP.
-* Memanfaatkan web service eksternal (API)
+## Introduction
+This is an implementation of a web-based online book store using **PHP**. It is open-source and everyone can contribute to probook by creating pull request.
 
-## Anggota Tim
+#### *Creating an online book store has never been so easy*
+**Online Book Store Template** - This web-based online book store template is your one-stop solution to start your own online book store.
 
-Setiap kelompok beranggotakan **3 orang dari kelas yang sama**. Jika jumlah mahasiswa dalam satu kelas modulo 3 menghasilkan 1, maka hanya 1 kelompok terdiri dari 4 mahasiswa. Jika jumlah mahasiswa modulo 3 menghasilkan 2, maka ada dua kelompok yang beranggotakan 4 orang. Seluruh anggota kelompok **harus berbeda dengan tugas 1**.
+#### *What's the point of Pro-Book?*
+Pro-Book wants to contribute to community by creating this open-source project about a web-based online book store. Young entrepreneurs can start their own online book store business by cloning this repository and deploy it on their own servers.
 
-## Petunjuk Pengerjaan
+#### *Why should I care?*
+Because Pro-Book is for *people* :tada:. You have contributed to the community by cloning or creating a pull request on this Pro-Book project.
 
-1. Buatlah organisasi pada gitlab dengan format "IF3110-2018-KXX-nama kelompok", dengan XX adalah nomor kelas.
-2. Tambahkan anggota tim pada organisasi anda.
-3. Fork pada repository ini dengan organisasi yang telah dibuat.
-4. Ubah hak akses repository hasil Fork anda menjadi **private**.
-5. [DELIVERABLE] Buat tugas sesuai spesifikasi dan silakan commit pada repository anda (hasil fork). Lakukan berberapa commit dengan pesan yang bermakna, contoh: `add register form`, `fix logout bug`, jangan seperti `final`, `benerin dikit`. Disarankan untuk tidak melakukan commit dengan perubahan yang besar karena akan mempengaruhi penilaian (contoh: hanya melakukan satu commit kemudian dikumpulkan). Sebaiknya commit dilakukan setiap ada penambahan fitur. **Commit dari setiap anggota tim akan mempengaruhi penilaian individu.** Jadi, setiap anggota tim harus melakukan sejumlah commit yang berpengaruh terhadap proses pembuatan aplikasi.
-6. Hapus bagian yang tidak perlu dari *readme* ini.
-7. [DELIVERABLE] Berikan penjelasan mengenai hal di bawah ini pada bagian **Penjelasan** dari *readme* repository git Anda: ((masih spek taun lalu))
-    - Basis data dari sistem yang Anda buat, yaitu basis data aplkasi pro-book, webservice bank, dan webservice buku.
-    - Konsep *shared session* dengan menggunakan REST.
-    - Mekanisme pembangkitan token dan expiry time pada aplikasi Anda.
-    - Kelebihan dan kelemahan dari arsitektur aplikasi tugas ini, dibandingkan dengan aplikasi monolitik (login, CRUD DB, dll jadi dalam satu aplikasi)
-8. Pada *readme* terdapat penjelasan mengenai pembagian tugas masing-masing anggota (lihat formatnya pada bagian **pembagian tugas**).
-9. Merge request dari repository anda ke repository ini dengan format **Nama kelompok** - **NIM terkecil** - **Nama Lengkap dengan NIM terkecil** sebelum **Jumat, 30 November 2018 pukul 23.59**.
+## Installation
+In order to run this web on your local server, you need to run it on **PHP 7.1** and install:
 
-### Deskripsi Tugas
-![](temp/architecture.png)
+1. PHP 7.1
+```
+apt-get install php7.1
+```
+2. PDO Extension
+```
+apt-get install php7.1-pdo-mysql
+```
+3. mysql
+```
+apt-get install mysql
+apt-get install mysql-server
+```
+4. Create .ethes file
+```
+cp ethes.sample .ethes
+#edit .ethes file with your own setting
+```
 
-Pada tugas 2, Anda diminta untuk mengembangkan aplikasi toko buku online sederhana yang sudah Anda buat pada tugas 1. Arsitektur aplikasi diubah agar memanfaatkan 2 buah webservice, yaitu webservice bank dan webservice buku. Baik aplikasi maupun kedua webservice, masing-masing memiliki database sendiri. Jangan menggabungkan ketiganya dalam satu database. Anda juga perlu mengubah beberapa hal pada aplikasi pro-book yang sudah Anda buat.
+## Run Pro-Book
+Run this command on your terminal
+```
+php -S localhost:5000
+```
+You can try to open Pro-Book on your browser with URL localhost:5000
 
-#### Webservice bank
+## Features
+- **Browse** : You can search any books that you want and view its detailed information that contains title, author, synopsis, cover, ratings, and list of reviews.
+- **Order** : When you are on the book's detail page, you can order the book by choosing the amount of copies you want and click on the Order button.
+- **History** : You can see your history of orders.
+- **Review** : On your history page, you can click the **review** button in order to give a review about your purchased books. You can also give a rating and comment about the book.
+- **View Profile** : You can view your profile details on the profile page.
+- **Edit Profile** : On the profile page, you can click the **edit** button and change some personal information about you. You are allowed to change your profile picture, name, address, and phone number.
 
-Anda diminta membuat sebuah webservice bank sederhana yang dibangun di atas **node.js**. Webservice bank memiliki database sendiri yang menyimpan informasi nasabah dan informasi transaksi. Informasi nasabah berisi nama, nomor kartu, dan saldo. Informasi transaksi berisi nomor kartu pengirim, nomor kartu penerima, jumlah, dan waktu transaksi. Informasi lain yang menurut Anda dibutuhkan silahkan ditambahkan sendiri. Database webservice bank harus terpisah dari database aplikasi pro-book.
+## Implemented Libraries
+We build this project from **scratch**. We **create** our own library to support this project. They are scalable and easy to use. List of our own library:
+- [**Router**](#router)
+- [**Request**](#request)
+- [**MarufDB**](#marufdb)
+- [**jQowi**](#jqowi)
+- [**Template Engine**](#templateengine)
+- [**dotEthes**](#dotethes)
+- [**JKWToken**](#jkwtoken)
 
-Webservice bank menyediakan service untuk validasi nomor kartu dan transfer. Webservice bank diimplementasikan menggunakan protokol **REST**.
-- Service validasi nomor kartu dilakukan dengan memeriksa apakah nomor kartu tersebut ada pada database bank. Jika iya, berarti kartu tersebut valid.
-  
-- Service transfer menerima input nomor kartu pengirim, penerima, dan jumlah yang ditransfer. Jika saldo mencukupi, maka transfer berhasil dan uang sejumlah tersebut dipindahkan dari pengirim ke penerima. Transaksi tersebut juga dicatat dalam database webservice. Jika saldo tidak mencukupi, maka transaksi ditolak dan tidak dicatat di database.
-  
-#### Webservice buku
+Here is the documentation about our own library. We will tell you about it's functionality and how to use it.
 
-Webservice ini menyediakan daftar buku beserta harganya yang akan digunakan oleh aplikasi pro-book. Webservice buku dibangun di atas **java servlet**. Service yang disediakan webservice ini antara lain adalah pencarian buku, mengambil detail buku, melakukan pembelian, serta memberikan rekomendasi buku sederhana. Webservice ini diimplementasikan menggunakan **JAX-WS dengan protokol SOAP**.
+### Router
+Router is a library to simplify php routing. When user input a path to your server, Rather than following the projects directory hierarchy, Router will check their input path and redirect it using its controller policy.
+Snippet of code example:
+```php
+//When user request a GET http method into /login, router will return a LoginGetController if the request pass the TokenValidationMiddleware and LoginRegisterMiddleware
+$router->get('/login', function($request) {
+  return LoginGetController::control($request);
+}, [new TokenValidationMiddleware, new LoginRegisterMiddleware]);
+```
 
-Webservice ini memanfaatkan **Google Books API melalui HttpURLConnection. Tidak diperbolehkan menggunakan Google Books Client Library for Java**. Data-data buku yang dimiliki oleh webservice ini akan mengambil dari Google Books API. Silahkan membaca [dokumentasinya](https://developers.google.com/books/docs/overview) untuk detail lebih lengkap. Data pada Google Books API tidak memiliki harga, maka webservice buku perlu memiliki database sendiri berisi data harga buku-buku yang dijual. Database webservice buku harus terpisah dari database bank dan dari database aplikasi pro-book.
+### Request
+Request is a library that contains RequestInterface and a Request class that implements a RequestInterface that works as a class which save all request parameters ($_SERVER , GET, POST).
 
-Detail service yang disediakan webservice ini adalah:
+### MarufDB
+This is the library for Pro-Book database. It is a PDO-MySQL Connection class that contains some functions to help us doing CRUD operations on our database.
 
-- Pencarian buku menerima keyword judul. Keyword ini akan diteruskan ke Google Books API dan mengambil daftar buku yang mengandung keyword tersebut pada judulnya. Hasil tersebut kemudian dikembalikan pada aplikasi setelah diproses. Proses yang dilakukan adalah menghapus data yang tidak dibutuhkan, menambahkan harga buku jika ada di database, dan mengubahnya menjadi format SOAP.
+#### Member Variables
+```php
+private $host
+#MySQL host
+private $dbName
+#MySQL Database Name
+private $dbUser
+#MySQL Username
+private $dbPassword
+#MySQL Password
+private $pdo
+#PDO Object
+```
 
-- Pengambilan detail juga mengambil data dari Google Books API, seperti service search. Baik service ini maupun search, informasi yang akan dikembalikan hanya informasi yang dibutuhkan. Jangan lansung melemparkan semua data yang didapatkan dari Google Books API ke aplikasi. Karena pengambilan detail buku menggunakan ID buku, maka ID buku webservice harus mengikuti ID buku Google Books API. Pada service ini, harga buku juga dicantumkan.
+#### Member Function
+```php
+public function __construct()
+#Class Constructor. It will assign member variables with defined variables on .ethes file (environment file) and create pdo connection.
+private function Connect()
+#Create PDO Connection with member variables as parameters.
+public function getUserId($token)
+#Get current userId by their token cookies.
+public function getUser($token)
+#Get current user data from Users table by their token cookies.
+public function getUsername($token)
+#Get current username by their token cookies.
+public function checkLogin($username, $password)
+#Check whether user has the correct combination of username and password or not when they try to login into Pro-Book.
+public function searchBook($title)
+#Get all books where $title is a substring on their title.
+public function addToken($user_id, $token)
+#Add user token to Pro-Book Database, so user doesn't need to login as long as the cookie expired time.
+public function checkToken($token)
+#Validate user token whether the token has already expired or not.
+public function validateUsername($username)
+#Check if the username isn't on the database yet.
+public function validateEmail($email)
+#Check if the email isn't on the database yet.
+public function orderBook($book_id, $user_id, $amount, $order_timestamp)
+#Insert order detail into Orders Database when user purchases a book.
+public function addProfile($name, $username, $email, $password, $address, $phonenumber)
+#Register a new account into Users Database.
+public function editProfile($name, $address, $phonenumber, $user_id)
+#Save edited user's data into database.
+public function getHistory($user_id)
+#Get list of orders history users.
+public function getBookIdByOrderId($order_id)
+#Get BookId by OrderId.
+public function getBookDetail($book_id)
+#Get book detail by bookId,
+public function addReview($user_id, $username, $book_id, $rating, $comment, $order_id)
+#Insert user's review into database.
+public function getReviews($book_id)
+#Get list of reviews by bookId,
+```
+### jQowi
+This library tries to solve much of the same problems as what jQuery is trying to solve--hence the name resemblance--by simplifying DOM element selection and AJAX request handling. We implemented jQowi as a simple wrapper for `Document.querySelector()` and `XMLHttpRequest` by providing simple and clear APIs.
 
-- Webservice ini menangani proses pembelian. Service ini menerima masukan id buku yang dibeli, jumlah yang dibeli, serta nomor rekening user yang membeli buku. Nomor rekening tersebut akan digunakan untuk mentransfer uang sejumlah harga total buku. Jika transfer gagal, maka pembelian buku juga gagal.
+#### DOM Element Selection
+```javascript
+// Select all elements with 'button' class
+// Note that selecting by class result an array of elements
+$$('.button').forEach((element) => {
+  element.onmouseenter = () => {
+    console.log('Hello, world!');
+  };
+});
 
-  Jumlah buku yang berhasil dibeli dicatat di database. Webservice menyimpan ID buku, kategori (genre), dan jumlah total pembelian buku tersebut. Data ini akan digunakan untuk memberikan rekomendasi. Jika pembelian gagal maka data tidak dicatat pada aplikasi.
+// Select the element with 'submitButton' id
+// Note that selecting by id results in just one element
+$$('#submitButton').onmouseenter = () => {
+  console.log('Hello, world!');
+};
+```
+> Note: jQowi uses the same query syntax as `Document.querySelector()`
 
-- Webservice juga dapat memberikan rekomendasi sederhana. Input dari webservice ini adalah kategori buku. Kategori buku yang dimasukkan boleh lebih dari 1. Buku yang direkomendasikan adalah buku yang memiliki jumlah pembelian total terbanyak yang memiliki kategori yang sama dengan daftar kategori yang menjadi input. Data tersebut didapat dari service yang mencatat jumlah pembelian.
-  
-  Jika buku dengan kategori tersebut belum ada yang terjual, maka webservice akan mengembalikan 1 buku random dari hasil pencarian pada Google Books API. Pencarian yang dilakukan adalah buku yang memiliki kategori yang sama dengan salah satu dari kategori yang diberikan (random).
-  
-#### Perubahan pada aplikasi pro-book
+#### AJAX
+```javascript
+// Sending an AJAX GET request
+xhttp = $$.ajax({
+  method: 'GET',
+  url: 'http://just.an/example',
+  callback: (response) => {
+    response = JSON.parse(response);
+    console.log(response);
+  }
+});
 
-Karena memanfaatkan kedua webservice tersebut, akan ada perubahan pada aplikasi yang Anda buat.
+// Sending an AJAX POST request
+$$.ajax({
+  method: 'POST',
+  url: 'http://just.an/example',
+  data: JSON.stringify(data),
+  callback: (response) => {
+    response = JSON.parse(response);
+    console.log(response);
+  },
+});
+```
+> Note: Every instance of an AJAX request returns an `XMLHttpRequest` object for that request
 
-- Setiap user menyimpan informasi nomor kartu yang divalidasi menggunakan webservice bank. Validasi dilakukan ketika melakukan registrasi atau mengubah informasi nomor kartu. Jika nomor kartu tidak valid, registrasi atau update profile gagal dan data tidak berubah.
+### Template Engine
+This library provides a simple and clear interface to serve a templated HTML page using PHP.
 
-- Data buku diambil dari webservice buku, sehingga aplikasi tidak menyimpan data buku secara lokal. Setiap kali aplikasi membutuhkan informasi buku, aplikasi akan melakukan request kepada webservice buku. Hal ini termasuk proses search dan melihat detail buku.
+#### Format
+You can get a pretty clear picture of the templating format by reading one of our implementation [here](src/view/search.php). In short, you just need to create a .php file implement a `render_template` function that takes whatever parameters you want for your template and returns an HTML string.
+```php
+<?php
+function render_template(string $username) {
+  return <<<HTML
+    <h1>Hello {$username}</h1>
+HTML;
+}
+```
 
-  Database webservice cukup menyimpan harga sebagian buku yang ada di Google Books API. Buku yang harganya tidak Anda definisikan di database boleh dicantumkan NOT FOR SALE dan tidak bisa dibeli, tetapi tetap bisa dilihat detailnya.
+#### Usage
+```php
+<?php
+$template = new Template('path/to/template.php');
+$username = 'mrjoko';
+echo $template->render($username);
+```
 
-- Proses pembelian buku pada aplikasi ditangani oleh webservice buku. Status pembelian (berhasil/gagal dan alasannya) dilaporkan kepada user dalam bentuk notifikasi. Untuk kemudahan, tidak perlu ada proses validasi dalam melakukan transfer
+### dotEthes
+dotEthes is a class that could read .ethes file that contains our environment variables and load it into **$_ENV** superglobal variable. dotEthes library has two main class:
 
-- Pada halaman detail buku, terdapat rekomendasi buku yang didapatkan dari webservice buku. Asumsikan sendiri tampilan yang sesuai.
+#### DotEthes
+DotEthes is one of the main class in dotEthes library that focuses on getting the .ethes filepath and then use Loader class to load all the environment variables into **$_ENV**.
+##### Member Variables
+```php
+protected $filePath;
+#path to .ethes file
+protected $loader;
+#loader class which can parse .ethes file
+```
+##### Member Functions
+```php
+public function __construct($path, $file = '.ethes')
+#Set $filePath and create new Loader class for $loader variable
+public function load()
+#Load .ethes variable into $_ENV
+public function getFilePath($path, $file)
+#Convert to a valid File Path by using rtrim
+protected function loadData()
+#call $loader load() to parse .ethes file and load it into $_ENV
+```
 
-- Halaman search-book dan search-result pada tugas 1 digabung menjadi satu halaman search yang menggunakan AngularJS. Proses pencarian buku diambil dari webservice buku menggunakan **AJAX**. Hasil pencarian akan ditampilkan pada halaman search menggunakan AngularJS, setelah mendapatkan respon dari webservice. Ubah juga tampilan saat melakukan pencarian untuk memberitahu jika aplikasi sedang melakukan pencarian atau tidak ditemukan hasil.
+#### Loader
+Loader is one of the main class in dotEthes library that focuses on parsing the .ethes file and load it into **$_ENV**.
+##### Member Variables
+```php
+protected $filePath
+#path to .ethes file
+public $variableNames = array()
+#container for all environment variables in .ethes file
+```
+##### Member Functions
+```php
+public function __construct($filePath)
+#Set $filePath variable
+public function load()
+#Read from .ethes file per lines and set it as environment variables
+protected function readLinesFromFile($filePath)
+#Return an array of line on .ethes file
+protected function isComment($line)
+#Check whether line is a comment or an environment variable
+protected function isSetter($line)
+#Check whether a line is a setter for environment variable
+public function setEnvironmentVariable($line)
+#Set environment variable from .ethes into $_ENV
+public function clearAllEnvironmentVariables()
+#Clear all .ethes environment variables from $_ENV
+public function getEnvironmentVariable($name)
+#Check whether a variable is already exist or not
+```
 
-- Aplikasi Anda menggunakan `access token` untuk menentukan active user. Mekanisme pembentukan dan validasi access token dapat dilihat di bagian *Mekanisme access token*.
+### JKWToken
+JKWToken is a class to generate a 16-bytes random string that will be used as the user's token cookie.
+#### Member Function
+```php
+public function generateJKWToken() {
+    return bin2hex(openssl_random_pseudo_bytes((int)$_ENV['JKWTOKEN_BYTES_LENGTH']));
+  }
+#Generate random string using openssl_random_pseudo_bytes.
+```
 
-#### Mekanisme access token
-`Access token` berupa string random. Ketika user melakukan login yang valid, sebuah access token di-generate, disimpan dalam database server, dan diberikan kepada browser. Satu `access token` memiliki `expiry time` token (berbeda dengan expiry time cookie) dan hanya dapat digunakan pada 1 *browser/agent* dari 1 *ip address* tempat melakukan login. Sebuah access token mewakilkan tepat 1 user. Sebuah access token dianggap valid jika:
-- Access token terdapat pada database server dan dipasangkan dengan seorang user.
-- Access token belum expired, yaitu expiry time access token masih lebih besar dari waktu sekarang.
-- Access token digunakan oleh browser yang sesuai.
-- Access token digunakan dari ip address yang sesuai.
+## Authors
+1. Nicholas Rianto Putra - 13516020 - https://github.com/nicholaz99
+2. Abram Perdanaputra - 13516083 - https://github.com/abrampers
+3. Faza Fahleraz - 13516095 - https://github.com/ffahleraz
 
-Jika access token tidak ada atau tidak valid, maka aplikasi melakukan *redirect* ke halaman login jika user mengakses halaman selain login atau register. Jika access token ada dan valid, maka user akan di-*redirect* ke halaman search jika mengakses halaman login. Fitur logout akan menghapus access token dari browser dan dari server.
+## Words from Authors
+Thanks to our lovely lecturer Mr. Dr.Techn. Muhammad Zuhri Catur Candra ST,MT for his amazing project about [Tugas 1 IF3110 Pengembangan Aplikasi Berbasis Web](http://gitlab.informatika.org/IF3110-2018/tugasbesar1_2018).
+> *"You already know how hard it is to build a software right? Do you still want to use pirated softwares?"*
+> *- Dr.Techn. Muhammad Zuhri Catur Candra ST,MT*
 
-#### Catatan
-
-Hal-hal detail yang disebutkan pada spesifikasi di atas seperti data yang disimpan di database, parameter request, dan jenis service yang disediakan adalah spesifikasi minimum yang harus dipenuhi. Anda boleh menambahkan data/parameter/service lain yang menurut Anda dibutuhkan oleh aplikasi atau web service lainnya. Jika Anda ingin mengubah data/parameter/service yang sudah disebutkan di atas, Anda wajib mempertanggung jawabkannya dan memiliki argumen yang mendukung keputusan tersebut.
-
-### Skenario
-
-1. User melakukan registrasi dengan memasukkan informasi nomor kartu.
-2. Jika nomor kartu tidak valid, registrasi ditolak dan user akan diminta memasukkan kembali nomor kartu yang valid.
-3. User yang sudah teregistrasi dapat mengganti informasi nomor kartu.
-4. Ketika user mengganti nomor kartu, nomor kartu yang baru akan diperiksa validasinya melalui webservice bank.
-5. Setelah login, user dapat melakukan pencarian buku.
-6. Pencarian buku akan mengirim request ke webservice buku. Halaman ini menggunakan AngularJS.
-7. Pada halaman detail buku, ada rekomendasi buku yang didapat dari webservice buku. Rekomendasi buku berdasarkan kategori buku yang sedang dilihat.
-8. Ketika user melakukan pemesanan buku, aplikasi akan melakukan request transfer kepada webservice bank.
-9. Jika transfer berhasil, aplikasi mengirimkan request kepada webservice buku untuk mencatat penjualan buku.
-10. Notifikasi muncul menandakan status pembelian, berhasil atau gagal.
-
-### Bonus
-
-Anda tidak dituntut untuk mengerjakan ini. Fokus terlebih dahulu menyelesaikan semua spesifikasi yang ada sebelum memikirkan bonus.
-
-1. Token bank
-
-    Ketika Anda melakukan transfer online, beberapa bank menyediakan sebuah mesin yang memberikan sebuah angka (token) yang harus dimasukan untuk memvalidasi transfer. Anda akan meniru fitur ini pada webservice bank.
-    
-    Mekanisme token menggunakan algoritma HOTP atau TOTP, algoritma hash yang digunakan dibebaskan kepada peserta, misalnya SHA1. Token berupa 8 digit angka. Informasi-informasi yang dibutuhkan untuk membangun token ini, seperti shared secret key, disimpan pada database webservice bank. Anda diperbolehkan menggunakan library HOTP/TOTP untuk membentuk token tersebut.
-    
-    Buatlah juga sebuah script (bebas, mau dalam bentuk PHP, JS, dll.) sebagai pengganti mesin token bank untuk membangun token yang akan digunakan untuk proses transfer.
-    
-    Setiap permintaan transfer yang berasal (yang memberikan uang) dari nomor kartu tersebut, harus menyertakan token yang valid. Token valid adalah token milik nomor kartu yang bersangkutan yang di-generate melalui alat (request di atas) dan belum expired. Jika transfer tidak menyertakan token yang valid, transfer akan gagal, seperti jika Anda melakukan transfer dengan saldo yang kurang.
-    
-    Maka, aplikasi pro-book memiliki field tambahan yaitu transfer token, yang terdapat pada halaman book detail saat melakukan order. Token tersebut kemudian diberikan kepada webservice buku, yang kemudian akan digunakan untuk memvalidasi transfer pembelian buku.
-    
-2. Login via Google
-    
-    Aplikasi memiliki pilihan untuk login menggunakan akun google, seperti yang sering ditemui pada aplikasi web atau game. Contohnya seperti tombol berikut pada [stack overflow](https://stackoverflow.com/). Informasi yang ditampilkan untuk user yang login dengan akun google diambil dari informasi akun google tersebut.
-    
-    ![](temp/button_example.png)
-
-### Pembagian Tugas
-"Gaji buta dilarang dalam tugas ini. Bila tak mengerti, luangkan waktu belajar lebih banyak. Bila belum juga mengerti, belajarlah bersama-sama kelompokmu. Bila Anda sekelompok bingung, bertanyalah (bukan menyontek) ke teman seangkatanmu. Bila seangkatan bingung, bertanyalah pada asisten manapun."
-
-*Harap semua anggota kelompok mengerjakan SOAP dan REST API kedua-duanya*. Tuliskan pembagian tugas seperti berikut ini.
-
-REST :
-1. Validasi nomor kartu : 1351xxxx
-2. ...
-
-SOAP :
-1. Add Produce : 1351xxxx
-2. Fungsionalitas Y : 1351xxxx
-3. ...
-
-Perubahan Web app :
-1. Halaman Search : 
-2. Halaman X :
-3. ...
-
-Bonus :
-1. Pembangkitan token HTOP/TOTP : 
-2. Validasi token : 
-3. ...
-
-## About
-
-Asisten IF3110 2018
-
-Audry | Erick | Holy | Kevin J. | Tasya | Veren | Vincent H.
-
-Dosen : Yudistira Dwi Wardhana | Riza Satria Perdana | Muhammad Zuhri Catur Candra
-
+## References
+* [Tugas 1 IF3110 Pengembangan Aplikasi Berbasis Web](http://gitlab.informatika.org/IF3110-2018/tugasbesar1_2018)
+* [World Wide Web Consortium (W3C)](https://www.w3.org/)
+* [Mozilla Developer Network web docs](https://developer.mozilla.org/en-US/)
+* [MIT 6.148 Web Development: IAP Class](http://webdevelopment.mit.edu/2018/)
+* [CS193X: Web Programming Fundamentals](http://web.stanford.edu/class/cs193x/)
+* [Flaticon](https://flaticon.com)
