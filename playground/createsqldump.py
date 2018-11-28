@@ -21,8 +21,11 @@ def parse_category(data):
 	except:
 		return 'Others'
 
-def generate_random_sold(data):
-	return random.randrange(10, 1000, 10)
+def generate_random_sold():
+	if random.randint(0, 10) >= 2:
+		return random.randrange(10, 1000, 10)
+	else:
+		return 0
 
 # book:
 # - id
@@ -30,17 +33,22 @@ def generate_random_sold(data):
 def parse_book(data):
 	book_id = parse_id(data)
 	book_price = parse_price(data)
-	return 'INSERT INTO book VALUES ("{}", {});'.format(book_id, book_price)
+	book_category = parse_category(data)
+	book_sold = generate_random_sold()
+	return 'INSERT INTO book VALUES ("{}", {}, "{}", {});'.format(book_id,
+											                      book_price,
+											                      book_category,
+											                      book_sold)
 
 # sold
 # - id
 # - category
 # - count
-def parse_sold(data):
-	sold_id = parse_id(data)
-	sold_category = parse_category(data)
-	sold_count = generate_random_sold(data)
-	return 'INSERT INTO sold VALUES ("{}", "{}", {});'.format(sold_id, sold_category, sold_count)
+# def parse_sold(data):
+# 	sold_id = parse_id(data)
+# 	sold_category = parse_category(data)
+# 	sold_count = generate_random_sold(data)
+# 	return 'INSERT INTO sold VALUES ("{}", "{}", {});'.format(sold_id, sold_category, sold_count)
 
 search_terms = ['react', 'harry+potter', 'software+engineering', 'lele']
 
@@ -55,8 +63,8 @@ for search_term in search_terms:
 	data = json.loads(res.content)
 	for book_data in data['items']:
 		books.append(parse_book(book_data))
-		if random.randint(0, 10) >= 2:
-			solds.append(parse_sold(book_data))
+		# if random.randint(0, 10) >= 2:
+		# 	solds.append(parse_sold(book_data))
 
 # Write to sql file
 file = open("db.sql", "w")
@@ -64,10 +72,10 @@ file = open("db.sql", "w")
 for book in books:
 	file.write(book + '\n')
 
-file.write('\n\n')
+# file.write('\n\n')
 
-for sold in solds:
-	file.write(sold + '\n')
+# for sold in solds:
+# 	file.write(sold + '\n')
 
 file.close()
 

@@ -11,9 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.blackmamba.api.BankAPI;
 import com.blackmamba.model.ListBooks;
 
 import com.blackmamba.model.BookDetail;
+import com.blackmamba.model.TransactionResponse;
 import org.json.simple.JSONObject;
 
 import com.blackmamba.model.Book;
@@ -53,8 +55,11 @@ public class BookWS {
     }
 
     // TODO: implement book transaction
-//    @WebMethod
-//    public ListBooks getBookRecommendation(String id) {
-//    }
+    @WebMethod
+    public TransactionResponse buyBook(String cardNumber, String token, String bookId, int bookAmount) {
+        BankAPI bankAPI = new BankAPI();
+        TransactionResponse transactionResponse = bankAPI.makeTransaction(cardNumber, token, bookId, bookAmount);
+        return transactionResponse;
+    }
 
 }

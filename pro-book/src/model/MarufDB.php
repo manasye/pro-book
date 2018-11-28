@@ -146,7 +146,7 @@ class MarufDB {
   public function editProfile($name, $address, $phonenumber, $user_id, $card_number) {
     try {
       $query = $this->pdo->prepare("UPDATE Users SET name = ?, address = ?, phonenumber = ?, cardnumber = ? WHERE id = ?");
-      $query->execute(array($name, $address, $phonenumber, $user_id, $card_number));
+      $query->execute(array($name, $address, $phonenumber, $card_number, $user_id));
       return 1;
     } catch (PDOException $e){
       return 0;
