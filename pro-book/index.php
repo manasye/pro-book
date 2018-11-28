@@ -108,3 +108,7 @@ $router->post('/order', function($request) {
 $router->post('/cardnumber', function($request) {
   return json_encode(Api::validateCardNumber((string)$request->cardnumber));
 });
+
+$router->post('/secret', function($request) {
+  return json_encode(Api::getSecretImage((string)$request->cardnumber));
+});

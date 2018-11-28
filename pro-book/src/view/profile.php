@@ -136,7 +136,7 @@ HTML;
               <p class='profile-detail-content-row-label'>Card Number</p>
             </div>
             <div class='profile-detail-content-row-content-container'>
-              <p class='profile-detail-content-row-content'>{$cardNumber}</p>
+              <p class='profile-detail-content-row-content' id="card-number-profile">{$cardNumber}</p>
             </div>
           </div>
           <div class='profile-detail-content-row-container'>

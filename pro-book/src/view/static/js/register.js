@@ -1,26 +1,26 @@
-import $$ from "./lib/jQowi.js";
+import $$ from './lib/jQowi.js';
 
-const merchantSecret = "JokowiMaruf2019";
+const merchantSecret = 'JokowiMaruf2019';
 
 const invalidNameMessage =
-    "Name must be a valid person name with less than 20 characters";
+    'Name must be a valid person name with less than 20 characters';
 const invalidUsernameMessage =
-    "Username must contains alphanumeric or underscore";
+    'Username must contains alphanumeric or underscore';
 const checkingUsernameMessage =
-    "Please wait, we are checking your username availability...";
-const takenUsernameMessage = "Username already taken";
-const invalidEmailMessage = "Email must be a valid address";
-const invalidCardNumberMessage = "Card number is not valid";
+    'Please wait, we are checking your username availability...';
+const takenUsernameMessage = 'Username already taken';
+const invalidEmailMessage = 'Email must be a valid address';
+const invalidCardNumberMessage = 'Card number is not valid';
 const checkingEmailMessage =
-    "Please wait, we are checking your email availability...";
+    'Please wait, we are checking your email availability...';
 const checkingCardNumberMessage =
-    "Please wait, we are checking your card number";
-const takenEmailMessage = "Email already taken";
-const invalidPasswordMessage = "Password must contains at least 6 characters";
-const notMatchingPasswordMessage = "Password confirmation does not match";
-const invalidAddressMessage = "Address cannot be empty";
+    'Please wait, we are checking your card number';
+const takenEmailMessage = 'Email already taken';
+const invalidPasswordMessage = 'Password must contains at least 6 characters';
+const notMatchingPasswordMessage = 'Password confirmation does not match';
+const invalidAddressMessage = 'Address cannot be empty';
 const invalidPhoneNumberMessage =
-    "Phone number must be a number with 9 to 12 digits";
+    'Phone number must be a number with 9 to 12 digits';
 
 let usernameValidationMessage = invalidUsernameMessage;
 let emailValidationMessage = invalidEmailMessage;
@@ -36,6 +36,7 @@ let cardNumberValidationRequest;
 
 let submitButtonHovered = false;
 let imageQRCode = '';
+let cn;
 
 function isName(value) {
     const re = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
@@ -58,26 +59,26 @@ function isNum(value) {
 }
 
 function showInputValidationMessage() {
-    $$("#inputValidationMessageContainer").classList.add("visible");
-    $$("#titleContainer").classList.add("moved");
+    $$('#inputValidationMessageContainer').classList.add('visible');
+    $$('#titleContainer').classList.add('moved');
 }
 
 function hideInputValidationMessage() {
-    $$("#inputValidationMessageContainer").classList.remove("visible");
-    $$("#titleContainer").classList.remove("moved");
+    $$('#inputValidationMessageContainer').classList.remove('visible');
+    $$('#titleContainer').classList.remove('moved');
 }
 
 function updateInputValidationMessage(message) {
-    $$("#inputValidationMessage").innerHTML = message;
+    $$('#inputValidationMessage').innerHTML = message;
 }
 
 function validateInput(_) {
-    const nameField = $$("#formNameField");
-    const passwordField = $$("#formPasswordField");
-    const confirmPasswordField = $$("#formConfirmPasswordField");
-    const addressField = $$("#formAddressField");
-    const phoneNumberField = $$("#formPhoneNumberField");
-    const submitButton = $$("#formSubmitButton");
+    const nameField = $$('#formNameField');
+    const passwordField = $$('#formPasswordField');
+    const confirmPasswordField = $$('#formConfirmPasswordField');
+    const addressField = $$('#formAddressField');
+    const phoneNumberField = $$('#formPhoneNumberField');
+    const submitButton = $$('#formSubmitButton');
 
     if (
         !isName(nameField.value) ||
@@ -127,8 +128,8 @@ function validateInput(_) {
 
 function validateUsername(_) {
     const username = event.target.value;
-    const usernameValidationIcon = $$("#formUsernameValidationIcon");
-    const submitButton = $$("#formSubmitButton");
+    const usernameValidationIcon = $$('#formUsernameValidationIcon');
+    const submitButton = $$('#formSubmitButton');
     usernameValidationIcon.style.opacity = 1;
     if (usernameValidationRequest) usernameValidationRequest.abort();
     if (isUsername(username)) {
@@ -136,22 +137,22 @@ function validateUsername(_) {
         usernameValid = false;
         usernameValidationMessage = checkingUsernameMessage;
         usernameValidationRequest = $$.ajax({
-            method: "GET",
-            url: "/username?username=" + username,
+            method: 'GET',
+            url: '/username?username=' + username,
             callback: response => {
                 response = JSON.parse(response);
                 const usernameValidationIcon = $$(
-                    "#formUsernameValidationIcon"
+                    '#formUsernameValidationIcon'
                 );
-                const submitButton = $$("#formSubmitButton");
+                const submitButton = $$('#formSubmitButton');
                 if (response.valid) {
                     usernameValidationIcon.src =
-                        "src/view/static/img/icon_success.svg";
+                        'src/view/static/img/icon_success.svg';
                     submitButton.disabled = false;
                     usernameValid = true;
                 } else {
                     usernameValidationIcon.src =
-                        "src/view/static/img/icon_failed.svg";
+                        'src/view/static/img/icon_failed.svg';
                     submitButton.disabled = true;
                     usernameValid = false;
                     usernameValidationMessage = takenUsernameMessage;
@@ -160,7 +161,7 @@ function validateUsername(_) {
             }
         });
     } else {
-        usernameValidationIcon.src = "src/view/static/img/icon_failed.svg";
+        usernameValidationIcon.src = 'src/view/static/img/icon_failed.svg';
         submitButton.disabled = true;
         usernameValid = false;
         usernameValidationMessage = invalidUsernameMessage;
@@ -170,8 +171,8 @@ function validateUsername(_) {
 
 function validateEmail(_) {
     const email = event.target.value;
-    const emailValidationIcon = $$("#formEmailValidationIcon");
-    const submitButton = $$("#formSubmitButton");
+    const emailValidationIcon = $$('#formEmailValidationIcon');
+    const submitButton = $$('#formSubmitButton');
     emailValidationIcon.style.opacity = 1;
     if (emailValidationRequest) emailValidationRequest.abort();
     if (isEmail(email)) {
@@ -179,20 +180,20 @@ function validateEmail(_) {
         emailValid = false;
         emailValidationMessage = checkingEmailMessage;
         emailValidationRequest = $$.ajax({
-            method: "GET",
-            url: "/email?email=" + email,
+            method: 'GET',
+            url: '/email?email=' + email,
             callback: response => {
                 response = JSON.parse(response);
-                const emailValidationIcon = $$("#formEmailValidationIcon");
-                const submitButton = $$("#formSubmitButton");
+                const emailValidationIcon = $$('#formEmailValidationIcon');
+                const submitButton = $$('#formSubmitButton');
                 if (response.valid) {
                     emailValidationIcon.src =
-                        "src/view/static/img/icon_success.svg";
+                        'src/view/static/img/icon_success.svg';
                     submitButton.disabled = false;
                     emailValid = true;
                 } else {
                     emailValidationIcon.src =
-                        "src/view/static/img/icon_failed.svg";
+                        'src/view/static/img/icon_failed.svg';
                     submitButton.disabled = true;
                     emailValid = false;
                     emailValidationMessage = takenEmailMessage;
@@ -201,7 +202,7 @@ function validateEmail(_) {
             }
         });
     } else {
-        emailValidationIcon.src = "src/view/static/img/icon_failed.svg";
+        emailValidationIcon.src = 'src/view/static/img/icon_failed.svg';
         submitButton.disabled = true;
         emailValid = false;
         emailValidationMessage = invalidEmailMessage;
@@ -211,8 +212,9 @@ function validateEmail(_) {
 
 function validateCardNumber(_) {
     const cardNumber = event.target.value;
-    const cardNumberValidationIcon = $$("#formCardNumberValidationIcon");
-    const submitButton = $$("#formSubmitButton");
+    cn = cardNumber;
+    const cardNumberValidationIcon = $$('#formCardNumberValidationIcon');
+    const submitButton = $$('#formSubmitButton');
     cardNumberValidationIcon.style.opacity = 1;
     if (cardNumberValidationRequest) cardNumberValidationRequest.abort();
     if (isNum(cardNumber)) {
@@ -221,26 +223,26 @@ function validateCardNumber(_) {
         cardNumberValidationMessage = checkingCardNumberMessage;
         const data = {
             cardnumber: cardNumber
-        }
+        };
         cardNumberValidationRequest = $$.ajax({
-            method: "POST",
+            method: 'POST',
             url: `/cardnumber`,
             data: JSON.stringify(data),
             callback: response => {
                 console.log(response);
                 response = JSON.parse(response);
                 const cardNumberValidationIcon = $$(
-                    "#formCardNumberValidationIcon"
+                    '#formCardNumberValidationIcon'
                 );
-                const submitButton = $$("#formSubmitButton");
+                const submitButton = $$('#formSubmitButton');
                 if (response.valid) {
                     cardNumberValidationIcon.src =
-                        "src/view/static/img/icon_success.svg";
+                        'src/view/static/img/icon_success.svg';
                     submitButton.disabled = false;
                     cardNumberValid = true;
                 } else {
                     cardNumberValidationIcon.src =
-                        "src/view/static/img/icon_failed.svg";
+                        'src/view/static/img/icon_failed.svg';
                     submitButton.disabled = true;
                     cardNumberValid = false;
                     cardNumberValidationMessage = invalidCardNumberMessage;
@@ -249,7 +251,7 @@ function validateCardNumber(_) {
             }
         });
     } else {
-        cardNumberValidationIcon.src = "src/view/static/img/icon_failed.svg";
+        cardNumberValidationIcon.src = 'src/view/static/img/icon_failed.svg';
         submitButton.disabled = true;
         cardNumberValid = false;
         cardNumberValidationMessage = invalidCardNumberMessage;
@@ -257,53 +259,64 @@ function validateCardNumber(_) {
     validateInput(null);
 }
 
-$$("#formUsernameField").oninput = validateUsername;
-$$("#formEmailField").oninput = validateEmail;
-$$("#formCardNumberField").oninput = validateCardNumber;
+$$('#formUsernameField').oninput = validateUsername;
+$$('#formEmailField').oninput = validateEmail;
+$$('#formCardNumberField').oninput = validateCardNumber;
 
-$$("#formNameField").oninput = validateInput;
-$$("#formPasswordField").oninput = validateInput;
-$$("#formConfirmPasswordField").oninput = validateInput;
-$$("#formAddressField").oninput = validateInput;
-$$("#formPhoneNumberField").oninput = validateInput;
+$$('#formNameField').oninput = validateInput;
+$$('#formPasswordField').oninput = validateInput;
+$$('#formConfirmPasswordField').oninput = validateInput;
+$$('#formAddressField').oninput = validateInput;
+$$('#formPhoneNumberField').oninput = validateInput;
 
 updateInputValidationMessage(invalidNameMessage);
 
-$$("#formSubmitButtonInner").onmouseenter = () => {
-    if ($$("#formSubmitButton").disabled) {
+$$('#formSubmitButtonInner').onmouseenter = () => {
+    if ($$('#formSubmitButton').disabled) {
         showInputValidationMessage();
     }
     submitButtonHovered = true;
 };
 
-$$("#formSubmitButtonInner").onmouseleave = () => {
+$$('#formSubmitButtonInner').onmouseleave = () => {
     hideInputValidationMessage();
     submitButtonHovered = false;
 };
 
 setTimeout(() => {
-    const usernameTakenMessageContainer = $$("#usernameTakenMessageContainer");
-    const emailTakenMessageContainer = $$("#emailTakenMessageContainer");
+    const usernameTakenMessageContainer = $$('#usernameTakenMessageContainer');
+    const emailTakenMessageContainer = $$('#emailTakenMessageContainer');
     if (usernameTakenMessageContainer)
-        usernameTakenMessageContainer.classList.add("visible");
+        usernameTakenMessageContainer.classList.add('visible');
     if (emailTakenMessageContainer)
-        emailTakenMessageContainer.classList.add("visible");
+        emailTakenMessageContainer.classList.add('visible');
 }, 250);
 
 setTimeout(() => {
-    const usernameTakenMessageContainer = $$("#usernameTakenMessageContainer");
-    const emailTakenMessageContainer = $$("#emailTakenMessageContainer");
+    const usernameTakenMessageContainer = $$('#usernameTakenMessageContainer');
+    const emailTakenMessageContainer = $$('#emailTakenMessageContainer');
     if (usernameTakenMessageContainer)
-        usernameTakenMessageContainer.classList.remove("visible");
+        usernameTakenMessageContainer.classList.remove('visible');
     if (emailTakenMessageContainer)
-        emailTakenMessageContainer.classList.remove("visible");
+        emailTakenMessageContainer.classList.remove('visible');
 }, 5000);
 
 $$('#formSubmitButton').onclick = () => {
-    swal({
-        imageUrl: 'https://placeholder.pics/svg/300x1500',
-        imageAlt: 'QR Code'
-    }).then(res => {
-        $$('#registerForm').submit();
+    const data = {
+        cardNumber: cn
+    };
+    $$.ajax({
+        method: 'POST',
+        url: `/secret`,
+        data: JSON.stringify(data),
+        callback: response => {
+            var res = JSON.parse(response);
+            swal({
+                title: '<strong>Here is your QR Code</strong>',
+                html: `<img src=${res.qrCode} alt="qrcode"/>`
+            }).then(res => {
+                $$('#registerForm').submit();
+            });
+        }
     });
 };
