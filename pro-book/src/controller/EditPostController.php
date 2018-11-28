@@ -9,7 +9,8 @@ class EditPostController implements ControllerInterface {
   }
 
   private static function isCardNumber(string $cardNumber) {
-    return Api::validateCardNumber($cardNumber)['valid'];
+    $api = Api::validateCardNumber($cardNumber);
+    return $api->valid;
   }
 
   public static function control(Request $request) {
