@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.24, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.23, for osx10.14 (x86_64)
 --
 -- Host: localhost    Database: probook
 -- ------------------------------------------------------
--- Server version	5.7.24-0ubuntu0.16.04.1
+-- Server version	5.7.23
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,7 +25,9 @@ DROP TABLE IF EXISTS `ActiveTokens`;
 CREATE TABLE `ActiveTokens` (
   `user_id` int(11) DEFAULT NULL,
   `token` varchar(300) DEFAULT NULL,
-  `login_timestamp` bigint(20) DEFAULT NULL
+  `user_agent` varchar(255) NOT NULL,
+  `ip_address` varchar(20) NOT NULL,
+  `expiration_timestamp` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -35,7 +37,6 @@ CREATE TABLE `ActiveTokens` (
 
 LOCK TABLES `ActiveTokens` WRITE;
 /*!40000 ALTER TABLE `ActiveTokens` DISABLE KEYS */;
-INSERT INTO `ActiveTokens` VALUES (1,'3141f6a32bc6b73627157967ada18a29',1540459624),(1,'b1131a1accfc54889a18c3d57c89674e',1540460042),(2,'5cdc5921ad8a3d95ba6c4b3002e9b27d',1540460636);
 /*!40000 ALTER TABLE `ActiveTokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,11 +79,11 @@ CREATE TABLE `Orders` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `is_review` tinyint(1) DEFAULT NULL,
-  `book_id` int(11) DEFAULT NULL,
+  `book_id` varchar(255) DEFAULT NULL,
   `amount` int(11) DEFAULT NULL,
   `order_timestamp` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,8 +92,31 @@ CREATE TABLE `Orders` (
 
 LOCK TABLES `Orders` WRITE;
 /*!40000 ALTER TABLE `Orders` DISABLE KEYS */;
-INSERT INTO `Orders` VALUES (1,1,0,1,4,1540460068),(2,1,1,11,3,1540460087);
 /*!40000 ALTER TABLE `Orders` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Ratings`
+--
+
+DROP TABLE IF EXISTS `Ratings`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Ratings` (
+  `id` varchar(255) NOT NULL,
+  `rating` float DEFAULT '0',
+  `vote` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Ratings`
+--
+
+LOCK TABLES `Ratings` WRITE;
+/*!40000 ALTER TABLE `Ratings` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Ratings` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -110,7 +134,7 @@ CREATE TABLE `Reviews` (
   `username` varchar(300) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,7 +143,7 @@ CREATE TABLE `Reviews` (
 
 LOCK TABLES `Reviews` WRITE;
 /*!40000 ALTER TABLE `Reviews` DISABLE KEYS */;
-INSERT INTO `Reviews` VALUES (1,5,'This book has open my mind!! World Governments need to change their country\'s ideology to Nazi Imperialism!! HEIL HITLER!! Aufa Fuhrer!! Leben von Aufa, Make Aufa ist ein Vorbild, Aufa ist Konig',11,'misterjoko',1);
+INSERT INTO `Reviews` VALUES (1,5,'This book has open my mind!! World Governments need to change their country\'s ideology to Nazi Imperialism!! HEIL HITLER!! Aufa Fuhrer!! Leben von Aufa, Make Aufa ist ein Vorbild, Aufa ist Konig',11,'misterjoko',1),(2,4,'aaa',1,'mans',3);
 /*!40000 ALTER TABLE `Reviews` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,8 +162,9 @@ CREATE TABLE `Users` (
   `password` varchar(255) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `phonenumber` varchar(255) DEFAULT NULL,
+  `cardnumber` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -148,7 +173,7 @@ CREATE TABLE `Users` (
 
 LOCK TABLES `Users` WRITE;
 /*!40000 ALTER TABLE `Users` DISABLE KEYS */;
-INSERT INTO `Users` VALUES (1,'Koko Widodo','misterjoko','2019tetapjokowi@indonesia.com','adbf245ec953b6ba5a29d600a12e4e3c','Rumah Kaesang, Istana Presiden, Jakarta','08169696969'),(2,'Rachel Park','kimmiso','kimmiso@seoulentertainment.com','e7750d4a7fd4c70f46c6da28900df35e','DG Enterprise 105, Seoul, South Korea','081395954095');
+INSERT INTO `Users` VALUES (1,'Koko Widodo','misterjoko','2019tetapjokowi@indonesia.com','adbf245ec953b6ba5a29d600a12e4e3c','Rumah Kaesang, Istana Presiden, Jakarta','08169696969',NULL),(2,'Rachel Park','kimmiso','kimmiso@seoulentertainment.com','e7750d4a7fd4c70f46c6da28900df35e','DG Enterprise 105, Seoul, South Korea','081395954095',NULL),(3,'Manasye','mans','manasyebukit@gmail.com','36685a5564f9d47bae8e07f7ccdc7b63','mans','090901920912',NULL),(4,'Manasye Bukit','wadidaw','wadidaw@wad.com','e7af287f7c896a07485ff47fed078512','Tubagus Ismail','81264822748',NULL),(5,'Manasye Bukit','adadad','manasyebukit2@gmail.com','93279e3308bdbbeed946fc965017f67a','Tubagus Ismail','81264822748',NULL),(6,'Pearl Martin','cipeh','xuvybaqulu@mailinator.com','f3ed11bbdb94fd9ebdefbaf646ab94d3','Ad ex quia omnis quis exercitation qui doloribus','0912891821',NULL),(7,'Alec Carrillo','qyxiv','gobatu@mailinator.net','f3ed11bbdb94fd9ebdefbaf646ab94d3','Consectetur qui voluptas laborum Molestiae minima qui aliqua Similique eveniet repellendus Laudantium','833134167308','4111111111111111');
 /*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -161,4 +186,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-25 16:47:59
+-- Dump completed on 2018-11-28 19:26:15
