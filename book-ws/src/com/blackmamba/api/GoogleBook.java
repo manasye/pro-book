@@ -14,25 +14,25 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.*;
 
-import com.blackmamba.model.SoldDB;
-import com.blackmamba.model.Sold;
+//import com.blackmamba.model.SoldDB;
+//import com.blackmamba.model.Sold;
 import com.blackmamba.model.BookDB;
 import com.blackmamba.model.Book;
 import com.blackmamba.model.BookDetail;
 
 
-class SortbySold implements Comparator<Sold> {
-    // Used for sorting in ascending order of
-    // roll number
-    public int compare(Sold a, Sold b) {
-        return b.getCount() - a.getCount();
-    }
-}
+//class SortbySold implements Comparator<Book> {
+//    // Used for sorting in ascending order of
+//    // roll number
+//    public int compare(Book a, Book b) {
+//        return b.getSold() - a.getSold();
+//    }
+//}
 
-public class GoogleBook {
+public class GoogleBook extends BaseAPI {
     private String BASE_API_URL = "https://www.googleapis.com/books/v1/volumes";
     private BookDB bookDB;
-    private SoldDB soldDB;
+//    private SoldDB soldDB;
 
     private static String BOOK_TITLE = "Title Is Not Available!";
     private static String BOOK_AUTHOR = "-";
@@ -45,7 +45,7 @@ public class GoogleBook {
 
     public GoogleBook() {
         this.bookDB = new BookDB();
-        this.soldDB = new SoldDB();
+//        this.soldDB = new SoldDB();
     }
 
     private String parseSearchTerm(String searchTerm) throws UnsupportedEncodingException {
@@ -64,29 +64,29 @@ public class GoogleBook {
         return new URL(BASE_API_URL + "/" + bookId);
     }
 
-    private String parseInputStream(InputStreamReader inputStream) {
-        try {
-
-            BufferedReader in = new BufferedReader(inputStream);
-            StringBuffer response = new StringBuffer();
-            String inputLine;
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-
-            in.close();
-
-            return response.toString();
-
-        } catch (IOException ex) {
-
-            System.out.println(ex.getMessage());
-
-            return null;
-
-        }
-    }
+//    private String parseInputStream(InputStreamReader inputStream) {
+//        try {
+//
+//            BufferedReader in = new BufferedReader(inputStream);
+//            StringBuffer response = new StringBuffer();
+//            String inputLine;
+//
+//            while ((inputLine = in.readLine()) != null) {
+//                response.append(inputLine);
+//            }
+//
+//            in.close();
+//
+//            return response.toString();
+//
+//        } catch (IOException ex) {
+//
+//            System.out.println(ex.getMessage());
+//
+//            return null;
+//
+//        }
+//    }
 
     public List<BookDetail> searchBookByTitle(String title) {
         try {
@@ -271,8 +271,8 @@ public class GoogleBook {
 
     public BookDetail getRandomBookDetail() {
         try {
-            Sold sold = this.soldDB.getSoldRandom();
-            return this.getBookDetail(sold.getId());
+            Book book = this.bookDB.getBookRandom();
+            return this.getBookDetail(book.getId());
         } catch (Exception ex) {
             System.out.println("[ERROR getOneBookNoMatterWhat] " + ex.getMessage());
             return null;
@@ -284,13 +284,13 @@ public class GoogleBook {
             return null;
         }
 
-        List<Sold> soldList = this.soldDB.getHighestSoldByCategories(categories);
-        if (soldList == null) {
+        List<Book> bookList = this.bookDB.getHighestSoldBookByCategories(categories);
+        if (bookList == null) {
             return null;
-        } else if (soldList.size() > 0) {
+        } else if (bookList.size() > 0) {
             List<BookDetail> bookRecommendations = new ArrayList<>();
-            for (Sold sold : soldList) {
-                BookDetail curHighestSoldBookDetail = this.getBookDetail(sold.getId());
+            for (Book book : bookList) {
+                BookDetail curHighestSoldBookDetail = this.getBookDetail(book.getId());
                 if (curHighestSoldBookDetail != null) {
                     bookRecommendations.add(curHighestSoldBookDetail);
                 }

@@ -1,6 +1,7 @@
 Customer = require("../models/customer");
 
 module.exports = function(req, res, next) {
+    console.log(req.body);
     Customer.getByCardNumber(req.body.cardNumber)
         .then(customer => {
             req.body.customerAccount = customer;

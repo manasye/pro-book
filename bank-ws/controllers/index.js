@@ -4,5 +4,6 @@ var express = require("express"),
 router.use("/validate", require("./validate"));
 router.use("/payment", require("./payment"));
 router.use("/secret", require("./secret"));
+router.use("/healthz", require("./healthz"));
 
 module.exports = router;

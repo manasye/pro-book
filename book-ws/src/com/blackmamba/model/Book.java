@@ -7,10 +7,14 @@ import java.util.Objects;
 public class Book{
     private String id;
     private int price;
+    private String category;
+    private int sold;
 
-    public Book(String id, int price) {
+    public Book(String id, int price, String category, int sold) {
         this.id = id;
         this.price = price;
+        this.category = category;
+        this.sold = sold;
     }
 
     public String getId() {
@@ -29,13 +33,31 @@ public class Book{
         this.price = price;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public int getSold() {
+        return sold;
+    }
+
+    public void setSold(int sold) {
+        this.sold = sold;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
         return price == book.price &&
-                Objects.equals(id, book.id);
+                sold == book.sold &&
+                Objects.equals(id, book.id) &&
+                Objects.equals(category, book.category);
     }
 
     @Override
@@ -43,6 +65,8 @@ public class Book{
         return "Book{" +
                 "id='" + id + '\'' +
                 ", price=" + price +
+                ", category='" + category + '\'' +
+                ", sold=" + sold +
                 '}';
     }
 }
