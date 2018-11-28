@@ -1,5 +1,7 @@
 import $$ from './lib/jQowi.js';
 
+const merchantSecret = 'JokowiMaruf2019';
+
 const invalidNameMessage =
     'Name must be a valid person name with less than 20 characters';
 const invalidUsernameMessage =
@@ -33,6 +35,8 @@ let emailValidationRequest;
 let cardNumberValidationRequest;
 
 let submitButtonHovered = false;
+let imageQRCode = '';
+let cn;
 
 function isName(value) {
     const re = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
@@ -208,6 +212,7 @@ function validateEmail(_) {
 
 function validateCardNumber(_) {
     const cardNumber = event.target.value;
+    cn = cardNumber;
     const cardNumberValidationIcon = $$('#formCardNumberValidationIcon');
     const submitButton = $$('#formSubmitButton');
     cardNumberValidationIcon.style.opacity = 1;
@@ -216,13 +221,15 @@ function validateCardNumber(_) {
         submitButton.disabled = true;
         cardNumberValid = false;
         cardNumberValidationMessage = checkingCardNumberMessage;
-        let baseURL = 'http://localhost:1111/production';
+        const data = {
+            cardnumber: cardNumber
+        };
         cardNumberValidationRequest = $$.ajax({
-            method: 'GET',
-            url: `${baseURL}/validate?cardNumber=${cardNumber}`,
+            method: 'POST',
+            url: `/cardnumber`,
+            data: JSON.stringify(data),
             callback: response => {
                 response = JSON.parse(response);
-                console.log(response);
                 const cardNumberValidationIcon = $$(
                     '#formCardNumberValidationIcon'
                 );
@@ -292,3 +299,23 @@ setTimeout(() => {
     if (emailTakenMessageContainer)
         emailTakenMessageContainer.classList.remove('visible');
 }, 5000);
+
+$$('#formSubmitButton').onclick = () => {
+    const data = {
+        cardNumber: cn
+    };
+    $$.ajax({
+        method: 'POST',
+        url: `/secret`,
+        data: JSON.stringify(data),
+        callback: response => {
+            var res = JSON.parse(response);
+            swal({
+                title: '<strong>Here is your QR Code</strong>',
+                html: `<img src=${res.qrCode} alt="qrcode"/>`
+            }).then(res => {
+                $$('#registerForm').submit();
+            });
+        }
+    });
+};

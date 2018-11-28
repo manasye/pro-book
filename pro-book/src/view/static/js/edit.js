@@ -38,13 +38,15 @@ function validateCardNumber(_) {
         submitButton.disabled = true;
         cardNumberValid = false;
         cardNumberValidationMessage = checkingCardNumberMessage;
-        let baseURL = 'http://localhost:1111/production';
+        const data = {
+            cardnumber: cardNumber
+        };
         cardNumberValidationRequest = $$.ajax({
-            method: 'GET',
-            url: `${baseURL}/validate?cardNumber=${cardNumber}`,
+            method: 'POST',
+            url: `/cardnumber`,
+            data: JSON.stringify(data),
             callback: response => {
                 response = JSON.parse(response);
-                console.log(response);
                 if (response.valid) {
                     submitButton.disabled = false;
                     cardNumberValid = true;

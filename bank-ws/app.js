@@ -5,6 +5,6 @@ var express = require('express'),
 app.use(bodyParser.json());
 app.use('/production', require('./controllers'));
 
-app.listen(process.env.DB_PORT, function() {
-    console.log(`Listening on port ${process.env.DB_PORT}...`);
+app.listen(process.env.PORT, function() {
+    console.log(`Listening on port ${process.env.PORT}...`);
 });

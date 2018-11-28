@@ -5,17 +5,22 @@ var express = require("express"),
     merchantMiddleware = require("../middlewares/merchantMiddleware");
 
 router.post("/", [customerMiddleware, merchantMiddleware], function(req, res) {
-    var otpauth_url =
-        "otpauth://totp/SecretKey?secret=" + req.body.customerAccount.secret;
-    QRCode.toDataURL(otpauth_url, function(err, image_data) {
-        image_data = image_data.split(",")[1];
-        var img = new Buffer(image_data, "base64");
-        res.writeHead(200, {
-            "Content-Type": "image/png",
-            "Content-Length": img.length
+    try {
+        var otpauth_url =
+            "otpauth://totp/SecretKey?secret=" + req.body.customerAccount.secret;
+        QRCode.toDataURL(otpauth_url, function(err, image_data) {
+            res.json({
+                success: true,
+                message: "Here's the QRCode",
+                qrCode: image_data
+            });
         });
-        res.end(img);
-    });
+    } catch(e) {
+        res.json({
+            success: false,
+            message: "Failed"
+        })
+    }
 });
 
 module.exports = router;

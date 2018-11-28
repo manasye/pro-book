@@ -1,5 +1,5 @@
-Merchant = require("../models/merchant");
-Customer = require("../models/customer");
+Merchant = require('../models/merchant');
+Customer = require('../models/customer');
 
 module.exports = function(req, res, next) {
     Merchant.getBySecret(req.body.merchantSecret)
@@ -15,10 +15,10 @@ module.exports = function(req, res, next) {
             next();
         })
         .catch(error => {
-            console.log("[ERROR]: " + error.message);
+            console.log('[ERROR]: ' + error.message);
             res.json({
                 success: true,
-                message: "Merchant Secret invalid"
+                message: 'Merchant Secret invalid'
             });
         });
 };

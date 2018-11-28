@@ -95,6 +95,7 @@ $router->get('/email', function($request) {
   return json_encode(Api::validateEmail($request->email));
 });
 
+
 $router->get('/search-book', function($request) {
   return json_encode(Api::getBooksFromTitle($request->title));
 });
@@ -104,3 +105,10 @@ $router->post('/order', function($request) {
   return json_encode(Api::order($request));
 }, [new TokenValidationMiddleware, new ApiAuthMiddleware]);
 
+$router->post('/cardnumber', function($request) {
+  return json_encode(Api::validateCardNumber((string)$request->cardnumber));
+});
+
+$router->post('/secret', function($request) {
+  return json_encode(Api::getSecretImage((string)$request->cardnumber));
+});

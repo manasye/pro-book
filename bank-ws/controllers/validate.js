@@ -1,8 +1,9 @@
 var express = require('express'),
     router = express.Router(),
-    Customer = require('../models/customer');
+    Customer = require('../models/customer'),
+    customerMiddleware = require('../middlewares/customerMiddleware');
 
-router.post('/', function(req, res) {
+router.post('/', customerMiddleware, function(req, res) {
     Customer.getByCardNumber(req.body.cardNumber)
         .then(customer => {
             console.log(customer.dataValues);
