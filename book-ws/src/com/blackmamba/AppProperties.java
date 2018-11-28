@@ -8,6 +8,6 @@ public class AppProperties extends Properties {
 
         this.setProperty("MYSQL_URL", "jdbc:mysql://localhost:3306/bookws?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
         this.setProperty("MYSQL_USER", "root");
-        this.setProperty("MYSQL_PASSWORD", "");
+        this.setProperty("MYSQL_PASSWORD", "root");
     }
 }
