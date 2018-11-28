@@ -99,7 +99,8 @@ function render_template(string $username) {
                                 <h4 class="book-title">{{book.title}}</h4>
                               </div>
                               <div class="col-1-of-2">
-                                <h4 class="book-price" ng-class="{'book-price-red': book.price === -1}">{{ book.price === -1 ? 'Not For Sale' : 'Rp ' + book.price }}</h4>
+                                <h4 class="book-price" ng-class="{'book-price-red': book.price === -1}">
+                                  {{ book.price === -1 ? 'Not For Sale' : 'Rp ' + book.price }}</h4>
                               </div>
                             </div>
                            <h4 class="book-author">{{book.author}} - 0.0 / 5.0 (0 vote)</h4>

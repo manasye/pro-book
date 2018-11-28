@@ -21,10 +21,12 @@ browseApp.controller('mainController', [
                     $scope.isLoading = false;
                     $scope.searched = true;
                     $scope.books.forEach((part, index) => {
-                        // Format price to be better readable
-                        $scope.books[index].price = numeral(
-                            $scope.books[index].price
-                        ).format('0,0');
+                        if ($scope.books[index].price !== -1) {
+                            // Format price to be better readable
+                            $scope.books[index].price = numeral(
+                                $scope.books[index].price
+                            ).format('0,0');
+                        }
                     });
                 })
                 .error((data, status) => {

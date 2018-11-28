@@ -7,10 +7,13 @@ const invalidPhoneNumberMessage =
     'Phone number must be a number with 9 to 12 digits';
 const invalidImageMessage = 'Image must be in JPG format';
 const invalidCardNumberMessage = 'Card number is not valid';
+const checkingCardNumberMessage = 'Checking card number validity';
 
 let submitButtonHovered = false;
 let imageSelected = false;
 let cardNumberValidationRequest;
+let cardNumberValid = false;
+let cardNumberValidationMessage = invalidCardNumberMessage;
 
 function isName(value) {
     const re = /^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/;
@@ -26,34 +29,40 @@ function isJPG(value) {
     return value.endsWith('.jpg');
 }
 
-function isValidCardNumber(value) {
+function validateCardNumber(_) {
+    const cardNumber = event.target.value;
+    const submitButton = $$('#submitButton');
+
     if (cardNumberValidationRequest) cardNumberValidationRequest.abort();
-    let baseURL = 'http://localhost:1111/production';
-    let result = false;
-    cardNumberValidationRequest = $$.ajax({
-        method: 'GET',
-        url: `${baseURL}/validate?cardNumber=${cardNumber}`,
-        callback: response => {
-            response = JSON.parse(response);
-            console.log(response);
-            const cardNumberValidationIcon = $$(
-                '#formCardNumberValidationIcon'
-            );
-            const submitButton = $$('#formSubmitButton');
-            if (response.valid) {
-                cardNumberValidationIcon.src =
-                    'src/view/static/img/icon_success.svg';
-                submitButton.disabled = false;
-                cardNumberValid = true;
-            } else {
-                cardNumberValidationIcon.src =
-                    'src/view/static/img/icon_failed.svg';
-                submitButton.disabled = true;
-                cardNumberValid = false;
-                cardNumberValidationMessage = invalidCardNumberMessage;
+    if (isNum(cardNumber)) {
+        submitButton.disabled = true;
+        cardNumberValid = false;
+        cardNumberValidationMessage = checkingCardNumberMessage;
+        let baseURL = 'http://localhost:1111/production';
+        cardNumberValidationRequest = $$.ajax({
+            method: 'GET',
+            url: `${baseURL}/validate?cardNumber=${cardNumber}`,
+            callback: response => {
+                response = JSON.parse(response);
+                console.log(response);
+                if (response.valid) {
+                    submitButton.disabled = false;
+                    cardNumberValid = true;
+                } else {
+                    submitButton.disabled = true;
+                    cardNumberValid = false;
+                    cardNumberValidationMessage = invalidCardNumberMessage;
+                }
+                validateInput(null);
             }
-        }
-    });
+        });
+    } else {
+        cardNumberValidationIcon.src = 'src/view/static/img/icon_failed.svg';
+        submitButton.disabled = true;
+        cardNumberValid = false;
+        cardNumberValidationMessage = invalidCardNumberMessage;
+    }
+    validateInput(null);
 }
 
 function showInputValidationMessage() {
@@ -98,13 +107,13 @@ function validateInput(_) {
         submitButton.disabled = true;
         updateInputValidationMessage(invalidPhoneNumberMessage);
         if (submitButtonHovered) showInputValidationMessage();
-    } else if (!isValidCardNumber(cardNumberField)) {
-        submitButton.disabled = true;
-        updateInputValidationMessage(invalidCardNumberMessage);
-        if (submitButtonHovered) showInputValidationMessage();
     } else if (imageSelected && !isJPG(imagePath)) {
         submitButton.disabled = true;
         updateInputValidationMessage(invalidImageMessage);
+        if (submitButtonHovered) showInputValidationMessage();
+    } else if (!cardNumberValid) {
+        submitButton.disabled = true;
+        updateInputValidationMessage(invalidCardNumberMessage);
         if (submitButtonHovered) showInputValidationMessage();
     } else {
         submitButton.disabled = false;
@@ -130,6 +139,7 @@ $$('#fileToUpload').onchange = () => {
 $$('#nameField').oninput = validateInput;
 $$('#addressField').oninput = validateInput;
 $$('#phoneNumberField').oninput = validateInput;
+$$('#cardNumberField').oninput = validateCardNumber;
 
 $$('#submitButtonContainer').onmouseenter = () => {
     if ($$('#submitButton').disabled) {
