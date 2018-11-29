@@ -27,44 +27,16 @@ $$('#orderButton').onclick = () => {
                 callback: response => {
                     let res = JSON.parse(response);
                     console.log(res);
-                    // if (res.message !== 'Merchant Secret invalid')
-                    //     $$('#qr-code').src = res.qrCode;
-                    // else
-                    //     $$('#qr-code').src =
-                    //         'https://image.flaticon.com/icons/svg/8/8235.svg';
+                    if (!res.success) {
+                        swal('ERROR', res.message, 'error');
+                    } else {
+                        swal('SUCCESS', res.message, 'success');
+                    }
                 }
             });
         },
         allowOutsideClick: () => !swal.isLoading()
-    }).then(result => {
-        // if (result.value) {
-        //     swal({
-        //         title: `${result.value.login}'s avatar`,
-        //         imageUrl: result.value.avatar_url
-        //     });
-        // }
     });
-    // $$('#orderButton').disabled = true;
-    // const data = {
-    //   'book_id': parseInt($$('#bookIdField').value, 10),
-    //   'quantity': parseInt($$('#orderQuantitySelector').value, 10)
-    // }
-    // $$.ajax({
-    //   method: 'POST',
-    //   url: '/order',
-    //   data: JSON.stringify(data),
-    //   callback: (response) => {
-    //     response = JSON.parse(response);
-    //     $$('#orderButton').disabled = false;
-    //     $$('#purchaseMessagePopupText').innerHTML = 'Transaction Number: ' + response.orderNumber;
-    //     $$('#purchaseMessageBackground').style.zIndex = 2;
-    //     $$('#purchaseMessagePopup').style.zIndex = 2;
-    //     setTimeout(() => {
-    //       $$('#purchaseMessageBackground').classList.add('visible');
-    //       $$('#purchaseMessagePopup').classList.add('visible');
-    //     }, 100);
-    //   },
-    // })
 };
 
 $$('#purchaseMessagePopupCloseButton').onclick = () => {
