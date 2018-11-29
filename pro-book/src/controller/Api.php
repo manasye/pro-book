@@ -9,7 +9,7 @@ class Api {
     $db = new MarufDB();
     return array('valid' => (bool) $db->validateEmail($email));
   }
-  
+
   public static function validateCardNumber(string $cardNumber) {
     $data = json_encode(array('cardNumber' => $cardNumber));
     $curl = curl_init();
@@ -19,9 +19,9 @@ class Api {
       CURLOPT_RETURNTRANSFER => 1,
       CURLOPT_POST => 1,
       CURLOPT_POSTFIELDS => $data,
-      CURLOPT_HTTPHEADER => array(                                                                          
-        'Content-Type: application/json',                                                                                
-        'Content-Length: ' . strlen($data))                                                                       
+      CURLOPT_HTTPHEADER => array(
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($data))
       )
     );
     $exec = curl_exec($curl);
@@ -31,13 +31,13 @@ class Api {
   }
 
   public static function getBooksFromTitle(string $title) {
-    $options = array( 
-    'cache_wsdl'=>WSDL_CACHE_NONE 
-    ); 
+    $options = array(
+    'cache_wsdl'=>WSDL_CACHE_NONE
+    );
 
     $db = new MarufDB();
 
-    $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options); 
+    $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options);
     $results = $soapClient->searchTitle($title)->bookList;
     $ret = array();
     foreach($results as $key => $book) {
@@ -67,9 +67,9 @@ class Api {
       CURLOPT_RETURNTRANSFER => 1,
       CURLOPT_POST => 1,
       CURLOPT_POSTFIELDS => $data,
-      CURLOPT_HTTPHEADER => array(                                                                          
-        'Content-Type: application/json',                                                                                
-        'Content-Length: ' . strlen($data))                                                                       
+      CURLOPT_HTTPHEADER => array(
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($data))
       )
     );
     $exec = curl_exec($curl);
@@ -97,12 +97,12 @@ class Api {
     $options = array(
       'cache_wsdl'=>WSDL_CACHE_NONE
     );
-    
+
     $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options);
     $res = $soapClient->buyBook($cardNumber, $token, $bookId, $amount);
     if (!$res->success) {
       $db->deleteOrder($orderId);
-    } 
+    }
     return $res;
   }
 
@@ -130,7 +130,7 @@ class Api {
 
       // If not exist, register with that email, and login with it
 
-      $result = $db->addProfileGoogle($name, $username, $email, 'Not assigned', 'Not assigned', 
+      $result = $db->addProfileGoogle($name, $username, $email, 'Not assigned', 'Not assigned',
         'Not assigned', 'Not assigned', $image);
 
       if ($result == 1) {
