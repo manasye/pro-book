@@ -4,6 +4,6 @@
 
     <endpoint
             name='HelloWorld'
-            implementation='com.blackmamba.endpoint.BookWSPublisher'
-            url-pattern='/services/HelloWorld'/>
+            implementation='com.blackmamba.ws.BookWS'
+            url-pattern='/ws/book'/>
 </endpoints>
