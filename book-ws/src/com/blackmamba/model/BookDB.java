@@ -51,12 +51,12 @@ public class BookDB extends BaseModel {
         }
     }
 
-    public boolean incrementBookSold(String id) {
+    public boolean addBookSold(String id, int amount) {
         Book book = this.getBookById(id);
         if (book == null) {
             return false;
         }
-        book.setSold(book.getSold() + 1);
+        book.setSold(book.getSold() + amount);
         this.updateBook(book);
         return true;
     }
