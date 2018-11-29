@@ -168,6 +168,16 @@ class MarufDB {
     }
   }
 
+  public function addProfileGoogle($name, $username, $email, $password, $address, $phonenumber, $cardnumber, $imageurl) {
+    if ($this->validateUsername($username) == 1 && $this->validateEmail($email) == 1){
+      $query = $this->pdo->prepare("INSERT INTO Users (name, username, email, password, address, phonenumber, cardnumber, imageurl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+      $query->execute(array($name, $username, $email, md5($password), $address, $phonenumber, $cardnumber, $imageurl));
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
   public function editProfile($name, $address, $phonenumber, $user_id, $card_number) {
     try {
       $query = $this->pdo->prepare("UPDATE Users SET name = ?, address = ?, phonenumber = ?, cardnumber = ? WHERE id = ?");

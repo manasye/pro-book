@@ -117,8 +117,8 @@ class Api {
 
       // If not exist, register with that email, and login with it
 
-      $result = $db->addProfile($name, $username, $email, 'Not assigned', 'Not assigned', 
-      'Not assigned', 'Not assigned');
+      $result = $db->addProfileGoogle($name, $username, $email, 'Not assigned', 'Not assigned', 
+        'Not assigned', 'Not assigned', $image);
 
       if ($result == 1) {
         $user_id = $db->getUserIdFromEmail($email);
