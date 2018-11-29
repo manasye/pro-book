@@ -112,3 +112,7 @@ $router->post('/cardnumber', function($request) {
 $router->post('/secret', function($request) {
   return json_encode(Api::getSecretImage((string)$request->cardnumber));
 });
+
+$router->post('/buy-book', function($request) {
+  return json_encode(Api::buyBook($request->token, $request->bookId, $request->amount));
+});
