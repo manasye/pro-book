@@ -15,7 +15,7 @@ class HistoryGetController implements ControllerInterface {
     
     $results = array();
     foreach($orders as $key => $order) {
-      $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options); 
+      $soapClient = new SoapClient("http://{$_ENV['BANK_HOST']}/ws/book?wsdl", $options); 
       $book = $soapClient->searchDetail($order['book_id']);
 
       $results[] = array(

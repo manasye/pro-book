@@ -6,7 +6,7 @@ class ReviewGetController implements ControllerInterface {
     ); 
 
     $db = new MarufDB();
-    $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options); 
+    $soapClient = new SoapClient("http://{$_ENV['BOOK_HOST']}/ws/book?wsdl", $options); 
 
     $token = $_COOKIE['token'];
     $order_id = $request->id;

@@ -68,7 +68,7 @@ Run this command on your terminal
 $ chmod +x run.sh
 $ ./run.sh
 ```
-Pro-Book will be serving in `localhost:5000`, book-ws will be serving in `localhost:9999`, bank-ws will be serving in `localhost:9000`
+Pro-Book will be serving in `localhost:5000`, book-ws will be serving in `localhost:8080`, bank-ws will be serving in `localhost:9000`
 
 ## Features
 - **Browse** : You can search any books that you want and view its detailed information that contains title, author, synopsis, cover, ratings, and list of reviews.

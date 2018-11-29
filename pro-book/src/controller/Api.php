@@ -37,7 +37,7 @@ class Api {
 
     $db = new MarufDB();
 
-    $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options);
+    $soapClient = new SoapClient("http://{$_ENV['BANK_HOST']}/ws/book?wsdl", $options);
     $results = $soapClient->searchTitle($title)->bookList;
     $ret = array();
     foreach($results as $key => $book) {
@@ -98,7 +98,7 @@ class Api {
       'cache_wsdl'=>WSDL_CACHE_NONE
     );
 
-    $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options);
+    $soapClient = new SoapClient("http://{$_ENV['BANK_HOST']}/ws/book?wsdl", $options);
     $res = $soapClient->buyBook($cardNumber, $token, $bookId, $amount);
     if (!$res->success) {
       $db->deleteOrder($orderId);
