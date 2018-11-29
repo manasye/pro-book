@@ -139,11 +139,23 @@ class MarufDB {
   }
 
   public function orderBook($book_id, $user_id, $amount, $order_timestamp) {
+    // TODO: isi supaya transaction
     $query = $this->pdo->prepare("INSERT INTO Orders (user_id, book_id, amount, order_timestamp, is_review) VALUES (?, ?, ?, ?, 0)");
     $query->execute(array($user_id, $book_id, $amount, $order_timestamp));
     $query = $this->pdo->prepare("SELECT id FROM Orders WHERE book_id = ? AND user_id = ? ORDER BY id DESC LIMIT 1");
     $query->execute(array($book_id, $user_id));
     return $query->fetch()['id'];
+  }
+
+  public function deleteOrder($order_id) {
+    // TODO: isi supaya transaction
+    try {
+      $query = $this->pdo->prepare("DELETE FROM Orders WHERE id = ?");
+      $query->execute(array($order_id));
+      return 1;
+    } catch(Exception $error) {
+      throw new Exception('Failed to delete Order');
+    }
   }
 
   public function addProfile($name, $username, $email, $password, $address, $phonenumber, $cardnumber) {
@@ -167,7 +179,7 @@ class MarufDB {
   }
 
   public function getHistory($user_id) {
-    $query = $this->pdo->prepare("SELECT Orders.id as order_id, Ratings.id as book_id, order_timestamp, is_review, title, amount  FROM Orders JOIN Ratings ON Orders.book_id = Ratings.id WHERE user_id = ? ORDER BY Orders.id DESC");
+    $query = $this->pdo->prepare("SELECT Orders.id as order_id, Ratings.id as book_id, order_timestamp, is_review, amount  FROM Orders JOIN Ratings ON Orders.book_id = Ratings.id WHERE user_id = ? ORDER BY Orders.id DESC");
     $query->execute(array($user_id));
     return $query->fetchAll();
   }

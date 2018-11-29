@@ -60,27 +60,37 @@ class Api {
     return $result;
   }
 
-  public static function order(Request $request) {
-    $db = new MarufDB();
-    $bookId = $request->bookid;
-    $userId = $db->getUserId($_COOKIE['token']);
-    $amount = $request->amount;
-    return array(
-      'orderNumber' => $db->orderBook($bookId, $userId, $amount, time())
-    );
-  }
+  // public static function order(Request $request) {
+  //   $db = new MarufDB();
+  //   $bookId = $request->bookid;
+  //   $userId = $db->getUserId($_COOKIE['token']);
+  //   $amount = $request->amount;
+  //   return array(
+  //     'orderNumber' => $db->orderBook($bookId, $userId, $amount, time())
+  //   );
+  // }
 
   public static function buyBook($token, $bookId, $amount) {
     $db = new MarufDB();
     $user = $db->getUser($_COOKIE['token']);
     $cardNumber = $user['cardnumber'];
+    $orderId = $db->orderBook($bookId, $user['id'], $amount, time());
 
     $options = array(
       'cache_wsdl'=>WSDL_CACHE_NONE
     );
     
     $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options);
-    return $soapClient->buyBook($cardNumber, $token, $bookId, $amount);
+    $res = $soapClient->buyBook($cardNumber, $token, $bookId, $amount);
+    if ($res->success) {
+      return $res;
+    } else {
+      $db->deleteOrder($orderId);
+      return array(
+        "success" => false,
+        "message" => "Failed to buy book"
+      );
+    }
   }
 
   public static function googleLogin($id, $name, $username, $image, $email) {

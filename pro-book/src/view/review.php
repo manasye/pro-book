@@ -1,7 +1,7 @@
 <?php
 function render_template(string $username, $book, $user_id, $order_id) {
-  $img_name = "src/model/books/".$book['id'].".jpg";
-  $book_id = $book['id'];
+  $img_name = $book->imageUrl;
+  $book_id = $book->id;
   $template = <<<HTML
 
 <!DOCTYPE html>
@@ -17,7 +17,7 @@ function render_template(string $username, $book, $user_id, $order_id) {
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <meta name="google-signin-client_id" content="320134199127-rqu56mi4kr6h0ekkbrejr00agenerb3p.apps.googleusercontent.com">
   <link rel="stylesheet" href="src/view/static/css/fonts.css" type='text/css'>
-  <title>{$book['title']} - History</title>
+  <title>{$book->title} - History</title>
 </head>
 <body>
   <div id='inputValidationMessageContainer' class='main-input-validation-message-container'>
@@ -81,8 +81,8 @@ function render_template(string $username, $book, $user_id, $order_id) {
       <div class='review-content-container'>
         <div class='review-book-container'>
           <div class='review-book-left-container'>
-            <h3 class='review-book-title'>{$book['title']}</h3>
-            <h4 class='review-book-author'>{$book['author']}</h4>
+            <h3 class='review-book-title'>{$book->title}</h3>
+            <h4 class='review-book-author'>{$book->author}</h4>
           </div>
           <div class='review-book-right-container'>
             <div class='review-book-image-container'>

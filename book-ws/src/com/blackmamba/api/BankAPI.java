@@ -147,9 +147,9 @@ public class BankAPI extends BaseAPI {
 
         if (!this.bookDB.addBookSold(bookId, bookQuantity)) {
             System.out.println("[ERROR makeTransaction] - fail increment sold for book " + bookId);
-            return new TransactionResponse(false, "Transaction failed");
+            return new TransactionResponse(false, "Server error");
         }
 
-        return new TransactionResponse(true, "Transaction succeeded");
+        return new TransactionResponse(true, "Your book has been ordered!");
     }
 }
