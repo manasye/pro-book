@@ -88,7 +88,7 @@ class Api {
       $db->deleteOrder($orderId);
       return array(
         "success" => false,
-        "message" => "Failed to buy book"
+        "message" => $res->message
       );
     }
   }
