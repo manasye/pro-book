@@ -24,7 +24,7 @@ public class GoogleBookAPI extends BaseAPI {
     private BookDB bookDB;
 
     private static String BOOK_TITLE = "Title Is Not Available!";
-    private static String BOOK_AUTHOR = "-";
+    private static String BOOK_AUTHOR = "Author not found";
     private static String BOOK_CATEGORY = "Others";
     private static String BOOK_DESCRIPTION = "Description Is Not Available";
     private static String BOOK_IMAGE_URL = "https://bennetts.co.nz/wp-content/uploads/placeholder2.png";
