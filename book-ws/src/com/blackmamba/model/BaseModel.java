@@ -1,12 +1,12 @@
 package com.blackmamba.model;
 
+import com.blackmamba.AppProperties;
+import io.github.cdimascio.dotenv.Dotenv;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
-
-import com.blackmamba.AppProperties;
-import io.github.cdimascio.dotenv.Dotenv;
 
 public class BaseModel {
     private String url;
