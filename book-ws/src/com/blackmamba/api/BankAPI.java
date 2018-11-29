@@ -135,14 +135,14 @@ public class BankAPI extends BaseAPI {
         int transactionAmount = this.getTransactionAmount(bookId, bookAmount);
         if (transactionAmount == BankAPI.MISSING_BOOK_PRICE) {
             System.out.println("[ERROR makeTransaction] - book not found");
-            return new TransactionResponse(false, "Book " + bookId + " not found");
+            return new TransactionResponse(false, "Book not found");
         }
 
         JSONObject paymentJsonObject = this.makePayment(cardNumber, token, transactionAmount);
         String paymentResponseMessage = this.getPaymentResponseMessage(paymentJsonObject);
         if (paymentJsonObject == null || !this.isPaymentSucceed(paymentJsonObject)) {
             System.out.println("[ERROR makeTransaction] - payment failed");
-            return new TransactionResponse(false, "Payment failed - " + paymentResponseMessage);
+            return new TransactionResponse(false, paymentResponseMessage);
         }
 
         if (!this.bookDB.addBookSold(bookId, bookAmount)) {
@@ -150,6 +150,6 @@ public class BankAPI extends BaseAPI {
             return new TransactionResponse(false, "Transaction failed");
         }
 
-        return new TransactionResponse(true, "Transaction succeed");
+        return new TransactionResponse(true, "Transaction succeeded");
     }
 }
