@@ -14,6 +14,7 @@ function render_template(bool $invalidUsername = true, bool $invalidEmail = true
   <script type='module' src='src/view/static/js/register.js'></script>
   <link rel="stylesheet" href="src/view/static/css/fonts.css" type='text/css'>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.all.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.min.css">
   <title>Register</title>
 </head>
 <body>

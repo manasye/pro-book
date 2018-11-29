@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 import com.blackmamba.AppProperties;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class BaseModel {
     private String url;
@@ -14,9 +15,14 @@ public class BaseModel {
 
     public BaseModel() {
         Properties appProperties = new AppProperties();
-        this.url = appProperties.getProperty("MYSQL_URL");
-        this.user = appProperties.getProperty("MYSQL_USER");
-        this.password = appProperties.getProperty("MYSQL_PASSWORD");
+
+        Dotenv dotenv = Dotenv.load();
+        this.url = dotenv.get("MYSQL_URL");
+        this.user = dotenv.get("MYSQL_USER");
+        this.password = dotenv.get("MYSQL_PASSWORD");
+//        this.url = appProperties.getProperty("MYSQL_URL");
+//        this.user = appProperties.getProperty("MYSQL_USER");
+//        this.password = appProperties.getProperty("MYSQL_PASSWORD");
     }
 
     public BaseModel(String url, String user, String password) {

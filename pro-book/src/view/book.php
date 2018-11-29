@@ -179,6 +179,8 @@ HTML;
       <link rel='stylesheet' href='src/view/static/css/grid.css'>
       <script type='module' src='src/view/static/js/main.js'></script>
       <script type='module' src='src/view/static/js/book.js'></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.all.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.min.css"></script>
       <link rel="stylesheet" href="src/view/static/css/fonts.css" type='text/css'>
       <title>{$book->title} - Browse</title>
    </head>

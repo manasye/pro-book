@@ -9,6 +9,5 @@ module.exports = function(req, res, next) {
         encoding: "base32",
         token: userToken
     });
-    console.log(verified);
     next();
 };
