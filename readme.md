@@ -51,8 +51,9 @@ Before we run the Pro-Book, we have to setup every `.env` file and database inst
 
 To initialize the `.env` file,
 ```
-$ cp bankws/env.sample bankws/.env          # Modify .env file with your own setting
+$ cp bank-ws/env.sample bank-ws/.env          # Modify .env file with your own setting
 $ cp pro-book/ethes.sample pro-book/.ethes  # Modify .ethes file with your own setting
+$ cp book-ws/ethes.sample book-ws/.ethes  # Modify .ethes file with your own setting
 ```
 
 To initialize the database,
