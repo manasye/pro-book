@@ -11,7 +11,8 @@ class BookGetController implements ControllerInterface {
     $recommendation = $soapClient->getBookRecommendation(explode("/", $book->category));
     // $recommendation = $soapClient->getBookRecommendation(['Other']);
     $reviews = $db->getReviews($book->id);
+    $rating = $db->getRatings($book->id);
     $template = new Template('src/view/book.php');
-    return $template->render($username, $book, $reviews, $recommendation);
+    return $template->render($username, $book, $reviews, $rating, $recommendation);
   }
 }

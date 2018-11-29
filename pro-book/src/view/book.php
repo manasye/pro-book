@@ -1,5 +1,5 @@
 <?php
-function render_template(string $username, $book, $reviews, $recommendation) {
+function render_template(string $username, $book, $reviews, $ratings, $recommendation) {
   $reviewsHTML = "";
   $bookId = $book->id;
   $bookImagePath = $book->imageUrl;
@@ -104,7 +104,10 @@ HTML;
   }
 
   // $rating = round($book['rating'], 1);
-  $rating = 0;
+  $rating = $ratings['rating'];
+  if(is_null($rating)) {
+     $rating = 0;
+  }
   $intRating = round($rating, 0, PHP_ROUND_HALF_UP);
 
   $ratingText = "" . $rating;
@@ -134,6 +137,7 @@ HTML;
       $profileImagePath = 'src/model/profile/avatar_default.jpg';
     }
 
+    $r = round($rating, 1);
     $reviewHTML = <<<HTML
 
 <div class='book-review-item-container'>
@@ -149,7 +153,7 @@ HTML;
   <div class='book-review-item-right-container'>
     <div class='book-review-item-rating-container'>
       <div class='book-review-item-rating-icon'></div>
-      <p class='book-review-item-rating-text'>{$review['rating']}.0 / 5.0</p>
+      <p class='book-review-item-rating-text'>{$r} / 5</p>
     </div>
   </div>
 </div>

@@ -103,7 +103,7 @@ function render_template(string $username) {
                                   {{ book.price === -1 ? 'Not For Sale' : 'Rp ' + book.price }}</h4>
                               </div>
                             </div>
-                           <h4 class="book-author">{{book.author}} - 0.0 / 5.0 (0 vote)</h4>
+                           <h4 class="book-author">{{book.author}} - {{book.rating}} / 5 ({{book.votes}} vote)</h4>
                            <p class="book-description">{{book.description.length > 300 ? 
                            book.description.substring(0, 300) + '...' : book.description}}</p>
                         </div>

@@ -207,4 +207,10 @@ class MarufDB {
     $query->execute(array($book_id));
     return $query->fetchAll();
   }
+
+  public function getRatings($book_id) {
+    $query = $this->pdo->prepare("SELECT * FROM Ratings WHERE id = ?");
+    $query->execute(array($book_id));
+    return $query->fetchAll()[0];
+  }
 }

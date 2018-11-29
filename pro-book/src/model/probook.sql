@@ -104,7 +104,7 @@ CREATE TABLE `Reviews` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `rating` float DEFAULT NULL,
   `comment` varchar(500) DEFAULT NULL,
-  `book_id` int(11) DEFAULT NULL,
+  `book_id` varchar(20) DEFAULT NULL,
   `username` varchar(300) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)

@@ -35,9 +35,27 @@ class Api {
     'cache_wsdl'=>WSDL_CACHE_NONE 
     ); 
 
-    $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options); 
+    $db = new MarufDB();
 
-    return $soapClient->searchTitle($title);
+    $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options); 
+    $results = $soapClient->searchTitle($title)->bookList;
+    $ret = array();
+    foreach($results as $key => $book) {
+      $rating = $db->getRatings($book->id);
+      $ret[] = array(
+        "author" => $book->author,
+        "category" => $book->category,
+        "description" => $book->description,
+        "id" => $book->id,
+        "imageUrl" => $book->imageUrl,
+        "price" => $book->price,
+        "title" => $book->title,
+        "rating" => round($rating['rating'], 1),
+        "votes" => $rating['vote']
+      );
+    }
+
+    return $ret;
   }
 
   public static function getSecretImage(string $cardNumber) {
@@ -82,15 +100,10 @@ class Api {
     
     $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options);
     $res = $soapClient->buyBook($cardNumber, $token, $bookId, $amount);
-    if ($res->success) {
-      return $res;
-    } else {
+    if (!$res->success) {
       $db->deleteOrder($orderId);
-      return array(
-        "success" => false,
-        "message" => "Failed to buy book"
-      );
-    }
+    } 
+    return $res;
   }
 
 }

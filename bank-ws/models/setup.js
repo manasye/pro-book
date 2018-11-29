@@ -8,7 +8,7 @@ Customer.sync({ force: true }).then(() => {
         {
             name: "Abram Situmorang",
             cardNumber: "4111111111111111",
-            balance: 100000,
+            balance: 100000000000000000,
             secret: speakeasy.generateSecret({ length: 19 }).base32
         },
         {

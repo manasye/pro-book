@@ -9,5 +9,12 @@ module.exports = function(req, res, next) {
         encoding: "base32",
         token: userToken
     });
-    next();
+    if (verified) {
+        next();
+    } else {
+        res.json({
+            success: false,
+            message: "TOTP Code Invalid!"
+        });
+    }
 };

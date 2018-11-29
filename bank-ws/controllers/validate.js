@@ -22,7 +22,7 @@ router.post('/', customerMiddleware, function(req, res) {
         .catch(error => {
             console.log('[ERROR]: ' + error.message);
             res.json({
-                success: true,
+                success: false,
                 message: 'Card Number invalid',
                 valid: false
             });
@@ -48,7 +48,7 @@ router.get('/', function(req, res) {
         .catch(error => {
             console.log('[ERROR]: ' + error.message);
             res.json({
-                success: true,
+                success: false,
                 message: 'Card Number invalid',
                 valid: false
             });

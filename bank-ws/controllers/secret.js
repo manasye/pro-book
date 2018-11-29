@@ -18,7 +18,7 @@ router.post("/", [customerMiddleware, merchantMiddleware], function(req, res) {
     } catch(e) {
         res.json({
             success: false,
-            message: "Failed"
+            message: "Fail to generate QRCode"
         })
     }
 });

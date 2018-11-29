@@ -17,7 +17,7 @@ module.exports = function(req, res, next) {
         .catch(error => {
             console.log('[ERROR]: ' + error.message);
             res.json({
-                success: true,
+                success: false,
                 message: 'Merchant Secret invalid'
             });
         });
