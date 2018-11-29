@@ -126,13 +126,13 @@ public class BankAPI extends BaseAPI {
         }
     }
 
-    public TransactionResponse makeTransaction(String cardNumber, String token, String bookId, int bookAmount) {
-        if (bookAmount <= 0) {
+    public TransactionResponse makeTransaction(String cardNumber, String token, String bookId, int bookQuantity) {
+        if (bookQuantity <= 0) {
             System.out.println("[ERROR makeTransaction] - bookAmount must be more than 0");
             return new TransactionResponse(false, "Book amount must be more than 0");
         }
 
-        int transactionAmount = this.getTransactionAmount(bookId, bookAmount);
+        int transactionAmount = this.getTransactionAmount(bookId, bookQuantity);
         if (transactionAmount == BankAPI.MISSING_BOOK_PRICE) {
             System.out.println("[ERROR makeTransaction] - book not found");
             return new TransactionResponse(false, "Book not found");
@@ -145,7 +145,7 @@ public class BankAPI extends BaseAPI {
             return new TransactionResponse(false, paymentResponseMessage);
         }
 
-        if (!this.bookDB.addBookSold(bookId, bookAmount)) {
+        if (!this.bookDB.addBookSold(bookId, bookQuantity)) {
             System.out.println("[ERROR makeTransaction] - fail increment sold for book " + bookId);
             return new TransactionResponse(false, "Transaction failed");
         }
