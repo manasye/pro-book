@@ -70,19 +70,17 @@ class Api {
     );
   }
 
-  public static function buyBook(Request $request) {
+  public static function buyBook($token, $bookId, $amount) {
     $db = new MarufDB();
     $user = $db->getUser($_COOKIE['token']);
     $cardNumber = $user['cardnumber'];
-    print_r($cardNumber);
-    print_r($request);
 
     $options = array(
       'cache_wsdl'=>WSDL_CACHE_NONE
     );
     
     $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options);
-    return $soapClient->buyBook($cardNumber, $request->token, $request->bookId, $request->amount);
+    return $soapClient->buyBook($cardNumber, $token, $bookId, $amount);
   }
 
 }

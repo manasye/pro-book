@@ -114,5 +114,5 @@ $router->post('/secret', function($request) {
 });
 
 $router->post('/buy-book', function($request) {
-  return json_encode(Api::buyBook($request->token, $request->bookId, $request->amount));
+  return json_encode(Api::buyBook($request->token, $request->bookid, $request->amount));
 });
