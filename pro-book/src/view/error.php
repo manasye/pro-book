@@ -11,6 +11,8 @@ function render_template(int $errorCode, string $errorMessage) {
   <link rel='stylesheet' href='src/view/static/css/main.css'>
   <link rel='stylesheet' href='src/view/static/css/error.css'>
   <script type='module' src='src/view/static/js/error.js'></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="320134199127-rqu56mi4kr6h0ekkbrejr00agenerb3p.apps.googleusercontent.com">
   <link rel="stylesheet" href="src/view/static/css/fonts.css" type='text/css'>
   <title>Not Found</title>
 </head>
@@ -34,7 +36,8 @@ function render_template(int $errorCode, string $errorMessage) {
       <p class='error-code'>{$errorCode}</p>
       <h3 class='error-message'>{$errorMessage}</h3>
     </div>
-	</div>
+  </div>
+  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 </body>
 </html>
 

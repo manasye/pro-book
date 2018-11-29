@@ -16,10 +16,7 @@ class MarufDB {
 
   private function Connect() {
     try {
-      // echo $this->dbUser;
-      // echo $this->dbPassword;
       $this->pdo = new PDO('mysql:host='.$this->host.';dbname='.$this->dbName, $this->dbUser, $this->dbPassword);
-      // $this->pdo = new PDO('mysql:host='.$this->host.';dbname='.$this->dbName, $this->dbUser, '');
     } catch (PDOException $e) {
       print "Error!: " . $e->getMessage() . "<br/>";
       die();
@@ -55,6 +52,22 @@ class MarufDB {
       $query = $this->pdo->prepare("SELECT username FROM Users WHERE id = ?");
       $query->execute(array($user_id));
       return $query->fetch()['username'];
+    }
+  }
+
+  public function checkEmailExist($email) {
+    $query = $this->pdo->prepare("SELECT COUNT(*) AS count FROM Users WHERE email = ?");
+    $query->execute(array($email));
+    return $query->fetch()['count'];
+  }
+
+  public function getUserIdFromEmail($email) {
+    $query = $this->pdo->prepare("SELECT * FROM Users WHERE email = ?");
+    $query->execute(array($email));
+    if ($query->rowCount() < 1) {
+      return -1;
+    } else {
+      return $query->fetch()['id'];
     }
   }
 
@@ -155,6 +168,16 @@ class MarufDB {
     }
   }
 
+  public function addProfileGoogle($name, $username, $email, $password, $address, $phonenumber, $cardnumber, $imageurl) {
+    if ($this->validateUsername($username) == 1 && $this->validateEmail($email) == 1){
+      $query = $this->pdo->prepare("INSERT INTO Users (name, username, email, password, address, phonenumber, cardnumber, imageurl) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+      $query->execute(array($name, $username, $email, md5($password), $address, $phonenumber, $cardnumber, $imageurl));
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+
   public function editProfile($name, $address, $phonenumber, $user_id, $card_number) {
     try {
       $query = $this->pdo->prepare("UPDATE Users SET name = ?, address = ?, phonenumber = ?, cardnumber = ? WHERE id = ?");
@@ -206,5 +229,11 @@ class MarufDB {
     $query = $this->pdo->prepare("SELECT * FROM Reviews WHERE book_id = ? ORDER BY id DESC");
     $query->execute(array($book_id));
     return $query->fetchAll();
+  }
+
+  public function getRatings($book_id) {
+    $query = $this->pdo->prepare("SELECT * FROM Ratings WHERE id = ?");
+    $query->execute(array($book_id));
+    return $query->fetchAll()[0];
   }
 }

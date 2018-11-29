@@ -17,7 +17,7 @@ browseApp.controller('mainController', [
                 .get(`/search-book?title=${$scope.searchInput}`)
                 .success(res => {
                     // Done loading
-                    $scope.books = res.bookList;
+                    $scope.books = res;
                     $scope.isLoading = false;
                     $scope.searched = true;
                     $scope.books.forEach((part, index) => {

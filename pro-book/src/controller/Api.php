@@ -9,7 +9,7 @@ class Api {
     $db = new MarufDB();
     return array('valid' => (bool) $db->validateEmail($email));
   }
-  
+
   public static function validateCardNumber(string $cardNumber) {
     $data = json_encode(array('cardNumber' => $cardNumber));
     $curl = curl_init();
@@ -19,9 +19,9 @@ class Api {
       CURLOPT_RETURNTRANSFER => 1,
       CURLOPT_POST => 1,
       CURLOPT_POSTFIELDS => $data,
-      CURLOPT_HTTPHEADER => array(                                                                          
-        'Content-Type: application/json',                                                                                
-        'Content-Length: ' . strlen($data))                                                                       
+      CURLOPT_HTTPHEADER => array(
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($data))
       )
     );
     $exec = curl_exec($curl);
@@ -31,13 +31,31 @@ class Api {
   }
 
   public static function getBooksFromTitle(string $title) {
-    $options = array( 
-    'cache_wsdl'=>WSDL_CACHE_NONE 
-    ); 
+    $options = array(
+    'cache_wsdl'=>WSDL_CACHE_NONE
+    );
 
-    $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options); 
+    $db = new MarufDB();
 
-    return $soapClient->searchTitle($title);
+    $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options);
+    $results = $soapClient->searchTitle($title)->bookList;
+    $ret = array();
+    foreach($results as $key => $book) {
+      $rating = $db->getRatings($book->id);
+      $ret[] = array(
+        "author" => $book->author,
+        "category" => $book->category,
+        "description" => $book->description,
+        "id" => $book->id,
+        "imageUrl" => $book->imageUrl,
+        "price" => $book->price,
+        "title" => $book->title,
+        "rating" => round($rating['rating'], 1),
+        "votes" => $rating['vote']
+      );
+    }
+
+    return $ret;
   }
 
   public static function getSecretImage(string $cardNumber) {
@@ -49,9 +67,9 @@ class Api {
       CURLOPT_RETURNTRANSFER => 1,
       CURLOPT_POST => 1,
       CURLOPT_POSTFIELDS => $data,
-      CURLOPT_HTTPHEADER => array(                                                                          
-        'Content-Type: application/json',                                                                                
-        'Content-Length: ' . strlen($data))                                                                       
+      CURLOPT_HTTPHEADER => array(
+        'Content-Type: application/json',
+        'Content-Length: ' . strlen($data))
       )
     );
     $exec = curl_exec($curl);
@@ -79,18 +97,61 @@ class Api {
     $options = array(
       'cache_wsdl'=>WSDL_CACHE_NONE
     );
-    
+
     $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options);
     $res = $soapClient->buyBook($cardNumber, $token, $bookId, $amount);
-    if ($res->success) {
-      return $res;
-    } else {
+    if (!$res->success) {
       $db->deleteOrder($orderId);
-      return array(
-        "success" => false,
-        "message" => $res->message
-      );
     }
+    return $res;
+  }
+
+  public static function googleLogin($id, $name, $username, $image, $email) {
+    $db = new MarufDB();
+    $emailExist = $db->checkEmailExist($email);
+
+    if ($emailExist == 1) {
+
+      // If email exist, login with that user
+
+      $user_id = $db->getUserIdFromEmail($email);
+      $user_agent = $_SERVER['HTTP_USER_AGENT'];
+      $ip_address = $_SERVER['REMOTE_ADDR'];
+      $JKWToken = new JKWToken();
+      $token = $JKWToken->generateJKWToken();
+      if ($db->addToken($user_id, $token, $user_agent, $ip_address) == 1) {
+        setcookie("token", $token, time() + (int)$_ENV['COOKIE_EXPIRED_TIME'], '/');
+        return array('success' => true);
+      } else {
+        return array('success' => false, 'message' => 'Token is not matched');
+      }
+
+    } else {
+
+      // If not exist, register with that email, and login with it
+
+      $result = $db->addProfileGoogle($name, $username, $email, 'Not assigned', 'Not assigned',
+        'Not assigned', 'Not assigned', $image);
+
+      if ($result == 1) {
+        $user_id = $db->getUserIdFromEmail($email);
+        $user_agent = $_SERVER['HTTP_USER_AGENT'];
+        $ip_address = $_SERVER['REMOTE_ADDR'];
+        $JKWToken = new JKWToken();
+        $token = $JKWToken->generateJKWToken();
+        if ($db->addToken($user_id, $token, $user_agent, $ip_address) == 1) {
+          setcookie("token", $token, time() + (int)$_ENV['COOKIE_EXPIRED_TIME'], '/');
+          return array('success' => true);
+        } else {
+          return array('success' => false, 'message' => 'Token is not matched');
+        }
+      } else {
+        return array("success" => false, 'message' =>"An error has occured");
+      }
+
+    }
+
+    return "An error has occured";
   }
 
 }

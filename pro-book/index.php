@@ -116,3 +116,7 @@ $router->post('/secret', function($request) {
 $router->post('/buy-book', function($request) {
   return json_encode(Api::buyBook($request->token, $request->bookid, $request->amount));
 });
+
+$router->post('/google-login', function($request) {
+  return json_encode(Api::googleLogin($request->id, $request->name, $request->username, $request->image, $request->email));
+});
