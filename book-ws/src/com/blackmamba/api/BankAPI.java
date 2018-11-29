@@ -114,29 +114,42 @@ public class BankAPI extends BaseAPI {
         }
     }
 
+    private String getPaymentResponseMessage(JSONObject paymentJsonObject) {
+        try {
+            if (!paymentJsonObject.has("success")) {
+                return "Error connecting to bank";
+            }
+            return paymentJsonObject.getString("message");
+        } catch (JSONException ex) {
+            System.out.println("[ERROR getPaymentResponseMessage] - " + ex.getMessage());
+            return null;
+        }
+    }
+
     public TransactionResponse makeTransaction(String cardNumber, String token, String bookId, int bookAmount) {
         if (bookAmount <= 0) {
             System.out.println("[ERROR makeTransaction] - bookAmount must be more than 0");
-            return new TransactionResponse(false, "book amount must be more than 0");
+            return new TransactionResponse(false, "Book amount must be more than 0");
         }
 
         int transactionAmount = this.getTransactionAmount(bookId, bookAmount);
         if (transactionAmount == BankAPI.MISSING_BOOK_PRICE) {
             System.out.println("[ERROR makeTransaction] - book not found");
-            return new TransactionResponse(false, "book " + bookId + " not found");
+            return new TransactionResponse(false, "Book " + bookId + " not found");
         }
 
         JSONObject paymentJsonObject = this.makePayment(cardNumber, token, transactionAmount);
+        String paymentResponseMessage = this.getPaymentResponseMessage(paymentJsonObject);
         if (paymentJsonObject == null || !this.isPaymentSucceed(paymentJsonObject)) {
             System.out.println("[ERROR makeTransaction] - payment failed");
-            return new TransactionResponse(false, "payment failed");
+            return new TransactionResponse(false, "Payment failed - " + paymentResponseMessage);
         }
 
         if (!this.bookDB.incrementBookSold(bookId)) {
             System.out.println("[ERROR makeTransaction] - fail increment sold for book " + bookId);
-            return new TransactionResponse(false, "transaction failed");
+            return new TransactionResponse(false, "Transaction failed");
         }
 
-        return new TransactionResponse(true, "transaction succeed");
+        return new TransactionResponse(true, "Transaction succeed");
     }
 }
