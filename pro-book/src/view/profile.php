@@ -1,24 +1,23 @@
 <?php
-function render_template(string $userId, string $name, string $username, string $email, string $address, string $phoneNumber, string $cardNumber, string $imageUrl) {
-  $path = 'src/model/profile/';
-  if(file_exists($path . $userId .'.jpg')) {
-    $path = $path . $userId . '.jpg';
-    $img = <<<HTML
+function render_template(string $userId, string $name, string $username, string $email, string $address, string $phoneNumber, string $cardNumber, string $imageUrl)
+{
+    $path = 'src/model/profile/';
+    if (file_exists($path . $userId . '.jpg')) {
+        $path = $path . $userId . '.jpg';
+        $img = <<<HTML
     <img class='profile-picture' src={$path} alt='Profile Picture' height='200' width='200'>
 HTML;
-  } else if ($imageUrl) {
-    $img = <<<HTML
+    } else if ($imageUrl) {
+        $img = <<<HTML
     <img class='profile-picture' src='{$imageUrl}' alt='Profile Picture' height='200' width='200'>
 HTML;
-  } else {
-    $img = <<<HTML
+    } else {
+        $img = <<<HTML
     <img class='profile-picture' src='src/model/profile/avatar_default.jpg' alt='Profile Picture' height='200' width='200'>
 HTML;
-  }
+    }
 
-
-
-  return <<<HTML
+    return <<<HTML
 
 <!DOCTYPE html>
 <html>
@@ -167,7 +166,7 @@ HTML;
               <p class='profile-detail-content-row-label'>QR Code</p>
             </div>
             <div class='profile-detail-content-row-content-container'>
-              <img src="http://www.myqrlink.com/qrcodes/calendar.png" alt="" id="qr-code">
+              <img src="https://image.flaticon.com/icons/svg/8/8235.svg" alt="" id="qr-code">
             </div>
           </div>
         </div>

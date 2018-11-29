@@ -12,7 +12,7 @@ const checkingCardNumberMessage = 'Checking card number validity';
 let submitButtonHovered = false;
 let imageSelected = false;
 let cardNumberValidationRequest;
-let cardNumberValid = false;
+let cardNumberValid = true;
 let cardNumberValidationMessage = invalidCardNumberMessage;
 
 function isName(value) {
