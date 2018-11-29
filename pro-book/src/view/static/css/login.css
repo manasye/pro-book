@@ -3,11 +3,19 @@
 }
 
 .auth-title-container {
-	-webkit-transition-duration: 0.25s;
+  -webkit-transition-duration: 0.25s;
   transition-duration: 0.25s;
   transform: translateY(15px);
 }
 
 .auth-title-container.moved {
-	transform: translateY(-8px);
+  transform: translateY(-8px);
+}
+
+.abcRioButton {
+  margin: 1vh 0 4vh 1.2vw;
+}
+
+#formSubmitButton {
+  margin-right: 1.2vw;
 }

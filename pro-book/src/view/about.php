@@ -10,6 +10,8 @@ function render_template(string $username) {
   <link rel='stylesheet' href='src/view/static/css/common.css'>
   <link rel='stylesheet' href='src/view/static/css/main.css'>
   <link rel='stylesheet' href='src/view/static/css/about.css'>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="320134199127-rqu56mi4kr6h0ekkbrejr00agenerb3p.apps.googleusercontent.com">
   <script type='module' src='src/view/static/js/main.js'></script>
   <link rel="stylesheet" href="src/view/static/css/fonts.css" type='text/css'>
   <title>Browse</title>

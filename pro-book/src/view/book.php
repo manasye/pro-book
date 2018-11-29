@@ -11,7 +11,9 @@ function render_template(string $username, $book, $reviews, $ratings, $recommend
 
   $price = 'Rp. ' . number_format($book->price);
   $priceClass = 'book-detail-price';
+  $displayOrderClass = '';
   if ($book->price == -1) {
+    $displayOrderClass = 'display-none';
     $price = 'NOT FOR SALE';
     $priceClass = 'book-detail-price-not-sale';
   }
@@ -183,6 +185,8 @@ HTML;
       <link rel='stylesheet' href='src/view/static/css/grid.css'>
       <script type='module' src='src/view/static/js/main.js'></script>
       <script type='module' src='src/view/static/js/book.js'></script>
+      <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="320134199127-rqu56mi4kr6h0ekkbrejr00agenerb3p.apps.googleusercontent.com">
       <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.all.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.min.css"></script>
       <link rel="stylesheet" href="src/view/static/css/fonts.css" type='text/css'>
@@ -227,7 +231,23 @@ HTML;
                   </div>
                   <div id='logoutButtonContainer' class='main-logout-button-container'>
                      <form id='logoutForm' action='/logout' method='get'></form>
-                     <button id="logoutButton" class='main-logout-button' type='submit' form='logoutForm'>
+
+                     <script>
+                        function signOut() {
+                           var auth2 = gapi.auth2.getAuthInstance();
+                           auth2.signOut().then(function () {
+                              console.log('User signed out.');
+                           });
+                        }
+
+                        function onLoad() {
+                           gapi.load('auth2', function() {
+                              gapi.auth2.init();
+                           });
+                        }
+                     </script>
+
+                     <button id="logoutButton" onclick="signOut();" class='main-logout-button' type='submit' form='logoutForm'>
                         <div id="logoutButtonIcon" class='main-logout-button-icon'></div>
                      </button>
                   </div>
@@ -268,7 +288,7 @@ HTML;
                      </div>
                   </div>
                </div>
-               <div class='book-order-container'>
+               <div class='book-order-container {$displayOrderClass}'>
                   <div class='book-order-title-container'>
                      <h3 class='book-order-title'>Order</h3>
                   </div>
@@ -312,6 +332,7 @@ HTML;
             </div>
          </div>
       </div>
+      <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
    </body>
 </html>
 HTML;

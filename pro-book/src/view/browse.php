@@ -12,6 +12,7 @@ function render_template(string $username) {
       <link rel='stylesheet' href='src/view/static/css/browse.css'>
       <link rel='stylesheet' href='src/view/static/css/search.css'>
       <link rel='stylesheet' href='src/view/static/css/grid.css'>
+      <meta name="google-signin-client_id" content="320134199127-rqu56mi4kr6h0ekkbrejr00agenerb3p.apps.googleusercontent.com">
       <script type='module' src='src/view/static/js/main.js'></script>
       <script type='module' src='src/view/static/js/browse.js'></script>
       <script src="//code.angularjs.org/1.3.0-rc.1/angular.min.js"></script>
@@ -44,7 +45,23 @@ function render_template(string $username) {
                   </div>
                   <div id='logoutButtonContainer' class='main-logout-button-container'>
                      <form id='logoutForm' action='/logout' method='get'></form>
-                     <button id="logoutButton" class='main-logout-button' type='submit' form='logoutForm'>
+
+                     <script>
+                        function signOut() {
+                           var auth2 = gapi.auth2.getAuthInstance();
+                           auth2.signOut().then(function () {
+                              console.log('User signed out.');
+                           });
+                        }
+
+                        function onLoad() {
+                           gapi.load('auth2', function() {
+                              gapi.auth2.init();
+                           });
+                        }
+                     </script>
+
+                     <button id="logoutButton" onclick="signOut();" class='main-logout-button' type='submit' form='logoutForm'>
                         <div id="logoutButtonIcon" class='main-logout-button-icon'></div>
                      </button>
                   </div>
@@ -123,6 +140,8 @@ function render_template(string $username) {
             </div>
          </div>
       </div>
+
+      <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
    </body>
 </html>
 

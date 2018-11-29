@@ -10,7 +10,10 @@ function render_template(bool $error = FALSE, bool $redirected = FALSE) {
   <link rel='stylesheet' href='src/view/static/css/common.css'>
   <link rel='stylesheet' href='src/view/static/css/auth.css'>
   <link rel='stylesheet' href='src/view/static/css/login.css'>
+  <link rel='stylesheet' href='src/view/static/css/grid.css'>
   <script type='module' src='src/view/static/js/login.js'></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="320134199127-rqu56mi4kr6h0ekkbrejr00agenerb3p.apps.googleusercontent.com">
   <link rel="stylesheet" href="src/view/static/css/fonts.css" type='text/css'>
   <title>Login</title>
 </head>
@@ -72,15 +75,26 @@ HTML
           </a>
         </div>
         <div class='auth-submit-container'>
-          <button id='formSubmitButton' type='submit' form='loginForm' disabled>
-            <div id='formSubmitButtonInner' class='auth-submit-inner'>
-              LOGIN
-            </div>
-          </button>
+        <div class="row">
+          <div class="col-1-of-2">
+            <button id='formSubmitButton' type='submit' form='loginForm' disabled>
+              <div id='formSubmitButtonInner' class='auth-submit-inner'>
+                LOGIN
+              </div>
+            </button>
+          </div>
+          <div class="col-1-of-2">
+            <div class="g-signin2" data-onsuccess="onSignIn" id="login-google"></div>
+          </div>
         </div>
+        </div>
+        
       </div>
 		</div>
 	</div>
+
+  <script type='text/javascript' src='src/view/static/js/glogin.js'></script>
+
 </body>
 </html>
 

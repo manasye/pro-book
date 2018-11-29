@@ -106,4 +106,52 @@ class Api {
     return $res;
   }
 
+  public static function googleLogin($id, $name, $username, $image, $email) {
+    $db = new MarufDB();
+    $emailExist = $db->checkEmailExist($email);
+
+    if ($emailExist == 1) {
+
+      // If email exist, login with that user
+
+      $user_id = $db->getUserIdFromEmail($email);
+      $user_agent = $_SERVER['HTTP_USER_AGENT'];
+      $ip_address = $_SERVER['REMOTE_ADDR'];
+      $JKWToken = new JKWToken();
+      $token = $JKWToken->generateJKWToken();
+      if ($db->addToken($user_id, $token, $user_agent, $ip_address) == 1) {
+        setcookie("token", $token, time() + (int)$_ENV['COOKIE_EXPIRED_TIME'], '/');
+        return array('success' => true);
+      } else {
+        return array('success' => false, 'message' => 'Token is not matched');
+      }
+
+    } else {
+
+      // If not exist, register with that email, and login with it
+
+      $result = $db->addProfileGoogle($name, $username, $email, 'Not assigned', 'Not assigned', 
+        'Not assigned', 'Not assigned', $image);
+
+      if ($result == 1) {
+        $user_id = $db->getUserIdFromEmail($email);
+        $user_agent = $_SERVER['HTTP_USER_AGENT'];
+        $ip_address = $_SERVER['REMOTE_ADDR'];
+        $JKWToken = new JKWToken();
+        $token = $JKWToken->generateJKWToken();
+        if ($db->addToken($user_id, $token, $user_agent, $ip_address) == 1) {
+          setcookie("token", $token, time() + (int)$_ENV['COOKIE_EXPIRED_TIME'], '/');
+          return array('success' => true);
+        } else {
+          return array('success' => false, 'message' => 'Token is not matched');
+        }
+      } else {
+        return array("success" => false, 'message' =>"An error has occured");
+      }
+
+    }
+
+    return "An error has occured";
+  }
+
 }

@@ -317,6 +317,7 @@
 .book-review-title {
   color: black;
   font-size: 3.4rem;
+  margin-top: 8vh;
 }
 
 .book-review-content-container {
@@ -558,4 +559,8 @@ button:hover[disabled] {
 .swal2-popup .swal2-input {
   height: 2em !important;
   margin: 0 !important;
+}
+
+.display-none {
+  display: none;
 }
