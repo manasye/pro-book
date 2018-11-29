@@ -1,11 +1,17 @@
 <?php
 class ReviewGetController implements ControllerInterface {
   public static function control(Request $request) {
+    $options = array( 
+      'cache_wsdl'=>WSDL_CACHE_NONE 
+    ); 
+
     $db = new MarufDB();
+    $soapClient = new SoapClient("http://localhost:9999/ws/book?wsdl", $options); 
+
     $token = $_COOKIE['token'];
     $order_id = $request->id;
     $book_id = $db->getBookIdByOrderId($order_id);
-    $book = $db->getBookDetail($book_id);
+    $book = $soapClient->searchDetail($book_id);
     $user_id = $db->getUserId($token);
     $username = $db->getUsername($token);
     $template = new Template('src/view/review.php');

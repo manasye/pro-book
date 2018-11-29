@@ -20,8 +20,6 @@ body {
   justify-content: center;
   align-items: center;
   box-shadow: 0 0px 10px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  margin-left: calc(-2vh - 1px);
-  padding-left: 2vh;
 }
 
 .main-header-top-container {
