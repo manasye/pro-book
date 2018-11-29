@@ -26,17 +26,36 @@ $$('#orderButton').onclick = () => {
                 data: JSON.stringify(data),
                 callback: response => {
                     let res = JSON.parse(response);
-                    console.log(res);
                     if (!res.success) {
-                        swal('ERROR', res.message, 'error');
+                        swal({
+                            title:
+                                '<h2 style="font-weight: 700; line-height: 50px; font-size: 5rem">ERROR</h2>',
+                            type: 'error',
+                            html: `<h5 style="margin-bottom: 2vh; text-decoration: none; color:#003366">${
+                                res.message
+                            }</h5>`,
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            showConfirmButton: false
+                        });
                     } else {
-                        swal('SUCCESS', res.message, 'success');
+                        swal({
+                            title:
+                                '<h2 style="font-weight: 700; line-height: 50px; font-size: 5rem">SUCCESS</h2>',
+                            type: 'success',
+                            html: `<h5 style="margin-bottom: 2vh; text-decoration: none; color:#003366">${
+                                res.message
+                            }</h5>`,
+                            showCloseButton: true,
+                            showCancelButton: false,
+                            showConfirmButton: false
+                        });
                     }
                 }
             });
         },
         allowOutsideClick: () => !swal.isLoading()
-    });
+    }).then(() => {});
 };
 
 $$('#purchaseMessagePopupCloseButton').onclick = () => {
