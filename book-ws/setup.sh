@@ -1,13 +1,15 @@
 cd book-ws
+source src/.env
+export $(cut -d= -f1 src/.env)
 
 # Setup mysql CEK JANG BENER APA KAGA
-if [ $DB_PASSWORD ]
+if [ $MYSQL_PASSWORD ]
 then
-  mysql -u "$DB_USERNAME" -p"$DB_PASSWORD" -e "drop database bookws;"
-  mysql -u "$DB_USERNAME" -p"$DB_PASSWORD" -e "create database bookws;"
-  mysql -u "$DB_USERNAME" -p"$DB_PASSWORD" bookws < db.sql
+  mysql -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "drop database bookws;"
+  mysql -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -e "create database bookws;"
+  mysql -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" bookws < db.sql
 else
-  mysql -u "$DB_USERNAME" -e "drop database bookws;"
-  mysql -u "$DB_USERNAME" -e "create database bookws;"
-  mysql -u "$DB_USERNAME" bookws < db.sql
+  mysql -u "$MYSQL_USER" -e "drop database bookws;"
+  mysql -u "$MYSQL_USER" -e "create database bookws;"
+  mysql -u "$MYSQL_USER" bookws < db.sql
 fi

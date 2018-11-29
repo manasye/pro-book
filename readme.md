@@ -53,7 +53,7 @@ To initialize the `.env` file,
 ```
 $ cp bank-ws/env.sample bank-ws/.env          # Modify .env file with your own setting
 $ cp pro-book/ethes.sample pro-book/.ethes  # Modify .ethes file with your own setting
-$ cp book-ws/ethes.sample book-ws/.ethes  # Modify .ethes file with your own setting
+$ cp book-ws/env.sample book-ws/.env  # Modify .env file with your own setting
 ```
 
 To initialize the database,
