@@ -14,6 +14,8 @@ function render_template(string $username, $book, $user_id, $order_id) {
   <link rel='stylesheet' href='src/view/static/css/review.css'>
   <script type='module' src='src/view/static/js/main.js'></script>
   <script type='module' src='src/view/static/js/review.js'></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="320134199127-rqu56mi4kr6h0ekkbrejr00agenerb3p.apps.googleusercontent.com">
   <link rel="stylesheet" href="src/view/static/css/fonts.css" type='text/css'>
   <title>{$book['title']} - History</title>
 </head>
@@ -40,10 +42,26 @@ function render_template(string $username, $book, $user_id, $order_id) {
             <h5>Hi, {$username}!</h5>
           </div>
           <div id='logoutButtonContainer' class='main-logout-button-container'>
-            <form id='logoutForm' action='/logout' method='get'></form>
-            <button id="logoutButton" class='main-logout-button' type='submit' form='logoutForm'>
-              <div id="logoutButtonIcon" class='main-logout-button-icon'></div>
-            </button>
+              <form id='logoutForm' action='/logout' method='get'></form>
+
+              <script>
+                function signOut() {
+                    var auth2 = gapi.auth2.getAuthInstance();
+                    auth2.signOut().then(function () {
+                      console.log('User signed out.');
+                    });
+                }
+
+                function onLoad() {
+                    gapi.load('auth2', function() {
+                      gapi.auth2.init();
+                    });
+                }
+              </script>
+
+              <button id="logoutButton" onclick="signOut();" class='main-logout-button' type='submit' form='logoutForm'>
+                <div id="logoutButtonIcon" class='main-logout-button-icon'></div>
+              </button>
           </div>
         </div>
       </div>
@@ -111,7 +129,8 @@ function render_template(string $username, $book, $user_id, $order_id) {
         </form>
       </div>
     </div>
-	</div>
+  </div>
+  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 </body>
 </html>
 HTML;

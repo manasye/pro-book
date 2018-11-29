@@ -16,10 +16,7 @@ class MarufDB {
 
   private function Connect() {
     try {
-      // echo $this->dbUser;
-      // echo $this->dbPassword;
       $this->pdo = new PDO('mysql:host='.$this->host.';dbname='.$this->dbName, $this->dbUser, $this->dbPassword);
-      // $this->pdo = new PDO('mysql:host='.$this->host.';dbname='.$this->dbName, $this->dbUser, '');
     } catch (PDOException $e) {
       print "Error!: " . $e->getMessage() . "<br/>";
       die();
@@ -55,6 +52,22 @@ class MarufDB {
       $query = $this->pdo->prepare("SELECT username FROM Users WHERE id = ?");
       $query->execute(array($user_id));
       return $query->fetch()['username'];
+    }
+  }
+
+  public function checkEmailExist($email) {
+    $query = $this->pdo->prepare("SELECT COUNT(*) AS count FROM Users WHERE email = ?");
+    $query->execute(array($email));
+    return $query->fetch()['count'];
+  }
+
+  public function getUserIdFromEmail($email) {
+    $query = $this->pdo->prepare("SELECT * FROM Users WHERE email = ?");
+    $query->execute(array($email));
+    if ($query->rowCount() < 1) {
+      return -1;
+    } else {
+      return $query->fetch()['id'];
     }
   }
 

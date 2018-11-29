@@ -12,6 +12,8 @@ function render_template(bool $invalidUsername = true, bool $invalidEmail = true
   <link rel='stylesheet' href='src/view/static/css/auth.css'>
   <link rel='stylesheet' href='src/view/static/css/register.css'>
   <script type='module' src='src/view/static/js/register.js'></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="320134199127-rqu56mi4kr6h0ekkbrejr00agenerb3p.apps.googleusercontent.com">
   <link rel="stylesheet" href="src/view/static/css/fonts.css" type='text/css'>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.all.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.29.2/sweetalert2.min.css">
