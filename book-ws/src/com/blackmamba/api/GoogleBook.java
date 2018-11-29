@@ -81,7 +81,6 @@ public class GoogleBook extends BaseAPI {
             }
         } catch (Exception e) {
             System.out.println("[ERROR searchBook] " + e.getMessage());
-
         }
         return bookList;
     }
@@ -214,7 +213,7 @@ public class GoogleBook extends BaseAPI {
             return bookDetail;
 
         } catch (JSONException ex) {
-
+            System.out.println("[ERROR parseBookDetail] - " + ex.getMessage());
             return null;
         }
     }

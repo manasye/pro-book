@@ -45,8 +45,7 @@ public class BookDB extends BaseModel {
             return this.getBookFromResultSet(resultSet);
 
         } catch (SQLException ex) {
-
-            System.out.println(ex.getMessage());
+            System.out.println("[ERROR getBookById] - " + ex.getMessage());
             return null;
 
         }
@@ -87,6 +86,7 @@ public class BookDB extends BaseModel {
 
             return true;
         } catch (SQLException ex) {
+            System.out.println("[ERROR insertBook] - " + ex.getMessage());
             return false;
         }
     }
@@ -116,6 +116,7 @@ public class BookDB extends BaseModel {
 
             return true;
         } catch (SQLException ex) {
+            System.out.println("[ERROR updateBook] - " + ex.getMessage());
             return false;
         }
     }
@@ -131,6 +132,7 @@ public class BookDB extends BaseModel {
 
             return true;
         } catch (SQLException ex) {
+            System.out.println("[ERROR deleteBookById] - " + ex.getMessage());
             return false;
         }
     }
@@ -146,12 +148,9 @@ public class BookDB extends BaseModel {
 
             // Parse query
             return this.getBookFromResultSet(resultSet);
-
         } catch (SQLException ex) {
-
-            System.out.println(ex.getMessage());
+            System.out.println("[ERROR getBookRandom] - " + ex.getMessage());
             return null;
-
         }
     }
 
@@ -181,11 +180,9 @@ public class BookDB extends BaseModel {
             List<Book> bookList = this.parseBookResultSet(resultSet);
 
             return bookList;
-
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            System.out.println("[ERROR getBookByCategory] - " + ex.getMessage());
             return null;
-
         }
     }
 
@@ -214,10 +211,8 @@ public class BookDB extends BaseModel {
             return bookList;
 
         } catch (SQLException ex) {
-            System.out.println("FUNCTION ERRORRRRRR . . .");
-            System.out.println(ex.getMessage());
+            System.out.println("[ERROR getHighestSoldBookByCategories] - " + ex.getMessage());
             return null;
-
         }
     }
 
