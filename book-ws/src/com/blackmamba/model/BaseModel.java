@@ -14,8 +14,6 @@ public class BaseModel {
     private String password;
 
     public BaseModel() {
-        Properties appProperties = new AppProperties();
-
         Dotenv dotenv = Dotenv.load();
         this.url = dotenv.get("MYSQL_URL");
         this.user = dotenv.get("MYSQL_USER");

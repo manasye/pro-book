@@ -3,6 +3,7 @@ package com.blackmamba.api;
 import com.blackmamba.model.Book;
 import com.blackmamba.model.BookDB;
 import com.blackmamba.model.TransactionResponse;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -14,15 +15,18 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class BankAPI extends BaseAPI {
-    private String BASE_API_URL = "http://localhost:3000/production";
+    private String BASE_API_URL;
 
     private static int MISSING_BOOK_PRICE = -1;
 
-    private static String MERCHANT_SECRET = "JokowiMaruf2019";
+    private String MERCHANT_SECRET;
 
     private BookDB bookDB;
 
     public BankAPI() {
+        Dotenv dotenv = Dotenv.load();
+        this.BASE_API_URL = dotenv.get("BANK_HOST");
+        this.MERCHANT_SECRET = dotenv.get("BANK_MERCHANT_SECRET");
         this.bookDB = new BookDB();
     }
 
@@ -57,7 +61,7 @@ public class BankAPI extends BaseAPI {
         requestBody.put("cardNumber", cardNumber);
         requestBody.put("token", token);
         requestBody.put("amount", transactionAmount);
-        requestBody.put("merchantSecret", BankAPI.MERCHANT_SECRET);
+        requestBody.put("merchantSecret", this.MERCHANT_SECRET);
 
         OutputStreamWriter wr = new OutputStreamWriter(connection.getOutputStream());
         wr.write(requestBody.toString());
