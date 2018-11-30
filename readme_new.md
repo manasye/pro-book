@@ -84,7 +84,7 @@ Pro-Book will be serving in `localhost:5000`, book-ws will be serving in `localh
 ***User Validation***
 
 Request:
-```
+```bash
 GET /production/validate
 POST /production/validate
 {
@@ -93,7 +93,7 @@ POST /production/validate
 ```
 
 Response:
-```
+```json
 {
     "success": whether the user is valid [boolean],
     "message": response message [string],
@@ -102,14 +102,14 @@ Response:
         "name": user name [string],
         "cardNumber": user card number [string],
         "balance": user bank balance [number]
-    } [if success == truee]
+    } [if success == true]
 }
 ```
 
 ***Acquire QR Secret***
 
 Request:
-```
+```json
 POST /production/validate
 {
     cardNumber: card number of a user [string]
@@ -118,7 +118,7 @@ POST /production/validate
 ```
 
 Response:
-```
+```json
 {
     "success": whether qr code successfully generated [boolean],
     "message": response message [string],
@@ -129,7 +129,7 @@ Response:
 ***Make Transaction***
 
 Request:
-```
+```bash
 POST /production/validate
 {
     cardNumber: card number of a user [string]
@@ -139,7 +139,7 @@ POST /production/validate
 ```
 
 Response:
-```
+```json
 {
     "success": whether transaction succeed [boolean],
     "message": response message [string],
@@ -149,18 +149,18 @@ Response:
 
 #### Book API
 You can use your preferred implementation of soap client. In this documentation, soapClient in PHP will be used for demonstration purposes.  To initialize the soap client in PHP, insert code below.
-```
+```php
 $soapClient = new SoapClient(<BOOK_API_WSDL_URL>);
 ```
 
 ***Search Book By Title***
 Command
-```
-soapClient->searchTitle(<SEARCH_TERM>);
+```php
+$soapClient->searchTitle(<SEARCH_TERM>);
 ```
 
 Response:
-```
+```json
 {
     "bookList": [
         {
@@ -179,12 +179,12 @@ Response:
 
 ***Search Book By Book Id***
 Command
-```
-soapClient->searchDetail(<BOOK_ID>);
+```php
+$soapClient->searchDetail(<BOOK_ID>);
 ```
 
 Response:
-```
+```json
 {
     "id": book id [string],
     "title": book title [string],
@@ -198,12 +198,12 @@ Response:
 
 ***Get Book Recommendation By Categories***
 Command
-```
-soapClient->getBookRecommendation(<CATEGORY_LIST>);
+```php
+$soapClient->getBookRecommendation(<CATEGORY_LIST>);
 ```
 
 Response:
-```
+```json
 {
     "bookList": [
         {
@@ -222,12 +222,12 @@ Response:
 
 ***Buy Book***
 Command
-```
-soapClient->buyBook(<CARD_NUMBER>, <TOKEN>, <BOOK_ID>, <BOOK_QUANTITY>);
+```php
+$soapClient->buyBook(<CARD_NUMBER>, <TOKEN>, <BOOK_ID>, <BOOK_QUANTITY>);
 ```
 
 Response:
-```
+```json
 {
     "success": whether the transcation succeed [boolean],
     "message": response message [string]
