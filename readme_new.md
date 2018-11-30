@@ -80,9 +80,9 @@ Pro-Book will be serving in `localhost:5000`, book-ws will be serving in `localh
 - **Edit Profile** : On the profile page, you can click the **edit** button and change some personal information about you. You are allowed to change your profile picture, name, address, and phone number.
 
 ## API Documentation
-#### Bank API
+#### Bank Service
 ***User Validation***
-
+Check whether the given card number is registered in the bank.
 Request:
 ```bash
 GET /production/validate
@@ -106,8 +106,8 @@ Response:
 }
 ```
 
-***Acquire QR Secret***
-
+***Generate QR Code Secret***
+Generate QR code for a merchant. Uses authentication by checking the card number and merchant secret.
 Request:
 ```
 POST /production/validate
@@ -127,7 +127,7 @@ Response:
 ```
 
 ***Make Transaction***
-
+Make transaction and checks whether the user's balance is enough to make a transaction with certain amount. Will transfer the transaction amount from user to merchant.
 Request:
 ```bash
 POST /production/validate
@@ -147,13 +147,14 @@ Response:
 ```
 
 
-#### Book API
-You can use your preferred implementation of soap client. In this documentation, soapClient in PHP will be used for demonstration purposes.  To initialize the soap client in PHP, insert code below.
+#### Book Service
+Book service is a service to get book details, get book recommendations, and make book transactions. Book service utilize Google Book service to fetch book info. Book service is implemented using JAX-WS. You can use your preferred implementation of soap client. In this documentation, soapClient in PHP will be used for demonstration purposes.  To initialize the soap client in PHP, insert code below.
 ```php
 $soapClient = new SoapClient(<BOOK_API_WSDL_URL>);
 ```
 
 ***Search Book By Title***
+Search a book based on the title of the book.
 Command
 ```php
 $soapClient->searchTitle(<SEARCH_TERM>);
@@ -178,6 +179,7 @@ Response:
 ```
 
 ***Search Book By Book Id***
+Seach a book based on the id of the book.
 Command
 ```php
 $soapClient->searchDetail(<BOOK_ID>);
@@ -197,6 +199,8 @@ Response:
 ```
 
 ***Get Book Recommendation By Categories***
+Generate book recommendations based on the number of sold items in the same categories. If no book in the categories that have been bought, book service will return one random book in the same categories from the Google Book API.
+
 Command
 ```php
 $soapClient->getBookRecommendation(<CATEGORY_LIST>);
@@ -221,6 +225,8 @@ Response:
 ```
 
 ***Buy Book***
+Buy book with bank authentication based by communicating with bank service.
+
 Command
 ```php
 $soapClient->buyBook(<CARD_NUMBER>, <TOKEN>, <BOOK_ID>, <BOOK_QUANTITY>);
