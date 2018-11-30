@@ -2,6 +2,8 @@ cd bank-ws
 source .env
 export $(cut -d= -f1 .env)
 
+npm install
+
 # Setup mysql
 if [ $DB_PASSWORD ]
 then

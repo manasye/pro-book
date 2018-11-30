@@ -52,6 +52,7 @@ Ubuntu
 $ apt-get install php7.1
 ```
 Windows: Use installer tools
+
 2. **PHP cURL**
 
 MacOS: PHP cURL comes with default PHP
@@ -61,6 +62,7 @@ Ubuntu
 $ sudo apt-get install php7.0-curl
 ```
 Windows, go [here](https://www.codeooze.com/coding/php-curl-on-windows/)
+
 3. **PDO Extension**
 
 MacOS: PHP cURL comes with default PHP
@@ -69,6 +71,7 @@ Ubuntu
 $ apt-get install php7.1-pdo-mysql
 ```
 Windows, go [here](http://php.net/manual/en/pdo.installation.php)
+
 4. **Node.js**
 
 MacOS
@@ -95,9 +98,14 @@ $ apt-get install mysql
 $ apt-get install mysql-server
 ```
 
-5. **Maven**, go [here](https://www.baeldung.com/install-maven-on-windows-linux-mac)
+6. **Maven**, go [here](https://www.baeldung.com/install-maven-on-windows-linux-mac)
 
-6. **Tomcat**
+Ubuntu
+```
+$ sudo apt install maven
+```
+
+7. **Tomcat**
 
 MacOS
 ```
@@ -135,6 +143,7 @@ $ mvn clean compile war:war
 Run this command on your terminal
 ```
 $ chmod +x run.sh
+$ tmux
 $ ./run.sh
 ```
 Pro-Book will be serving in `localhost:5000`, book-ws will be serving in `localhost:8080`, bank-ws will be serving in `localhost:9000`
