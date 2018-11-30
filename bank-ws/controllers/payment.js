@@ -40,7 +40,7 @@ router.post("/", [customerMiddleware, merchantMiddleware], function(req, res) {
             // Transaction failed
             console.log("[ERROR]: " + error.message);
             if (error.message != "Insufficient funds")
-                error.message = "Internal server error";
+                error.message = "An error has occured";
             return res.json({
                 success: false,
                 message: error.message
