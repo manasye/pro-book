@@ -7,6 +7,7 @@ function render_template(string $userId, string $name, string $username, string 
         $img = <<<HTML
     <img class='profile-picture' src={$path} alt='Profile Picture' height='200' width='200'>
 HTML;
+
     } else if ($imageUrl) {
         $img = <<<HTML
     <img class='profile-picture' src='{$imageUrl}' alt='Profile Picture' height='200' width='200'>
