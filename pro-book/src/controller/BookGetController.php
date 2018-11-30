@@ -2,7 +2,9 @@
 class BookGetController implements ControllerInterface {
   public static function control(Request $request) {
     $db = new MarufDB;
-    $username = $db->getUsername($_COOKIE['token']);
+    $user = $db->getUser($_COOKIE['token']);
+    $username = $user['username'];
+    $userImg = $user['imageurl'];
     $options = array(
     'cache_wsdl'=>WSDL_CACHE_NONE
     );
@@ -12,6 +14,6 @@ class BookGetController implements ControllerInterface {
     $reviews = $db->getReviews($book->id);
     $rating = $db->getRatings($book->id);
     $template = new Template('src/view/book.php');
-    return $template->render($username, $book, $reviews, $rating, $recommendation);
+    return $template->render($username, $userImg, $book, $reviews, $rating, $recommendation);
   }
 }
