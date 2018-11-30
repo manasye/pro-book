@@ -1,179 +1,512 @@
-# Tugas 2 IF3110 Pengembangan Aplikasi Berbasis Web
+<img src="pro-book/docs/logo.png">
 
-Melakukan _upgrade_ Website toko buku online pada Tugas 1 dengan mengaplikasikan **arsitektur web service REST dan SOAP**.
+Pro-Book
+&middot;
+[![GitLab license](https://img.shields.io/github/license/Day8/re-frame.svg)](LICENSE)
+=====
 
-### Tujuan Pembuatan Tugas
+> A book is both a usually portable physical object and the body of immaterial representations or intellectual object whose material signs—written or drawn lines or other two-dimensional media—the physical object contains or houses. Pro-Book is an online book store that allows user to buy books and give reviews to their purchased books.
 
-Diharapkan dengan tugas ini anda dapat mengerti:
+## Table Of Contents
 
--   Produce dan Consume REST API
--   Produce dan Consume Web Services dengan protokol SOAP
--   Membuat web application yang akan memanggil web service secara REST dan SOAP.
--   Memanfaatkan web service eksternal (API)
+-   [Introduction](#introduction)
+-   [Installation](#installation)
+-   [Run Pro-Book](#run-pro-book)
+-   [Features](#features)
+-   [Implemented Libraries](#implemented-libraries)
+-   [API Documentation](#api-Documentation)
+-   [Authors](#authors)
+-   [Words From Authors](#words-from-authors)
+-   [References](#references)
 
-## Anggota Tim
+## Introduction
 
-Setiap kelompok beranggotakan **3 orang dari kelas yang sama**. Jika jumlah mahasiswa dalam satu kelas modulo 3 menghasilkan 1, maka hanya 1 kelompok terdiri dari 4 mahasiswa. Jika jumlah mahasiswa modulo 3 menghasilkan 2, maka ada dua kelompok yang beranggotakan 4 orang. Seluruh anggota kelompok **harus berbeda dengan tugas 1**.
+This is an implementation of a web-based online book store using **PHP**.
 
-## Petunjuk Pengerjaan
+## Requirements
 
-1. Buatlah organisasi pada gitlab dengan format "IF3110-2018-KXX-nama kelompok", dengan XX adalah nomor kelas.
-2. Tambahkan anggota tim pada organisasi anda.
-3. Fork pada repository ini dengan organisasi yang telah dibuat.
-4. Ubah hak akses repository hasil Fork anda menjadi **private**.
-5. [DELIVERABLE] Buat tugas sesuai spesifikasi dan silakan commit pada repository anda (hasil fork). Lakukan berberapa commit dengan pesan yang bermakna, contoh: `add register form`, `fix logout bug`, jangan seperti `final`, `benerin dikit`. Disarankan untuk tidak melakukan commit dengan perubahan yang besar karena akan mempengaruhi penilaian (contoh: hanya melakukan satu commit kemudian dikumpulkan). Sebaiknya commit dilakukan setiap ada penambahan fitur. **Commit dari setiap anggota tim akan mempengaruhi penilaian individu.** Jadi, setiap anggota tim harus melakukan sejumlah commit yang berpengaruh terhadap proses pembuatan aplikasi.
-6. Hapus bagian yang tidak perlu dari _readme_ ini.
-7. [DELIVERABLE] Berikan penjelasan mengenai hal di bawah ini pada bagian **Penjelasan** dari _readme_ repository git Anda:
-    - Basis data dari sistem yang Anda buat, yaitu basis data aplkasi pro-book, webservice bank, dan webservice buku.
-    - Konsep _shared session_ dengan menggunakan REST.
-    - Mekanisme pembangkitan token dan expiry time pada aplikasi Anda.
-    - Kelebihan dan kelemahan dari arsitektur aplikasi tugas ini, dibandingkan dengan aplikasi monolitik (login, CRUD DB, dll jadi dalam satu aplikasi)
-8. Pada _readme_ terdapat penjelasan mengenai pembagian tugas masing-masing anggota (lihat formatnya pada bagian **pembagian tugas**).
-9. Merge request dari repository anda ke repository ini dengan format **Nama kelompok** - **NIM terkecil** - **Nama Lengkap dengan NIM terkecil** sebelum **Jumat, 30 November 2018 pukul 23.59**.
+To run Pro-Book, we need to install certain libraries and packages
 
-### Deskripsi Tugas
+1. [PHP 7](http://php.net/manual/en/install.php)
+2. [PHP-curl](https://www.digitalocean.com/community/questions/curl-is-not-installed-in-your-php-installation)
+3. [PHP PDO Extension](http://php.net/manual/en/pdo.installation.php)
+4. [Node.js](https://nodejs.org/en/download/package-manager/)
+5. [tmux](https://github.com/tmux/tmux/wiki)
+6. [MySQL](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/)
+7. [Maven](https://maven.apache.org/install.html)
+8. [Tomcat](http://www.ntu.edu.sg/home/ehchua/programming/howto/tomcat_howto.html)
 
-![](temp/architecture.png)
+## Installation
 
-Pada tugas 2, Anda diminta untuk mengembangkan aplikasi toko buku online sederhana yang sudah Anda buat pada tugas 1. Arsitektur aplikasi diubah agar memanfaatkan 2 buah webservice, yaitu webservice bank dan webservice buku. Baik aplikasi maupun kedua webservice, masing-masing memiliki database sendiri. Jangan menggabungkan ketiganya dalam satu database. Anda juga perlu mengubah beberapa hal pada aplikasi pro-book yang sudah Anda buat.
+In order to run this web on your local server, you need to run it on **PHP 7.1** and install:
 
-#### Webservice bank
+### For MacOS users
 
-Anda diminta membuat sebuah webservice bank sederhana yang dibangun di atas **node.js**. Webservice bank memiliki database sendiri yang menyimpan informasi nasabah dan informasi transaksi. Informasi nasabah berisi nama, nomor kartu, dan saldo. Informasi transaksi berisi nomor kartu pengirim, nomor kartu penerima, jumlah, dan waktu transaksi. Informasi lain yang menurut Anda dibutuhkan silahkan ditambahkan sendiri. Database webservice bank harus terpisah dari database aplikasi pro-book.
+Install Homebrew
 
-Webservice bank menyediakan service untuk validasi nomor kartu dan transfer. Webservice bank diimplementasikan menggunakan protokol **REST**.
+```
+$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
 
--   Service validasi nomor kartu dilakukan dengan memeriksa apakah nomor kartu tersebut ada pada database bank. Jika iya, berarti kartu tersebut valid.
+1. **PHP 7.1**
 
--   Service transfer menerima input nomor kartu pengirim, penerima, dan jumlah yang ditransfer. Jika saldo mencukupi, maka transfer berhasil dan uang sejumlah tersebut dipindahkan dari pengirim ke penerima. Transaksi tersebut juga dicatat dalam database webservice. Jika saldo tidak mencukupi, maka transaksi ditolak dan tidak dicatat di database.
+MacOS
 
-#### Webservice buku
+```
+$ brew install php71
+```
 
-Webservice ini menyediakan daftar buku beserta harganya yang akan digunakan oleh aplikasi pro-book. Webservice buku dibangun di atas **java servlet**. Service yang disediakan webservice ini antara lain adalah pencarian buku, mengambil detail buku, melakukan pembelian, serta memberikan rekomendasi buku sederhana. Webservice ini diimplementasikan menggunakan **JAX-WS dengan protokol SOAP**.
+Ubuntu
 
-Webservice ini memanfaatkan **Google Books API melalui HttpURLConnection. Tidak diperbolehkan menggunakan Google Books Client Library for Java**. Data-data buku yang dimiliki oleh webservice ini akan mengambil dari Google Books API. Silahkan membaca [dokumentasinya](https://developers.google.com/books/docs/overview) untuk detail lebih lengkap. Data pada Google Books API tidak memiliki harga, maka webservice buku perlu memiliki database sendiri berisi data harga buku-buku yang dijual. Database webservice buku harus terpisah dari database bank dan dari database aplikasi pro-book.
+```
+$ apt-get install php7.1
+```
 
-Detail service yang disediakan webservice ini adalah:
+Windows: Use installer tools
 
--   Pencarian buku menerima keyword judul. Keyword ini akan diteruskan ke Google Books API dan mengambil daftar buku yang mengandung keyword tersebut pada judulnya. Hasil tersebut kemudian dikembalikan pada aplikasi setelah diproses. Proses yang dilakukan adalah menghapus data yang tidak dibutuhkan, menambahkan harga buku jika ada di database, dan mengubahnya menjadi format SOAP.
+2. **PHP cURL**
 
--   Pengambilan detail juga mengambil data dari Google Books API, seperti service search. Baik service ini maupun search, informasi yang akan dikembalikan hanya informasi yang dibutuhkan. Jangan lansung melemparkan semua data yang didapatkan dari Google Books API ke aplikasi. Karena pengambilan detail buku menggunakan ID buku, maka ID buku webservice harus mengikuti ID buku Google Books API. Pada service ini, harga buku juga dicantumkan.
+MacOS: PHP cURL comes with default PHP
 
--   Webservice ini menangani proses pembelian. Service ini menerima masukan id buku yang dibeli, jumlah yang dibeli, serta nomor rekening user yang membeli buku. Nomor rekening tersebut akan digunakan untuk mentransfer uang sejumlah harga total buku. Jika transfer gagal, maka pembelian buku juga gagal.
+Ubuntu
 
-    Jumlah buku yang berhasil dibeli dicatat di database. Webservice menyimpan ID buku, kategori (genre), dan jumlah total pembelian buku tersebut. Data ini akan digunakan untuk memberikan rekomendasi. Jika pembelian gagal maka data tidak dicatat pada aplikasi.
+```
+$ sudo apt-get install php7.0-curl
+```
 
--   Webservice juga dapat memberikan rekomendasi sederhana. Input dari webservice ini adalah kategori buku. Kategori buku yang dimasukkan boleh lebih dari 1. Buku yang direkomendasikan adalah buku yang memiliki jumlah pembelian total terbanyak yang memiliki kategori yang sama dengan daftar kategori yang menjadi input. Data tersebut didapat dari service yang mencatat jumlah pembelian.
+Windows, go [here](https://www.codeooze.com/coding/php-curl-on-windows/)
 
-    Jika buku dengan kategori tersebut belum ada yang terjual, maka webservice akan mengembalikan 1 buku random dari hasil pencarian pada Google Books API. Pencarian yang dilakukan adalah buku yang memiliki kategori yang sama dengan salah satu dari kategori yang diberikan (random).
+3. **PDO Extension**
 
-#### Perubahan pada aplikasi pro-book
+MacOS: PHP cURL comes with default PHP
+Ubuntu
 
-Karena memanfaatkan kedua webservice tersebut, akan ada perubahan pada aplikasi yang Anda buat.
+```
+$ apt-get install php7.1-pdo-mysql
+```
 
--   Setiap user menyimpan informasi nomor kartu yang divalidasi menggunakan webservice bank. Validasi dilakukan ketika melakukan registrasi atau mengubah informasi nomor kartu. Jika nomor kartu tidak valid, registrasi atau update profile gagal dan data tidak berubah.
+Windows, go [here](http://php.net/manual/en/pdo.installation.php)
 
--   Data buku diambil dari webservice buku, sehingga aplikasi tidak menyimpan data buku secara lokal. Setiap kali aplikasi membutuhkan informasi buku, aplikasi akan melakukan request kepada webservice buku. Hal ini termasuk proses search dan melihat detail buku.
+4. **Node.js**
 
-    Database webservice cukup menyimpan harga sebagian buku yang ada di Google Books API. Buku yang harganya tidak Anda definisikan di database boleh dicantumkan NOT FOR SALE dan tidak bisa dibeli, tetapi tetap bisa dilihat detailnya.
+MacOS
 
--   Proses pembelian buku pada aplikasi ditangani oleh webservice buku. Status pembelian (berhasil/gagal dan alasannya) dilaporkan kepada user dalam bentuk notifikasi. Untuk kemudahan, tidak perlu ada proses validasi dalam melakukan transfer
+```sh-session
+$ brew install node
+```
 
--   Pada halaman detail buku, terdapat rekomendasi buku yang didapatkan dari webservice buku. Asumsikan sendiri tampilan yang sesuai.
+Ubuntu
 
--   Halaman search-book dan search-result pada tugas 1 digabung menjadi satu halaman search yang menggunakan AngularJS. Proses pencarian buku diambil dari webservice buku menggunakan **AJAX**. Hasil pencarian akan ditampilkan pada halaman search menggunakan AngularJS, setelah mendapatkan respon dari webservice. Ubah juga tampilan saat melakukan pencarian untuk memberitahu jika aplikasi sedang melakukan pencarian atau tidak ditemukan hasil.
+```sh-session
+$ curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
+$ sudo apt-get install -y nodejs
+```
 
-    Berikut adalah komponen pada AngularJS yang harus digunkan pada aplikasi Anda:
+Windows: Use windows installer
 
-    -   Data binding (ng-model directives)
-    -   Controllers (ng-controllers)
-    -   ng-repeat, untuk menampilkan list
+5. **MySQL**
 
--   Aplikasi Anda menggunakan `access token` untuk menentukan active user. Mekanisme pembentukan dan validasi access token dapat dilihat di bagian _Mekanisme access token_.
+MacOS
 
-#### Mekanisme access token
+```
+$ brew install mysql
+```
 
-`Access token` berupa string random. Ketika user melakukan login yang valid, sebuah access token di-generate, disimpan dalam database server, dan diberikan kepada browser. Satu `access token` memiliki `expiry time` token (berbeda dengan expiry time cookie) dan hanya dapat digunakan pada 1 _browser/agent_ dari 1 _ip address_ tempat melakukan login. Sebuah access token mewakilkan tepat 1 user. Sebuah access token dianggap valid jika:
+Ubuntu
 
--   Access token terdapat pada database server dan dipasangkan dengan seorang user.
--   Access token belum expired, yaitu expiry time access token masih lebih besar dari waktu sekarang.
--   Access token digunakan oleh browser yang sesuai.
--   Access token digunakan dari ip address yang sesuai.
+```
+$ apt-get install mysql
+$ apt-get install mysql-server
+```
 
-Jika access token tidak ada atau tidak valid, maka aplikasi melakukan _redirect_ ke halaman login jika user mengakses halaman selain login atau register. Jika access token ada dan valid, maka user akan di-_redirect_ ke halaman search jika mengakses halaman login. Fitur logout akan menghapus access token dari browser dan dari server.
+6. **Maven**, go [here](https://www.baeldung.com/install-maven-on-windows-linux-mac)
 
-#### Catatan
+Ubuntu
 
-Hal-hal detail yang disebutkan pada spesifikasi di atas seperti data yang disimpan di database, parameter request, dan jenis service yang disediakan adalah spesifikasi minimum yang harus dipenuhi. Anda boleh menambahkan data/parameter/service lain yang menurut Anda dibutuhkan oleh aplikasi atau web service lainnya. Jika Anda ingin mengubah data/parameter/service yang sudah disebutkan di atas, Anda wajib mempertanggung jawabkannya dan memiliki argumen yang mendukung keputusan tersebut.
+```
+$ sudo apt install maven
+```
 
-### Skenario
+7. **Tomcat**
 
-1. User melakukan registrasi dengan memasukkan informasi nomor kartu.
-2. Jika nomor kartu tidak valid, registrasi ditolak dan user akan diminta memasukkan kembali nomor kartu yang valid.
-3. User yang sudah teregistrasi dapat mengganti informasi nomor kartu.
-4. Ketika user mengganti nomor kartu, nomor kartu yang baru akan diperiksa validasinya melalui webservice bank.
-5. Setelah login, user dapat melakukan pencarian buku.
-6. Pencarian buku akan mengirim request ke webservice buku. Halaman ini menggunakan AngularJS.
-7. Pada halaman detail buku, ada rekomendasi buku yang didapat dari webservice buku. Rekomendasi buku berdasarkan kategori buku yang sedang dilihat.
-8. Ketika user melakukan pemesanan buku, aplikasi akan melakukan request transfer kepada webservice bank.
-9. Jika transfer berhasil, aplikasi mengirimkan request kepada webservice buku untuk mencatat penjualan buku.
-10. Notifikasi muncul menandakan status pembelian, berhasil atau gagal.
+MacOS
 
-### Bonus
+```
+$ brew install tomcat
+```
 
-Anda tidak dituntut untuk mengerjakan ini. Fokus terlebih dahulu menyelesaikan semua spesifikasi yang ada sebelum memikirkan bonus.
+Ubuntu, or you can go [here](https://linuxize.com/post/how-to-install-tomcat-8-5-on-ubuntu-18.04/)
 
-1. Token bank
+## Pre-Running
 
-    Ketika Anda melakukan transfer online, beberapa bank menyediakan sebuah mesin yang memberikan sebuah angka (token) yang harus dimasukan untuk memvalidasi transfer. Anda akan meniru fitur ini pada webservice bank.
+Before we run the Pro-Book, we have to setup every `.env` file and database instances.
 
-    Mekanisme token menggunakan algoritma HOTP atau TOTP, algoritma hash yang digunakan dibebaskan kepada peserta, misalnya SHA1. Token berupa 8 digit angka. Informasi-informasi yang dibutuhkan untuk membangun token ini, seperti shared secret key, disimpan pada database webservice bank. Anda diperbolehkan menggunakan library HOTP/TOTP untuk membentuk token tersebut.
+To initialize the `.env` file,
 
-    Buatlah juga sebuah script (bebas, mau dalam bentuk PHP, JS, dll.) sebagai pengganti mesin token bank untuk membangun token yang akan digunakan untuk proses transfer.
+```
+$ cp bank-ws/env.sample bank-ws/.env                                # Modify .env file with your own setting
+$ cp pro-book/ethes.sample pro-book/.ethes                          # Modify .ethes file with your own setting
+$ cp book-ws/src/main/envs/env.sample book-ws/src/main/envs/.env    # Modify .env file with your own setting
+```
 
-    Setiap permintaan transfer yang berasal (yang memberikan uang) dari nomor kartu tersebut, harus menyertakan token yang valid. Token valid adalah token milik nomor kartu yang bersangkutan yang di-generate melalui alat (request di atas) dan belum expired. Jika transfer tidak menyertakan token yang valid, transfer akan gagal, seperti jika Anda melakukan transfer dengan saldo yang kurang.
+To initialize the database,
 
-    Maka, aplikasi pro-book memiliki field tambahan yaitu transfer token, yang terdapat pada halaman book detail saat melakukan order. Token tersebut kemudian diberikan kepada webservice buku, yang kemudian akan digunakan untuk memvalidasi transfer pembelian buku.
+```sh-session
+$ chmod +x setup.sh
+$ ./setup.sh
+```
 
-2. Login via Google
+Build the book-ws servlet and make sure `CATALINA_HOME` is pointing to tomcat correctly in `book-ws/src/main/envs`
 
-    Aplikasi memiliki pilihan untuk login menggunakan akun google, seperti yang sering ditemui pada aplikasi web atau game. Contohnya seperti tombol berikut pada [stack overflow](https://stackoverflow.com/). Informasi yang ditampilkan untuk user yang login dengan akun google diambil dari informasi akun google tersebut.
+```sh-session
+$ cd book-ws
+$ mvn clean compile war:war
+```
 
-    ![](temp/button_example.png)
+## Run Pro-Book
 
-### Pembagian Tugas
+Run this command on your terminal
 
-"Gaji buta dilarang dalam tugas ini. Bila tak mengerti, luangkan waktu belajar lebih banyak. Bila belum juga mengerti, belajarlah bersama-sama kelompokmu. Bila Anda sekelompok bingung, bertanyalah (bukan menyontek) ke teman seangkatanmu. Bila seangkatan bingung, bertanyalah pada asisten manapun."
+```
+$ chmod +x run.sh
+$ tmux
+$ ./run.sh
+```
 
-_Harap semua anggota kelompok mengerjakan SOAP dan REST API kedua-duanya_. Tuliskan pembagian tugas seperti berikut ini.
+Pro-Book will be serving in `localhost:5000`, book-ws will be serving in `localhost:8080`, bank-ws will be serving in `localhost:9000`
 
-REST :
+## Features
 
-1. Validasi nomor kartu : 1351xxxx
-2. ...
+-   **Browse** : You can search any books that you want and view its detailed information that contains title, author, synopsis, cover, ratings, and list of reviews.
+-   **Order** : When you are on the book's detail page, you can order the book by choosing the amount of copies you want and click on the Order button.
+-   **History** : You can see your history of orders.
+-   **Review** : On your history page, you can click the **review** button in order to give a review about your purchased books. You can also give a rating and comment about the book.
+-   **View Profile** : You can view your profile details on the profile page.
+-   **Edit Profile** : On the profile page, you can click the **edit** button and change some personal information about you. You are allowed to change your profile picture, name, address, and phone number.
 
-SOAP :
+## API Documentation
 
-1. Add Produce : 1351xxxx
-2. Fungsionalitas Y : 1351xxxx
-3. ...
+#### Bank Service
 
-Perubahan Web app :
+**_User Validation_**
 
-1. Halaman Search :
-2. Halaman X :
-3. ...
+Check whether the given card number is registered in the bank.
+Request:
 
-Bonus :
+```bash
+GET /production/validate
+POST /production/validate
+{
+    "cardNumber": card number of a user [string]
+}
+```
 
-1. Pembangkitan token HTOP/TOTP :
-2. Validasi token :
-3. ...
+Response:
 
-## About
+```
+{
+    "success": whether the user is valid [boolean],
+    "message": response message [string],
+    "account": {
+        "id": user id [string],
+        "name": user name [string],
+        "cardNumber": user card number [string],
+        "balance": user bank balance [number]
+    } [if success == true]
+}
+```
 
-Asisten IF3110 2018
+**_Generate QR Code Secret_**
 
-Audry | Erick | Holy | Kevin J. | Tasya | Veren | Vincent H.
+Generate QR code for a merchant. Uses authentication by checking the card number and merchant secret.
+Request:
 
-Dosen : Yudistira Dwi Wardhana | Riza Satria Perdana | Muhammad Zuhri Catur Candra
+```
+POST /production/validate
+{
+    cardNumber: card number of a user [string]
+    merchantSecret: merchant secret [string]
+}
+```
+
+Response:
+
+```
+{
+    "success": whether qr code successfully generated [boolean],
+    "message": response message [string],
+    "qrCode": image [binary] [if success == true]
+}
+```
+
+**_Make Transaction_**
+
+Make transaction and checks whether the user's balance is enough to make a transaction with certain amount. Will transfer the transaction amount from user to merchant.
+Request:
+
+```bash
+POST /production/validate
+{
+    cardNumber: card number of a user [string]
+    merchantSecret: merchant secret [string]
+    amount: amount of transaction in IDR [number]
+}
+```
+
+Response:
+
+```
+{
+    "success": whether transaction succeed [boolean],
+    "message": response message [string],
+}
+```
+
+#### Book Service
+
+Book service is a service to get book details, get book recommendations, and make book transactions. Book service utilize Google Book service to fetch book info. Book service is implemented using JAX-WS. You can use your preferred implementation of soap client. In this documentation, soapClient in PHP will be used for demonstration purposes. To initialize the soap client in PHP, insert code below.
+
+```php
+$soapClient = new SoapClient(<BOOK_API_WSDL_URL>);
+```
+
+**_Search Book By Title_**
+
+Search a book based on the title of the book.
+Command
+
+```php
+$soapClient->searchTitle(<SEARCH_TERM>);
+```
+
+Response:
+
+```
+{
+    "bookList": [
+        {
+            "id": book id [string],
+            "title": book title [string],
+            "author": book author [string],
+            "category": book category [string],
+            "description": book description [string],
+            "imageUrl": book image url [string],
+            "price": book price [number]
+        },
+        ...
+    ]
+}
+```
+
+**_Search Book By Book Id_**
+
+Seach a book based on the id of the book.
+Command
+
+```php
+$soapClient->searchDetail(<BOOK_ID>);
+```
+
+Response:
+
+```
+{
+    "id": book id [string],
+    "title": book title [string],
+    "author": book author [string],
+    "category": book category [string],
+    "description": book description [string],
+    "imageUrl": book image url [string],
+    "price": book price [number]
+}
+```
+
+**_Get Book Recommendation By Categories_**
+
+Generate book recommendations based on the number of sold items in the same categories. If no book in the categories that have been bought, book service will return one random book in the same categories from the Google Book API.
+
+Command
+
+```php
+$soapClient->getBookRecommendation(<CATEGORY_LIST>);
+```
+
+Response:
+
+```
+{
+    "bookList": [
+        {
+            "id": book id [string],
+            "title": book title [string],
+            "author": book author [string],
+            "category": book category [string],
+            "description": book description [string],
+            "imageUrl": book image url [string],
+            "price": book price [number]
+        },
+        ...
+    ]
+}
+```
+
+**_Buy Book_**
+
+Buy book with bank authentication based by communicating with bank service.
+
+Command
+
+```php
+$soapClient->buyBook(<CARD_NUMBER>, <TOKEN>, <BOOK_ID>, <BOOK_QUANTITY>);
+```
+
+Response:
+
+```
+{
+    "success": whether the transcation succeed [boolean],
+    "message": response message [string]
+}
+```
+
+## Explanations
+
+### Database Schema
+
+#### Probook
+
+**_ActiveTokens_**
+
+| Field                | Type         | Description           |
+| -------------------- | ------------ | --------------------- |
+| user_id              | INT(11)      | User ID (Primary Key) |
+| token                | VARCHAR(300) | User Token            |
+| user_agent           | VARCHAR(255) | User Agent            |
+| ip_address           | VARCHAR(20)  | IP Address            |
+| expiration_timestamp | BIGINT(20)   | Expiration Timestamp  |
+
+**_Orders_**
+
+| Field           | Type         | Description       |
+| --------------- | ------------ | ----------------- |
+| id              | INT(11)      | Order ID          |
+| user_id         | INT(11)      | User ID           |
+| is_review       | TINYINT(1)   | Is order reviewed |
+| book_id         | VARCHAR(255) | Book ID           |
+| amount          | INT(11)      | Amount            |
+| order_timestamp | BIGINT(20)   | Order Timestamp   |
+
+**_Ratings_**
+
+| Field  | Type         | Description                          |
+| ------ | ------------ | ------------------------------------ |
+| id     | VARCHAR(255) | Book ID                              |
+| rating | FLOAT        | Book Average Rating                  |
+| vote   | INT(11)      | Number of User Ratings for This Book |
+
+**_Reviews_**
+
+| Field    | Type         | Description       |
+| -------- | ------------ | ----------------- |
+| id       | INT(11)      | Rating ID         |
+| rating   | FLOAT        | Review Rating     |
+| coment   | VARCHAR(500) | Review Comment    |
+| book_id  | VARCHAR(20)  | Book ID           |
+| username | VARCHAR(300) | Reviewer Username |
+| user_id  | INT(11)      | Reviewer ID       |
+
+**_Users_**
+
+| Field       | Type         | Description              |
+| ----------- | ------------ | ------------------------ |
+| id          | INT(11)      | User ID                  |
+| name        | VARCHAR(255) | User Name                |
+| username    | VARCHAR(255) | User Username            |
+| email       | VARCHAR(255) | User Email Address       |
+| password    | VARCHAR(255) | User Password            |
+| address     | VARCHAR(255) | User Address             |
+| phonenumber | VARCHAR(255) | User Phone Number        |
+| cardnumber  | VARCHAR(255) | User Card Number         |
+| imageurl    | VARCHAR(255) | User Profile Picture URL |
+
+#### Bank Service
+
+**_customers_**
+
+| Field      | Type   | Description          |
+| ---------- | ------ | -------------------- |
+| id         | INT    | Customer ID          |
+| name       | STRING | Customer Name        |
+| cardNumber | STRING | Customer Card Number |
+| balance    | BIGINT | Customer Balance     |
+| secret     | STRING | Customer Secret      |
+
+**_merchants_**
+
+| Field        | Type   | Description     |
+| ------------ | ------ | --------------- |
+| id           | INT    | Merchant ID     |
+| ownerAccount | INT    | Owner User ID   |
+| merchantName | STRING | Merchant Name   |
+| secret       | STRING | Merchant Secret |
+
+**_transactions_**
+
+| Field           | Type   | Description        |
+| --------------- | ------ | ------------------ |
+| id              | INT    | Transaction ID     |
+| senderAccount   | INT    | Sender User ID     |
+| receiverAccount | INT    | Receiver User ID   |
+| amount          | BIGINT | Transaction Amount |
+| transactionTime | DATE   | Transaction Time   |
+
+#### Book Service
+
+**_book_**
+
+| Field    | Type         | Description     |
+| -------- | ------------ | --------------- |
+| id       | VARCHAR(255) | Book ID         |
+| price    | INT          | Book Price      |
+| category | VARCHAR(255) | Book Category   |
+| sold     | INT          | Book Sold Count |
+
+### [TODO] Shared Session in REST
+
+### [TODO] Token Creation And Expiry Mechanism
+
+In this project, whenever user log in to the web, the app will generate the token and automatically calculates the expiry time and stores the IP Address, HTTP Client, and the expiry time of the token to web's database.
+When user accesses the web, it will validate the token, IP Address, HTTP Client, and the expiry time of the token. If the token validates, the user will be redirected to /browse page, else client token will be deleted and the user will be redirected to /login page.
+
+### Probook Architecture vs Monolith Architecture
+
+Since this project uses microservice architecture, there must be a tradeoff in this architecture compared to the traditional monolith architecture. Here's the pros and cons of our architecture compared against monolith architecture.
+
+**_Pros:_**
+
+-   Microservice is decoupled so service isolation is easier to be done.
+-   Microservice is easier to understand since there's less dependencies compared to Monolith.
+-   Microservice allows parallel development.
+
+**_Cons:_**
+
+-   There's more operational overhead compared Monolith.
+-   It's possible to have worse performance than monolith since monolith's shared memory is much faster than inter-process communication (IPC).
+
+## Authors
+
+1. Abram Perdanaputra - 13516083 - https://github.com/abrampers
+2. Ahmad Izzan - 13516116 - https://github.com/ahmadizzan
+3. Manasye Bukit - 13516122 - https://github.com/manasye
+
+## Words from Authors
+
+Thanks to our lovely lecturer Mr. Dr.Techn. Muhammad Zuhri Catur Candra ST,MT for his amazing project about [Tugas 1 IF3110 Pengembangan Aplikasi Berbasis Web](http://gitlab.informatika.org/IF3110-2018/tugasbesar1_2018).
+
+> _"You already know how hard it is to build a software right? Do you still want to use pirated softwares?"_ > _- Dr.Techn. Muhammad Zuhri Catur Candra ST,MT_
+
+## References
+
+-   [Pro-Book v1](https://github.com/abrampers/PRO-Book)
+-   [Tugas 1 IF3110 Pengembangan Aplikasi Berbasis Web](http://gitlab.informatika.org/IF3110-2018/tugasbesar1_2018)
+-   [Flaticon](https://flaticon.com)
