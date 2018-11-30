@@ -1,12 +1,11 @@
 package com.blackmamba.model;
 
-import com.blackmamba.AppProperties;
 import io.github.cdimascio.dotenv.Dotenv;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Properties;
+import java.util.TimeZone;
 
 public class BaseModel {
     private String url;
@@ -30,6 +29,15 @@ public class BaseModel {
     }
 
     public Connection connect() throws SQLException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            System.out.println("[ERROR connection] - " + e.getMessage());
+            return null;
+        }
+        TimeZone timeZone = TimeZone.getTimeZone("yourTimeZone"); // e.g. "Europe/Rome"
+        System.out.println("HUYUUU: " + timeZone);
+        TimeZone.setDefault(timeZone);
         return DriverManager.getConnection(this.url, this.user, this.password);
     }
 }
