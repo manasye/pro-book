@@ -113,6 +113,10 @@ function validateInput(_) {
         submitButton.disabled = true;
         updateInputValidationMessage(invalidImageMessage);
         if (submitButtonHovered) showInputValidationMessage();
+    } else if (cardNumberField.value === 'Not assigned') {
+        submitButton.disabled = true;
+        updateInputValidationMessage(invalidCardNumberMessage);
+        if (submitButtonHovered) showInputValidationMessage();
     } else if (!cardNumberValid) {
         submitButton.disabled = true;
         updateInputValidationMessage(invalidCardNumberMessage);
@@ -137,6 +141,8 @@ $$('#fileToUpload').onchange = () => {
     imageSelected = true;
     validateInput();
 };
+
+window.onload = validateInput;
 
 $$('#nameField').oninput = validateInput;
 $$('#addressField').oninput = validateInput;

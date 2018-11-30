@@ -94,7 +94,7 @@ class EditPostController implements ControllerInterface {
 
     $template = new Template('src/view/edit.php');
     if ($imageUrl) {
-      return $template->render($user['id'], $name, $user['username'], $user['email'], $address, $phoneNumber, $cardNumber, $imageUrl, $response);  
+      return $template->render($user['id'], $name, $user['username'], $user['email'], $address, $phoneNumber, $cardNumber, $imageUrl, $response);
     }
     return $template->render($user['id'], $name, $user['username'], $user['email'], $address, $phoneNumber, $cardNumber, '', $response);
   }
