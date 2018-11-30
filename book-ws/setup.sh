@@ -1,6 +1,6 @@
 cd book-ws
-source src/.env
-export $(cut -d= -f1 src/.env)
+source src/main/envs/.env
+export $(cut -d= -f1 src/main/envs/.env)
 
 # Setup mysql CEK JANG BENER APA KAGA
 if [ $MYSQL_PASSWORD ]

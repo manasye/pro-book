@@ -114,10 +114,11 @@ $ brew install tomcat
 Ubuntu, or you can go [here](https://linuxize.com/post/how-to-install-tomcat-8-5-on-ubuntu-18.04/)
 
 ## Pre-Running
-Before we run the Pro-Book, we have to setup every `.env` file and database instances.
+Before we run the Pro-Book, go to tmux and we have to setup every `.env` file and database instances.
 
 To initialize the `.env` file,
 ```
+$ tmux
 $ cp bank-ws/env.sample bank-ws/.env                                # Modify .env file with your own setting
 $ cp pro-book/ethes.sample pro-book/.ethes                          # Modify .ethes file with your own setting
 $ cp book-ws/src/main/envs/env.sample book-ws/src/main/envs/.env    # Modify .env file with your own setting
@@ -139,7 +140,6 @@ $ mvn clean compile war:war
 Run this command on your terminal
 ```
 $ chmod +x run.sh
-$ tmux
 $ ./run.sh
 ```
 Pro-Book will be serving in `localhost:5000`, book-ws will be serving in `localhost:8080`, bank-ws will be serving in `localhost:9000`
