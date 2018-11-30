@@ -1,8 +1,10 @@
 <?php
-function render_template(string $id, string $name, string $username, string $email, string $address, string $phoneNumber, string $cardNumber, $response = null) {
+function render_template(string $id, string $name, string $username, string $email, string $address, string $phoneNumber, string $cardNumber, string $imageUrl, $response = null) {
   $path = 'src/model/profile/';
   if(file_exists($path . $id .'.jpg')) {
     $path = $path . $id . '.jpg';
+  } else if ($imageUrl)  {
+    $path = $imageUrl;
   } else {
     $path = 'src/model/profile/avatar_default.jpg';
   }
