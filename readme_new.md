@@ -315,8 +315,8 @@ Response:
 }
 ```
 
-
-## Database Schema
+## Explanations
+### Database Schema
 #### Probook
 ***ActiveTokens***
 
@@ -411,6 +411,21 @@ Response:
 | price    | INT          | Book Price      |
 | category | VARCHAR(255) | Book Category   |
 | sold     | INT          | Book Sold Count |
+
+### [TODO] Shared Session in REST
+### [TODO] Token Creation And Expiry Mechanism
+
+### Probook Architecture vs Monolith Architecture
+Since this project uses microservice architecture, there must be a tradeoff in this architecture compared to the traditional monolith architecture. Here's the pros and cons of our architecture compared against monolith architecture.
+
+***Pros:***
+- Microservice is decoupled so service isolation is easier to be done.
+- Microservice is easier to understand since there's less dependencies compared to Monolith.
+- Microservice allows parallel development.
+
+***Cons:***
+- There's more operational overhead compared Monolith.
+- It's possible to have worse performance than monolith since monolith's shared memory is much faster than inter-process communication (IPC).
 
 ## Authors
 1. Abram Perdanaputra - 13516083 - https://github.com/abrampers
