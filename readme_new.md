@@ -251,6 +251,7 @@ Response:
 ## Database Schema
 #### Probook
 ***ActiveTokens***
+
 | Field                | Type         | Description           |
 |----------------------|--------------|-----------------------|
 | user_id              | INT(11)      | User ID (Primary Key) |
@@ -260,6 +261,7 @@ Response:
 | expiration_timestamp | BIGINT(20)   | Expiration Timestamp  |
 
 ***Orders***
+
 | Field           | Type         | Description       |
 |-----------------|--------------|-------------------|
 | id              | INT(11)      | Order ID          |
@@ -270,6 +272,7 @@ Response:
 | order_timestamp | BIGINT(20)   | Order Timestamp   |
 
 ***Ratings***
+
 | Field  | Type         | Description                          |
 |--------|--------------|--------------------------------------|
 | id     | VARCHAR(255) | Book ID                              |
@@ -277,6 +280,7 @@ Response:
 | vote   | INT(11)      | Number of User Ratings for This Book |
 
 ***Reviews***
+
 | Field    | Type         | Description        |
 |----------|--------------|--------------------|
 | id       | INT(11)      | Rating ID          |
@@ -302,6 +306,7 @@ Response:
 
 #### Bank Service
 ***customers***
+
 | Field      | Type   | Description          |
 |------------|--------|----------------------|
 | id         | INT    | Customer ID          |
@@ -311,6 +316,7 @@ Response:
 | secret     | STRING | Customer Secret      |
 
 ***merchants***
+
 | Field        | Type   | Description     |
 |--------------|--------|-----------------|
 | id           | INT    | Merchant ID     |
