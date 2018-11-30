@@ -22,45 +22,113 @@ This is an implementation of a web-based online book store using **PHP**.
 
 ## Requirements
 To run Pro-Book, we need to install certain libraries and packages
-1. PHP
-2. PHP-curl
-3. npm
-4. tmux
-5. MySQL
-6. perjava2an
+1. [PHP 7](http://php.net/manual/en/install.php)
+2. [PHP-curl](https://www.digitalocean.com/community/questions/curl-is-not-installed-in-your-php-installation)
+3. [PHP PDO Extension](http://php.net/manual/en/pdo.installation.php)
+3. [Node.js](https://nodejs.org/en/download/package-manager/)
+4. [tmux](https://github.com/tmux/tmux/wiki)
+5. [MySQL](https://dev.mysql.com/doc/mysql-installation-excerpt/5.7/en/)
+6. [Maven](https://maven.apache.org/install.html)
+7. [Tomcat](http://www.ntu.edu.sg/home/ehchua/programming/howto/tomcat_howto.html)
 
 
 ## Installation
 In order to run this web on your local server, you need to run it on **PHP 7.1** and install:
 
-1. PHP 7.1
+### For MacOS users
+Install Homebrew
+```
+$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
+
+1. **PHP 7.1**
+
+MacOS
+```
+$ brew install php71
+```
+Ubuntu
 ```
 $ apt-get install php7.1
 ```
-2. PDO Extension
+Windows: Use installer tools
+2. **PHP cURL**
+
+MacOS: PHP cURL comes with default PHP
+
+Ubuntu
+```
+$ sudo apt-get install php7.0-curl
+```
+Windows, go [here](https://www.codeooze.com/coding/php-curl-on-windows/)
+3. **PDO Extension**
+
+MacOS: PHP cURL comes with default PHP
+Ubuntu
 ```
 $ apt-get install php7.1-pdo-mysql
 ```
-3. mysql
+Windows, go [here](http://php.net/manual/en/pdo.installation.php)
+4. **Node.js**
+
+MacOS
+```sh-session
+$ brew install node
+```
+Ubuntu
+```sh-session
+$ curl -sL https://deb.nodesource.com/setup_11.x | sudo -E bash -
+$ sudo apt-get install -y nodejs
+```
+
+Windows: Use windows installer
+
+5. **MySQL**
+
+MacOS
+```
+$ brew install mysql
+```
+Ubuntu
 ```
 $ apt-get install mysql
 $ apt-get install mysql-server
 ```
 
+5. **Maven**, go [here](https://www.baeldung.com/install-maven-on-windows-linux-mac)
+
+6. **Tomcat**
+
+MacOS
+```
+$ brew install tomcat
+```
+Ubuntu, or you can go [here](https://www.digitalocean.com/community/tutorials/how-to-install-apache-tomcat-8-on-ubuntu-16-04)
+```
+$ curl -O http://apache.mirrors.ionfish.org/tomcat/tomcat-8/v8.5.5/bin/apache-tomcat-8.5.5.tar.gz
+$ sudo mkdir /opt/tomcat
+$ sudo tar xzvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1
+```
 ## Pre-Running
 Before we run the Pro-Book, we have to setup every `.env` file and database instances.
 
 To initialize the `.env` file,
 ```
-$ cp bank-ws/env.sample bank-ws/.env          # Modify .env file with your own setting
-$ cp pro-book/ethes.sample pro-book/.ethes  # Modify .ethes file with your own setting
-$ cp book-ws/env.sample book-ws/.env  # Modify .env file with your own setting
+$ cp bank-ws/env.sample bank-ws/.env                                # Modify .env file with your own setting
+$ cp pro-book/ethes.sample pro-book/.ethes                          # Modify .ethes file with your own setting
+$ cp book-ws/src/main/envs/env.sample book-ws/src/main/envs/.env    # Modify .env file with your own setting
 ```
 
 To initialize the database,
-```
+```sh-session
 $ chmod +x setup.sh
 $ ./setup.sh
+```
+
+Build the book-ws servlet and make sure `CATALINA_HOME` is pointing to tomcat correctly in `book-ws/src/main/envs`
+```sh-session
+$ cd book-ws
+$ mvn clean compile war:war
 ```
 
 ## Run Pro-Book
