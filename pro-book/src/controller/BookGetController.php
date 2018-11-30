@@ -6,7 +6,7 @@ class BookGetController implements ControllerInterface {
     $options = array( 
     'cache_wsdl'=>WSDL_CACHE_NONE 
     ); 
-    $soapClient = new SoapClient("http://{$_ENV['BANK_HOST']}/ws/book?wsdl", $options); 
+    $soapClient = new SoapClient("http://{$_ENV['BOOK_HOST']}/ws/book?wsdl", $options); 
     $book = $soapClient->searchDetail($request->id);
     $recommendation = $soapClient->getBookRecommendation(explode("/", $book->category));
     // $recommendation = $soapClient->getBookRecommendation(['Other']);

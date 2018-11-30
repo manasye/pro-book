@@ -37,6 +37,7 @@ public class BookWS {
 
     @WebMethod
     public BookDetail searchDetail(String id) {
+        System.out.println("SEARCH DEATIAL");
         GoogleBookAPI googleBook = new GoogleBookAPI();
         BookDetail bookDetail = googleBook.getBookDetail(id);
         return bookDetail;
