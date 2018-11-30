@@ -4,25 +4,12 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import com.blackmamba.api.BankAPI;
 import com.blackmamba.api.GoogleBookAPI;
 import com.blackmamba.model.ListBooks;
-
 import com.blackmamba.model.BookDetail;
 import com.blackmamba.model.TransactionResponse;
-import org.json.simple.JSONObject;
-
-import com.blackmamba.model.Book;
-import com.blackmamba.api.GoogleBook;
-
-import com.blackmamba.api.GoogleBook;
 
 @WebService
 @SOAPBinding(style = Style.RPC, use = SOAPBinding.Use.ENCODED)
@@ -37,7 +24,7 @@ public class BookWS {
 
     @WebMethod
     public BookDetail searchDetail(String id) {
-        System.out.println("SEARCH DEATIAL");
+        System.out.println("SEARCH DEATAIL");
         GoogleBookAPI googleBook = new GoogleBookAPI();
         BookDetail bookDetail = googleBook.getBookDetail(id);
         return bookDetail;
