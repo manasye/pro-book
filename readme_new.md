@@ -82,6 +82,7 @@ Pro-Book will be serving in `localhost:5000`, book-ws will be serving in `localh
 ## API Documentation
 #### Bank Service
 ***User Validation***
+
 Check whether the given card number is registered in the bank.
 Request:
 ```bash
@@ -107,6 +108,7 @@ Response:
 ```
 
 ***Generate QR Code Secret***
+
 Generate QR code for a merchant. Uses authentication by checking the card number and merchant secret.
 Request:
 ```
@@ -127,6 +129,7 @@ Response:
 ```
 
 ***Make Transaction***
+
 Make transaction and checks whether the user's balance is enough to make a transaction with certain amount. Will transfer the transaction amount from user to merchant.
 Request:
 ```bash
@@ -154,6 +157,7 @@ $soapClient = new SoapClient(<BOOK_API_WSDL_URL>);
 ```
 
 ***Search Book By Title***
+
 Search a book based on the title of the book.
 Command
 ```php
@@ -179,6 +183,7 @@ Response:
 ```
 
 ***Search Book By Book Id***
+
 Seach a book based on the id of the book.
 Command
 ```php
@@ -199,6 +204,7 @@ Response:
 ```
 
 ***Get Book Recommendation By Categories***
+
 Generate book recommendations based on the number of sold items in the same categories. If no book in the categories that have been bought, book service will return one random book in the same categories from the Google Book API.
 
 Command
@@ -225,6 +231,7 @@ Response:
 ```
 
 ***Buy Book***
+
 Buy book with bank authentication based by communicating with bank service.
 
 Command
@@ -240,7 +247,98 @@ Response:
 }
 ```
 
-### Authors
+
+## Database Schema
+#### Probook
+***ActiveTokens***
+| Field                | Type         | Description           |
+|----------------------|--------------|-----------------------|
+| user_id              | INT(11)      | User ID (Primary Key) |
+| token                | VARCHAR(300) | User Token            |
+| user_agent           | VARCHAR(255) | User Agent            |
+| ip_address           | VARCHAR(20)  | IP Address            |
+| expiration_timestamp | BIGINT(20)   | Expiration Timestamp  |
+
+***Orders***
+| Field           | Type         | Description       |
+|-----------------|--------------|-------------------|
+| id              | INT(11)      | Order ID          |
+| user_id         | INT(11)      | User ID           |
+| is_review       | TINYINT(1)   | Is order reviewed |
+| book_id         | VARCHAR(255) | Book ID           |
+| amount          | INT(11)      | Amount            |
+| order_timestamp | BIGINT(20)   | Order Timestamp   |
+
+***Ratings***
+| Field  | Type         | Description                          |
+|--------|--------------|--------------------------------------|
+| id     | VARCHAR(255) | Book ID                              |
+| rating | FLOAT        | Book Average Rating                  |
+| vote   | INT(11)      | Number of User Ratings for This Book |
+
+***Reviews***
+| Field    | Type         | Description        |
+|----------|--------------|--------------------|
+| id       | INT(11)      | Rating ID          |
+| rating   | FLOAT        | Review Rating      |
+| coment   | VARCHAR(500) | Review Comment     |
+| book_id  | VARCHAR(20)  | Book ID            |
+| username | VARCHAR(300) | Reviewer Username  |
+| user_id  | INT(11)      | Reviewer ID        |
+
+***Users***
+
+| Field       | Type         | Description              |
+|-------------|--------------|--------------------------|
+| id          | INT(11)      | User ID                  |
+| name        | VARCHAR(255) | User Name                |
+| username    | VARCHAR(255) | User Username            |
+| email       | VARCHAR(255) | User Email Address       |
+| password    | VARCHAR(255) | User Password            |
+| address     | VARCHAR(255) | User Address             |
+| phonenumber | VARCHAR(255) | User Phone Number        |
+| cardnumber  | VARCHAR(255) | User Card Number         |
+| imageurl    | VARCHAR(255) | User Profile Picture URL |
+
+#### Bank Service
+***customers***
+| Field      | Type   | Description          |
+|------------|--------|----------------------|
+| id         | INT    | Customer ID          |
+| name       | STRING | Customer Name        |
+| cardNumber | STRING | Customer Card Number |
+| balance    | BIGINT | Customer Balance     |
+| secret     | STRING | Customer Secret      |
+
+***merchants***
+| Field        | Type   | Description     |
+|--------------|--------|-----------------|
+| id           | INT    | Merchant ID     |
+| ownerAccount | INT    | Owner User ID   |
+| merchantName | STRING | Merchant Name   |
+| secret       | STRING | Merchant Secret |
+
+***transactions***
+
+| Field           | Type   | Description        |
+|-----------------|--------|--------------------|
+| id              | INT    | Transaction ID     |
+| senderAccount   | INT    | Sender User ID     |
+| receiverAccount | INT    | Receiver User ID   |
+| amount          | BIGINT | Transaction Amount |
+| transactionTime | DATE   | Transaction Time   |
+
+#### Book Service
+***book***
+
+| Field    | Type         | Description     |
+|----------|--------------|-----------------|
+| id       | VARCHAR(255) | Book ID         |
+| price    | INT          | Book Price      |
+| category | VARCHAR(255) | Book Category   |
+| sold     | INT          | Book Sold Count |
+
+## Authors
 1. Abram Perdanaputra - 13516083 - https://github.com/abrampers
 2. Ahmad Izzan - 13516116 - https://github.com/ahmadizzan
 3. Manasye Bukit - 13516122 - https://github.com/manasye
