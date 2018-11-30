@@ -138,8 +138,7 @@ HTML;
     if(!file_exists($profileImagePath)) {
       $profileImagePath = 'src/model/profile/avatar_default.jpg';
     }
-
-    $r = round($rating, 1);
+    $r = round($review['rating'], 1);
     $reviewHTML = <<<HTML
 
 <div class='book-review-item-container'>
