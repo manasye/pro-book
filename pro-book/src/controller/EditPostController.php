@@ -21,6 +21,7 @@ class EditPostController implements ControllerInterface {
     $address = $user['address'];
     $phoneNumber = $user['phonenumber'];
     $cardNumber = $user['cardnumber'];
+    $imageUrl = $user['imageurl'];
 
     $response = array('error' => array());
     $response['success'] = True;
@@ -80,8 +81,9 @@ class EditPostController implements ControllerInterface {
         $address = $request->address;
         $phoneNumber = $request->phoneNumber;
         $cardNumber = $request->cardNumber;
+        $imageUrl = $request->imageUrl;
         $response['success'] = True;
-        $result = $db->editProfile($request->name, $request->address, $request->phoneNumber, $request->userId, $request->cardNumber);
+        $result = $db->editProfile($request->name, $request->address, $request->phoneNumber, $request->userId, $request->cardNumber, $request->imageUrl);
       }
     }
 
@@ -91,6 +93,9 @@ class EditPostController implements ControllerInterface {
     }
 
     $template = new Template('src/view/edit.php');
-    return $template->render($user['id'], $name, $user['username'], $user['email'], $address, $phoneNumber, $cardNumber, $response);
+    if ($imageUrl) {
+      return $template->render($user['id'], $name, $user['username'], $user['email'], $address, $phoneNumber, $cardNumber, $imageUrl, $response);  
+    }
+    return $template->render($user['id'], $name, $user['username'], $user['email'], $address, $phoneNumber, $cardNumber, '', $response);
   }
 }

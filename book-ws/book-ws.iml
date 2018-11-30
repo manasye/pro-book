@@ -33,5 +33,6 @@
     <orderEntry type="library" name="com.sun.xml.bind:jaxb-core:2.3.0" level="project" />
     <orderEntry type="library" name="com.sun.xml.ws:rt:2.3.0" level="project" />
     <orderEntry type="library" name="com.sun.xml.ws:jaxws-rt:2.3.0" level="project" />
+    <orderEntry type="library" name="com.sun.xml.ws:rt:2.3.01" level="project" />
   </component>
 </module>
