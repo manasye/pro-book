@@ -111,12 +111,8 @@ MacOS
 ```
 $ brew install tomcat
 ```
-Ubuntu, or you can go [here](https://www.digitalocean.com/community/tutorials/how-to-install-apache-tomcat-8-on-ubuntu-16-04)
-```
-$ curl -O http://apache.mirrors.ionfish.org/tomcat/tomcat-8/v8.5.5/bin/apache-tomcat-8.5.5.tar.gz
-$ sudo mkdir /opt/tomcat
-$ sudo tar xzvf apache-tomcat-8*tar.gz -C /opt/tomcat --strip-components=1
-```
+Ubuntu, or you can go [here](https://linuxize.com/post/how-to-install-tomcat-8-5-on-ubuntu-18.04/)
+
 ## Pre-Running
 Before we run the Pro-Book, we have to setup every `.env` file and database instances.
 
@@ -423,6 +419,8 @@ Response:
 
 ### [TODO] Shared Session in REST
 ### [TODO] Token Creation And Expiry Mechanism
+In this project, whenever user log in to the web, the app will generate the token and automatically calculates the expiry time and stores the IP Address, HTTP Client, and the expiry time of the token to web's database.
+When user accesses the web, it will validate the token, IP Address, HTTP Client, and the expiry time of the token. If the token validates, the user will be redirected to /browse page, else client token will be deleted and the user will be redirected to /login page.
 
 ### Probook Architecture vs Monolith Architecture
 Since this project uses microservice architecture, there must be a tradeoff in this architecture compared to the traditional monolith architecture. Here's the pros and cons of our architecture compared against monolith architecture.
