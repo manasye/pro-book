@@ -1,5 +1,5 @@
 <?php
-function render_template(string $username, $book, $reviews, $ratings, $recommendation) {
+function render_template(string $username, $userImg, $book, $reviews, $ratings, $recommendation) {
   $reviewsHTML = "";
   $bookId = $book->id;
   $bookImagePath = $book->imageUrl;
@@ -136,7 +136,11 @@ HTML;
   foreach($reviews as $review) {
     $profileImagePath = "src/model/profile/".$review['user_id'].".jpg";
     if(!file_exists($profileImagePath)) {
-      $profileImagePath = 'src/model/profile/avatar_default.jpg';
+       if ($userImg) {
+          $profileImagePath = $userImg;
+       } else {
+          $profileImagePath = 'src/model/profile/avatar_default.jpg';
+       }
     }
     $r = round($review['rating'], 1);
     $reviewHTML = <<<HTML

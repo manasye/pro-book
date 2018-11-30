@@ -18,8 +18,7 @@ $$.ajax({
     data: JSON.stringify(data),
     callback: response => {
         let res = JSON.parse(response);
-        if (res.message !== 'Merchant Secret invalid')
-            $$('#qr-code').src = res.qrCode;
+        if (res.success) $$('#qr-code').src = res.qrCode;
         else
             $$('#qr-code').src =
                 'https://image.flaticon.com/icons/svg/8/8235.svg';
