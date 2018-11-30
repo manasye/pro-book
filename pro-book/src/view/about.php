@@ -62,11 +62,11 @@ function render_template(string $username) {
       <div class='about-content-container'>
         <div class='about-content-column-container'>
           <div class='about-content-picture-container'>
-            <img class='profile-picture' src='src/model/profile/nicho.jpg' alt='Nicholas Rianto Putra'>
+            <img class='profile-picture' src='src/model/profile/manasye.png' alt='Manasye Shousen Bukit'>
           </div>
           <div class='about-content-name-container'>
-            <h3 class='name'>Nicholas Rianto Putra</h3>
-            <h3 class='title'>Query Master</h3>
+            <h3 class='name'>Manasye Shousen Bukit</h3>
+            <h3 class='title'>Front End Master</h3>
           </div>
           <div class='about-content-detail-container'>
             <div class='about-content-row-container'>
@@ -74,7 +74,7 @@ function render_template(string $username) {
                 <img class='icon' src='src/view/static/img/icon_email.svg'>
               </div>
               <div class='about-content'>
-                <a href='mailto:nicholasmagbanua@gmail.com'><p>nicholasmagbanua@gmail.com</p></a>
+                <a href='mailto:manasyebukit@gmail.com'><p>manasyebukit@gmail.com</p></a>
               </div>
             </div>
             <div class='about-content-row-container'>
@@ -82,7 +82,7 @@ function render_template(string $username) {
                 <img class='icon' src='src/view/static/img/icon_github.svg'>
               </div>
               <div class='about-content'>
-                <a href='https://github.com/Nicholaz99'><p>Nicholaz99</p></a>
+                <a href='https://github.com/manasye'><p>manasye</p></a>
               </div>
             </div>
             <div class='about-content-row-container'>
@@ -90,15 +90,7 @@ function render_template(string $username) {
                 <img class='icon' src='src/view/static/img/icon_linkedin.svg'>
               </div>
               <div class='about-content'>
-                <a href='https://www.linkedin.com/in/nicholas-rp/'><p>Nicholas Rianto Putra</p></a>
-              </div>
-            </div>
-            <div class='about-content-row-container'>
-              <div class='about-content-icon-container'>
-                <img class='icon' src='src/view/static/img/icon_twitter.svg'>
-              </div>
-              <div class='about-content'>
-                <a href='https://twitter.com/nicho_cholas'><p>@nicho_cholas</p></a>
+                <a href='https://www.linkedin.com/in/manasye-shousen-bukit-833313156/'><p>Manasye Shousen Bukit</p></a>
               </div>
             </div>
             <div class='about-content-row-container'>
@@ -106,7 +98,7 @@ function render_template(string $username) {
                 <img class='icon' src='src/view/static/img/icon_instagram.svg'>
               </div>
               <div class='about-content'>
-                <a href='https://www.instagram.com/nicholasr.p/'><p>@nicholasr.p</p></a>
+                <a href='https://www.instagram.com/manasyebukit/'><p>@manasyebukit</p></a>
               </div>
             </div>
             <div class='about-content-row-container'>
@@ -114,7 +106,7 @@ function render_template(string $username) {
                 <img class='icon' src='src/view/static/img/icon_facebook.svg'>
               </div>
               <div class='about-content'>
-                <a href='https://www.facebook.com/nicholas.uzumaki'><p>Nicholas R Putra</p></a>
+                <a href='https://www.facebook.com/manase.sekosen'><p>Manase Sekosen</p></a>
               </div>
             </div>
           </div>
@@ -125,7 +117,7 @@ function render_template(string $username) {
           </div>
           <div class='about-content-name-container'>
             <h3 class='name'>Abram Situmorang</h3>
-            <h3 class='title'>PHP Master</h3>
+            <h3 class='title'>Node JS Master</h3>
           </div>
           <div class='about-content-detail-container'>
             <div class='about-content-row-container'>
@@ -154,14 +146,6 @@ function render_template(string $username) {
             </div>
             <div class='about-content-row-container'>
               <div class='about-content-icon-container'>
-                <img class='icon' src='src/view/static/img/icon_twitter.svg'>
-              </div>
-              <div class='about-content'>
-                <a href='https://twitter.com/abrampers'><p>@abrampers</p></a>
-              </div>
-            </div>
-            <div class='about-content-row-container'>
-              <div class='about-content-icon-container'>
                 <img class='icon' src='src/view/static/img/icon_instagram.svg'>
               </div>
               <div class='about-content'>
@@ -180,11 +164,11 @@ function render_template(string $username) {
         </div>
         <div class='about-content-column-container'>
           <div class='about-content-picture-container'>
-            <img class='profile-picture' src='src/model/profile/faza.jpg' alt='Faza Fahleraz'>
+            <img class='profile-picture' src='src/model/profile/izzan.jpeg' alt='Ahmad Izzan'>
           </div>
           <div class='about-content-name-container'>
-            <h3 class='name'>Faza Fahleraz</h3>
-            <h3 class='title'>JS x CSS Master</h3>
+            <h3 class='name'>Ahmad Izzan</h3>
+            <h3 class='title'>Java Master</h3>
           </div>
           <div class='about-content-detail-container'>
             <div class='about-content-row-container'>
@@ -192,7 +176,7 @@ function render_template(string $username) {
                 <img class='icon' src='src/view/static/img/icon_email.svg'>
               </div>
               <div class='about-content'>
-                <a href='mailto:ffahleraz@gmail.com'><p>ffahleraz@gmail.com</p></a>
+                <a href='mailto:aahmadizzan@gmail.com'><p>aahmadizzan@gmail.com</p></a>
               </div>
             </div>
             <div class='about-content-row-container'>
@@ -200,7 +184,7 @@ function render_template(string $username) {
                 <img class='icon' src='src/view/static/img/icon_github.svg'>
               </div>
               <div class='about-content'>
-                <a href='https://github.com/ffahleraz'><p>ffahleraz</p></a>
+                <a href='https://github.com/ahmadizzan'><p>ahmadizzan</p></a>
               </div>
             </div>
             <div class='about-content-row-container'>
@@ -208,15 +192,7 @@ function render_template(string $username) {
                 <img class='icon' src='src/view/static/img/icon_linkedin.svg'>
               </div>
               <div class='about-content'>
-                <a href='https://www.linkedin.com/in/ffahleraz/'><p>Faza Fahleraz</p></a>
-              </div>
-            </div>
-            <div class='about-content-row-container'>
-              <div class='about-content-icon-container'>
-                <img class='icon' src='src/view/static/img/icon_twitter.svg'>
-              </div>
-              <div class='about-content'>
-                <a href='https://twitter.com/ffahleraz'><p>@ffahleraz</p></a>
+                <a href='https://www.linkedin.com/in/ahmadizzan/'><p>Ahmad Izzan</p></a>
               </div>
             </div>
             <div class='about-content-row-container'>
@@ -224,7 +200,7 @@ function render_template(string $username) {
                 <img class='icon' src='src/view/static/img/icon_instagram.svg'>
               </div>
               <div class='about-content'>
-                <a href='https://www.instagram.com/ffahleraz/'><p>@ffahleraz</p></a>
+                <a href='https://www.instagram.com/izzaaann/'><p>@izzaaann</p></a>
               </div>
             </div>
             <div class='about-content-row-container'>
@@ -232,7 +208,7 @@ function render_template(string $username) {
                 <img class='icon' src='src/view/static/img/icon_facebook.svg'>
               </div>
               <div class='about-content'>
-                <a href='https://www.facebook.com/ffahleraz'><p>Faza Fahleraz</p></a>
+                <a href='https://www.facebook.com/ahmad.izzan.5'><p>Ahmad Izzan</p></a>
               </div>
             </div>
           </div>
