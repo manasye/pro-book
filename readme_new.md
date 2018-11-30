@@ -93,7 +93,7 @@ POST /production/validate
 ```
 
 Response:
-```json
+```
 {
     "success": whether the user is valid [boolean],
     "message": response message [string],
@@ -109,7 +109,7 @@ Response:
 ***Acquire QR Secret***
 
 Request:
-```json
+```
 POST /production/validate
 {
     cardNumber: card number of a user [string]
@@ -118,7 +118,7 @@ POST /production/validate
 ```
 
 Response:
-```json
+```
 {
     "success": whether qr code successfully generated [boolean],
     "message": response message [string],
@@ -139,7 +139,7 @@ POST /production/validate
 ```
 
 Response:
-```json
+```
 {
     "success": whether transaction succeed [boolean],
     "message": response message [string],
@@ -160,7 +160,7 @@ $soapClient->searchTitle(<SEARCH_TERM>);
 ```
 
 Response:
-```json
+```
 {
     "bookList": [
         {
@@ -184,7 +184,7 @@ $soapClient->searchDetail(<BOOK_ID>);
 ```
 
 Response:
-```json
+```
 {
     "id": book id [string],
     "title": book title [string],
@@ -203,7 +203,7 @@ $soapClient->getBookRecommendation(<CATEGORY_LIST>);
 ```
 
 Response:
-```json
+```
 {
     "bookList": [
         {
@@ -227,7 +227,7 @@ $soapClient->buyBook(<CARD_NUMBER>, <TOKEN>, <BOOK_ID>, <BOOK_QUANTITY>);
 ```
 
 Response:
-```json
+```
 {
     "success": whether the transcation succeed [boolean],
     "message": response message [string]
