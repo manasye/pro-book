@@ -40,7 +40,7 @@ To run Pro-Book, we need to install certain libraries and packages
 
 In order to run this web on your local server, you need to run it on **PHP 7.1** and install:
 
-### For MacOS users
+#### For MacOS users
 
 Install Homebrew
 
@@ -471,9 +471,7 @@ Response:
 | category | VARCHAR(255) | Book Category   |
 | sold     | INT          | Book Sold Count |
 
-### [TODO] Shared Session in REST
-
-### [TODO] Token Creation And Expiry Mechanism
+### Token Creation And Expiry Mechanism
 
 In this project, whenever user log in to the web, the app will generate the token and automatically calculates the expiry time and stores the IP Address, HTTP Client, and the expiry time of the token to web's database.
 When user accesses the web, it will validate the token, IP Address, HTTP Client, and the expiry time of the token. If the token validates, the user will be redirected to /browse page, else client token will be deleted and the user will be redirected to /login page.
@@ -498,15 +496,3 @@ Since this project uses microservice architecture, there must be a tradeoff in t
 1. Abram Perdanaputra - 13516083 - https://github.com/abrampers
 2. Ahmad Izzan - 13516116 - https://github.com/ahmadizzan
 3. Manasye Bukit - 13516122 - https://github.com/manasye
-
-## Words from Authors
-
-Thanks to our lovely lecturer Mr. Dr.Techn. Muhammad Zuhri Catur Candra ST,MT for his amazing project about [Tugas 1 IF3110 Pengembangan Aplikasi Berbasis Web](http://gitlab.informatika.org/IF3110-2018/tugasbesar1_2018).
-
-> _"You already know how hard it is to build a software right? Do you still want to use pirated softwares?"_ > _- Dr.Techn. Muhammad Zuhri Catur Candra ST,MT_
-
-## References
-
--   [Pro-Book v1](https://github.com/abrampers/PRO-Book)
--   [Tugas 1 IF3110 Pengembangan Aplikasi Berbasis Web](http://gitlab.informatika.org/IF3110-2018/tugasbesar1_2018)
--   [Flaticon](https://flaticon.com)
